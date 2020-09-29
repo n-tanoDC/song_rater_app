@@ -1,18 +1,21 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from './components/HomeScreen'
-import Login from './components/LoginScreen'
-import Register from './components/RegisterScreen'
+import Home from './components/screens/HomeScreen'
+import User from './components/screens/UserScreen'
+import Feed from './components/screens/FeedScreen'
+import Music from './components/screens/MusicScreen'
 
-const { Navigator, Screen } = createStackNavigator()
+
+const { Navigator, Screen } = createBottomTabNavigator()
 
 export default () => 
   <NavigationContainer>
     <Navigator headerMode="none" initialRouteName="Home">
       <Screen name="Home" component={Home} />
-      <Screen name="Login" component={Login} />
-      <Screen name="Register" component={Register} />
+      <Screen name="User" component={User} />
+      <Screen name="Feed" component={Feed} />
+      <Screen name="Music" component={Music} />
     </Navigator>
   </NavigationContainer>
