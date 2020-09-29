@@ -1,6 +1,7 @@
 import { Button, Form, Input, Item, Text } from 'native-base';
 import { Modal } from 'react-native';
 import React, { useState } from 'react';
+import { authenticate } from '../../data/user';
 
 export default (props) => {
   const { visibility } = props;
@@ -9,19 +10,7 @@ export default (props) => {
   const [password, setPassword] = useState('password');
 
   const handleSubmit = () => {
-    const body = {
-      username: username,
-      email: email,
-      password: password
-    }
-    fetch('http://192.168.43.202:8000/auth/signup', {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    })
-      .then(res => res.json())
+    authenticate({username, email, password}, 'signup')
       .then(() => visibility.switchSignup(false))
       .catch(err => console.log(err))
   }
