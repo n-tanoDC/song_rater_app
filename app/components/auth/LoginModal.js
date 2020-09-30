@@ -6,7 +6,7 @@ import { authenticate } from '../../data/user';
 export default (props) => {
   const { visibility, userContext } = props;
 
-  const [username, setUsername] = useState('test rn')
+  const [username, setUsername] = useState('test')
   const [password, setPassword] = useState('password')
 
   const handleSubmit = () => {
