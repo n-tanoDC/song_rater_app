@@ -1,4 +1,5 @@
 import { TOKENS, EXTERNAL_API } from '../config';
+import { getQuery } from './functions';
 
 export const generateToken = setter => {
   const options = {
@@ -14,14 +15,6 @@ export const generateToken = setter => {
     .then(res => res.json())
     .then(data => setter(data.access_token))
     .catch(error => console.log('error', error));
-}
-
-const getQuery = (query, platform = 'spotify', type = 'artist', limit = '20') => {
-  switch(platform) {
-    case 'spotify':
-      return 'search?q=' + query + '&type=' + type + '&market=FR&limit=' + limit + '&offset=0'
-      break;
-  }
 }
 
 export const search = (query, token) => {

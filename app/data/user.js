@@ -1,31 +1,23 @@
 import { API_URL } from "../config";
+import { getReqOptions } from "./functions";
 
 export const authenticate = (body, action) => {
-  const options = {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  }
-
   return (
-    fetch(API_URL + 'auth/' + action, options)
+    fetch(API_URL + 'auth/' + action, getReqOptions(body))
     .then(res => res.json())
     .catch(err => console.log(err))
   )
 }
 
 export const addToFavorites = (element_id, user) => {
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json' 
-    },
-    body: JSON.stringify({element_id: element_id, id: user._id})
-  }
+  const id = user._id;
 
-  fetch(API_URL + 'user/favorites?secret_token=' + user.token, options)
-    .then(res => res.json())
+  fetch(API_URL + 'user/favorites?secret_token=' + user.token, getReqOptions({ element_id, id }))
+    .then(() => {
+      let add = user.favorites.find(fav => fav === element_id);
+      if (!add) {
+        user.favorites.push(element_id)
+      }
+    })
     .catch(err => console.log(err))
 }
