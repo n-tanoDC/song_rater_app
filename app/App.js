@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { createContext, useEffect, useState } from 'react';
 import Navigator from './Navigator'
-import { Text } from 'native-base';
+import { Text, Root } from 'native-base';
 import { generateToken } from './data/spotify'
 
 export const UserContext = createContext();
@@ -18,10 +18,12 @@ export default () => {
   }
 
   return (
-    <SpotifyContext.Provider value={{ token, setToken }}>
-      <UserContext.Provider value={{user, setUser}}>
-        <Navigator />
-      </UserContext.Provider>
-    </SpotifyContext.Provider>
+    <Root>
+      <SpotifyContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{user, setUser}}>
+          <Navigator />
+        </UserContext.Provider>
+      </SpotifyContext.Provider>
+    </Root>
   )
 }
