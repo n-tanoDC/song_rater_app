@@ -9,15 +9,17 @@ export const authenticate = (body, action) => {
   )
 }
 
-export const addToFavorites = (element_id, user) => {
-  const id = user._id;
+export const addToFavorites = (element_id, userContext) => {
+  const { user, setUser } = userContext;
+  const id = user._id
 
   fetch(API_URL + 'user/favorites?secret_token=' + user.token, getReqOptions({ element_id, id }))
     .then(() => {
       let add = user.favorites.find(fav => fav === element_id);
       if (!add) {
-        user.favorites.push(element_id)
-      }
+        const newFavs = [...user.favorites, element_id];
+        setUser({...user, favorites: newFavs});
+      } 
     })
     .catch(err => console.log(err))
 }

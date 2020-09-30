@@ -12,7 +12,7 @@ export default (props) => {
 
   if (userContext.user) {
     favButton = 
-      <Button warning rounded onPress={() => addToFavorites(result.id, userContext.user)}>
+      <Button warning rounded onPress={() => addToFavorites(result.id, userContext)}>
         <Icon type="Entypo" name="star" />
       </Button>
   }
