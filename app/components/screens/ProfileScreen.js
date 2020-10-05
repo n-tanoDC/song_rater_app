@@ -4,9 +4,9 @@ import { UserContext } from '../../App';
 
 export default ({ navigation }) => {
 
-  const userContext = useContext(UserContext);
+  const { setUser, user } = useContext(UserContext);
 
-  if (!userContext.user) {
+  if (!user) {
     return (
       <Container>
         <Content>
@@ -22,7 +22,6 @@ export default ({ navigation }) => {
     )
   }
 
-  const { user } = userContext
   let favs;
 
   if (user.favorites) {
@@ -38,6 +37,11 @@ export default ({ navigation }) => {
       <List>
         {favs}
       </List>
+      <Button full onPress={() => setUser(null)}>
+        <Text>
+          Se déconnecter
+        </Text>
+      </Button>
     </Content>
   )
 }
