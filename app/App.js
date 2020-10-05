@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { createContext, useEffect, useState } from 'react';
-import Navigator from './Navigator'
+import TabNavigator from './navigation/TabNavigator'
 import { Text, Root } from 'native-base';
 import { generateToken } from './data/spotify'
 
@@ -21,7 +21,7 @@ export default () => {
     <Root>
       <SpotifyContext.Provider value={{ token, setToken }}>
         <UserContext.Provider value={{user, setUser}}>
-          <Navigator />
+          <TabNavigator />
         </UserContext.Provider>
       </SpotifyContext.Provider>
     </Root>
