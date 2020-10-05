@@ -8,10 +8,10 @@ export const getReqOptions = body => {
   }
 }
 
-export const getQuery = (query, platform = 'spotify', type = 'artist', limit = '20') => {
+export const getQuery = (query, platform = 'spotify') => {
   switch(platform) {
     case 'spotify':
-      return 'search?q=' + query + '&type=' + type + '&market=FR&limit=' + limit + '&offset=0'
+      return 'search?q=' + query + '&type=track,album,artist&market=FR'
       break;
   }
 }
