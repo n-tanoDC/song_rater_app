@@ -1,8 +1,10 @@
-import { Text } from 'native-base';
+import { Button, Text } from 'native-base';
 import React from 'react';
 
-export default (props) => {
+export default ({ navigation }) => {
   return (
-    <Text>Fil d'actualités</Text>
+    <Button onPress={() => navigation.navigate('Content', { screen: 'Artist'})}>
+      <Text>Artiste</Text>
+    </Button>
   )
 };
