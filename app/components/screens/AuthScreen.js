@@ -1,12 +1,14 @@
 import { Container, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import LoginForm from '../auth/LoginForm';
 import RegistrationForm from '../auth/RegistrationForm';
+import { UserContext } from '../../App';
 
-export default ({ route }) => {
+export default ({ navigation, route }) => {
   const [login, setLogin] = useState(route.params.login);
+  const userContext = useContext(UserContext);
 
-  const content = login ? <LoginForm /> : <RegistrationForm />
+  const content = login ? <LoginForm userContext={userContext} navigation={navigation}/> : <RegistrationForm userContext={userContext}/>
   return(
     <Container>
       <Header hasSegment>

@@ -2,8 +2,7 @@ import { Button, Form, Input, Item, Text } from 'native-base';
 import React, { useState } from 'react';
 import { authenticate } from '../../data/user';
 
-export default (props) => {
-  const { userContext } = props;
+export default ({userContext, navigation}) => {
 
   const [username, setUsername] = useState('test')
   const [password, setPassword] = useState('password')
@@ -14,6 +13,7 @@ export default (props) => {
         const { user, token } = res;
         userContext.setUser({...user, token})
       })
+      .then(() => navigation.navigate('Profile'))
       .catch(err => console.log(err))
   }
 
