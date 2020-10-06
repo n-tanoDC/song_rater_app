@@ -6,16 +6,73 @@ import Home from '../components/screens/HomeScreen'
 import Search from '../components/screens/SearchScreen'
 
 import { UserNavigator, FeedNavigator, ContentNavigator } from './StackNavigators';
+import TabIcon from './TabIcon';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
-export default () => 
-  <NavigationContainer>
-    <Navigator lazy={false} headerMode="none" initialRouteName="Home">
-      <Screen name="Search" component={Search} />
-      <Screen name="Content" component={ContentNavigator} />
-      <Screen name="Home" component={Home} />
-      <Screen name="Feed" component={FeedNavigator} />
-      <Screen name="User" component={UserNavigator} />
-    </Navigator>
-  </NavigationContainer>
+export default () => {
+  const tabBarOptions = {
+    showLabel: false,
+    activeTintColor: '#9E00FF',
+    inactiveTintColor: 'transparent',
+    tabStyle: {
+      backgroundColor: '#FDFDFD',
+    }
+  }
+
+  const getIcons = (route, color) => {
+      let iconName;
+
+      switch (route.name) {
+        case 'Search':
+          iconName = 'magnify';
+          break;
+        case 'Content':
+          iconName = 'music-note-quarter-dotted';
+          break;
+        case 'Home':
+          iconName = 'home';
+          break;
+        case 'Feed':
+          iconName = 'playlist-star';
+          break;
+        case 'User':
+          iconName = 'account';
+          break;
+      }
+
+      return <TabIcon name={iconName} color={color} />;
+
+  }
+  return (
+    <NavigationContainer>
+      <Navigator 
+        backBehavior='history'
+        headerMode="none"
+        initialRouteName="Home"
+        tabBarOptions={tabBarOptions}
+        screenOptions={({ route }) => ({ 
+          tabBarIcon: ({ color }) => getIcons(route, color)
+        })}
+      >
+        <Screen
+          name="Search"
+          component={Search} />
+        <Screen 
+          name="Content"
+          component={ContentNavigator} />
+        <Screen 
+          name="Home"
+          component={Home} />
+        <Screen 
+          name="Feed"
+          component={FeedNavigator} />
+        <Screen 
+        name="User" 
+        component={UserNavigator} />
+      </Navigator>
+    </NavigationContainer>
+  )
+}
+
+  
