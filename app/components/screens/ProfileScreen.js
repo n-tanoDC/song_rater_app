@@ -1,24 +1,15 @@
-import { Text, H1, Button, ListItem, List, Content, Container } from 'native-base';
+import { Text, Button, ListItem, List, Content, Container } from 'native-base';
 import React, { useContext } from 'react';
 import { UserContext } from '../../App';
+import AuthScreen from './AuthScreen';
 
-export default ({ navigation }) => {
+export default () => {
 
   const { setUser, user } = useContext(UserContext);
 
   if (!user) {
     return (
-      <Container>
-        <Content>
-          <H1>Vous n'êtes pas connecté</H1>
-          <Button onPress={() => navigation.navigate('Auth', { login: true})}>
-            <Text>Se connecter</Text>
-          </Button>
-          <Button  onPress={() => navigation.navigate('Auth', { login: false})}>
-            <Text>Créer un compte</Text>
-          </Button>
-        </Content>
-      </Container>
+      <AuthScreen />
     )
   }
 
@@ -29,6 +20,7 @@ export default ({ navigation }) => {
   }
 
   return (
+  <Container>
     <Content>
       <Text>Nom d'utilisateur : {user.username}</Text>
       <Text>Email : {user.email}</Text>
@@ -43,5 +35,6 @@ export default ({ navigation }) => {
         </Text>
       </Button>
     </Content>
+  </Container>
   )
 }
