@@ -1,24 +1,32 @@
-import { Text, Content, Container, Thumbnail, Grid, Col, Row } from 'native-base';
-import React, { useContext, useState } from 'react';
+import { Text, Content, Container, Thumbnail, Grid, Col, Row, Button, Icon } from 'native-base';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { UserContext } from '../../App';
-import FollowButton from '../common/FollowButton'
+import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
+import FollowButton from '../common/FollowButton';
 import ReviewsList from '../reviews/ReviewsList';
 import AuthScreen from './AuthScreen';
-
+import FavsList from './FavsList';
 
 export default ({ navigation }) => {
-  const [selected, setSelected] = useState('critiques');
-  const [following, setFollowing] = useState(false);
-
   const userContext = useContext(UserContext);
   
-  if (!userContext.user) {
+  const [selected, setSelected] = useState('critiques');
+  const [following, setFollowing] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => { setUser(userContext.user) }, [userContext])
+  
+
+  if (!user) {
     return <AuthScreen />
   }
+  
+  const button = user === userContext.user ?
+    <ButtonIcon onPress={() => userContext.setUser(null)} name='ellipsis-horizontal' color='#3A3A3A' /> :
+    <FollowButton state={{ following, setFollowing }} />
 
-  const { user } = userContext;
   return (
     <Container>
       <Content padder>
@@ -32,7 +40,7 @@ export default ({ navigation }) => {
             <Col>
               <Row style={styles.spacedRow}>
                   <Text style={{ fontWeight: 'bold'}}>{user.username}</Text>
-                  <FollowButton text='Suivre' state={{ value: following, callback: setFollowing }} />
+                  {button}
               </Row>
               <Row>
                 <Text style={{ fontSize: 14 }}>{user.description}</Text>
@@ -50,7 +58,7 @@ export default ({ navigation }) => {
               state={{ value: selected, callback: setSelected }} />
           </Row>
         </Grid>
-        {selected === 'critiques' ? <ReviewsList navigation={navigation} reviews={[]}/> : <ReviewsList reviews={[]} />}
+        {selected === 'critiques' ? <ReviewsList navigation={navigation} size='small' reviews={user.reviews}/> : <FavsList user={user} navigation={navigation} />}
       </Content>
     </Container>
   )
