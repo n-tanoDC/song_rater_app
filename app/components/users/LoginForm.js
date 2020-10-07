@@ -10,8 +10,8 @@ export default ({userContext, navigation}) => {
   const handleSubmit = () => {
     authenticate({username, password}, 'login')
       .then(res => {
-        const { user, token } = res;
-        userContext.setUser({...user, token})
+        const { user, token, reviews } = res;
+        userContext.setUser({...user, token, reviews})
       })
       .then(() => navigation.navigate('Profile'))
       .catch(err => console.log(err))
