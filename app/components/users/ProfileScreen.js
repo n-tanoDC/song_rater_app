@@ -12,13 +12,12 @@ import FavsList from './FavsList';
 export default ({ navigation }) => {
   const userContext = useContext(UserContext);
   
-  const [selected, setSelected] = useState('critiques');
+  const [selected, setSelected] = useState(0);
   const [following, setFollowing] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => { setUser(userContext.user) }, [userContext])
   
-
   if (!user) {
     return <AuthScreen />
   }
@@ -52,13 +51,11 @@ export default ({ navigation }) => {
             <Text style={styles.stats}>X Abonnés</Text>
             <Text style={styles.stats}>X Abonnements</Text>
           </Row>
-          <Row style={styles.centeredRow}>
-            <CustomSegment 
-              data={['critiques', 'favoris']} 
-              state={{ value: selected, callback: setSelected }} />
-          </Row>
         </Grid>
-        {selected === 'critiques' ? <ReviewsList navigation={navigation} size='small' reviews={user.reviews}/> : <FavsList user={user} navigation={navigation} />}
+        <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
+        {!selected ? 
+          <ReviewsList navigation={navigation} size='small' reviews={user.reviews}/> : 
+          <FavsList user={user} navigation={navigation} />}
       </Content>
     </Container>
   )
