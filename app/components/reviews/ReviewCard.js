@@ -2,7 +2,7 @@ import { Card, CardItem, Left, Icon, Text, Thumbnail, Body, Right, View } from '
 import React from 'react';
 import AlbumCard from '../content/AlbumCard';
 
-export default ({ size, review }) => {
+export default ({ size, review, navigation }) => {
   switch (size) {
     case 'large':
       return (
@@ -34,13 +34,13 @@ export default ({ size, review }) => {
     default:
       return (
         <Card style={{ borderRadius: 10, overflow: "hidden"}}>
-          <CardItem style={{ backgroundColor: '#F9F9F9' }}>
+          <CardItem button onPress={() => navigation.navigate('Feed', { screen: 'Review' })} style={{ backgroundColor: '#F9F9F9' }}>
             <Left>
               <Thumbnail square source={{ uri: 'https://images.genius.com/6fd31c8993a97f5851e5f9cfc7cbe5e8.1000x1000x1.jpg'}}/>
             </Left>
             <Body style={{ flex: 3 }}>
               <Text>{review.title}</Text>
-              <Text style={{ fontSize: 12 }}>Et licet quocumque oculos flexeris feminas adfatim [...]</Text>
+              <Text style={{ fontSize: 12 }}>{review.content ? review.content : 'Aucun contenu'}</Text>
             </Body>
             <Right style={{ justifyContent: "space-between" }}>
               <Thumbnail small source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80'}} />
@@ -53,5 +53,4 @@ export default ({ size, review }) => {
         </Card>
       )
   }
-  return (<Text>{review.title}</Text>)
 };
