@@ -5,14 +5,16 @@ import CustomSegment from '../common/CustomSegment';
 import AuthForm from './AuthForm';
 
 export default () => {
-  const [selected, setSelected] = useState('login');
+  const [selected, setSelected] = useState(0)
   const userContext = useContext(UserContext);
+
+  const action = selected === 0 ? 'login' : 'register'
   
   return(
     <Container>
-      <CustomSegment data={['login', 'register']} state={{ value: selected, callback: setSelected }}/>
+      <CustomSegment data={['Se connecter', 'Créer un compte']} state={{ selected, setSelected }}/>
       <Content contentContainerStyle={{ justifyContent: 'center', flex: 1 }} padder>
-        <AuthForm action={selected} userContext={userContext} />
+        <AuthForm action={action} userContext={userContext} />
       </Content>
     </Container>
   )

@@ -9,6 +9,8 @@ export default ({ userContext, action }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const isLogin = action === 'login';
+
   const login = () => {
     authenticate({username, password}, 'login')
       .then(res => {
@@ -23,14 +25,10 @@ export default ({ userContext, action }) => {
   }
 
   const handleSubmit = () => {
-    if (action === 'login') {
-      login()
-    } else {
-      register()
-    }
+    isLogin? login() : register();
   }
 
-  const emailInput = action !== 'login' ?
+  const emailInput = !isLogin ?
     <CustomInput 
       icon='mail-outline'
       placeholder="Email"
@@ -50,7 +48,7 @@ export default ({ userContext, action }) => {
       <CustomButton
         color='#FFB906'
         onPress={() => handleSubmit()}
-        text='Créer un compte' />
+        text={isLogin ? 'Se connecter' : 'Créer un compte'} />
     </Form>
   )
 };

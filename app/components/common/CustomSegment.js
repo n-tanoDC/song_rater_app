@@ -1,24 +1,20 @@
-import { Segment, Button, Text } from 'native-base';
+import SegmentedControl from '@react-native-community/segmented-control';
 import React from 'react';
 
 export default ({ data, state }) => {
-
-  const buttons = data.map((item, key) => 
-    <Button
-      key={key}
-      onPress={() => state.callback(item)}
-      first={key === 0}
-      last={key === data.length}
-      active={state.value === item}>
-      <Text>
-        {item.toUpperCase()}
-      </Text>
-    </Button> 
-  )
+  
+  const handleChange = value => {
+    const index = data.findIndex(item => value === item)
+    state.setSelected(index)
+  }
 
   return (
-    <Segment>
-      {buttons}
-    </Segment>
+    <SegmentedControl
+    values={data}
+    selectedIndex={state.selected}
+    onValueChange={value => handleChange(value)}
+    style={{ backgroundColor: '#C4C4C4', margin: 10 }}
+    tintColor='#9E00FF'
+  />
   )
 };
