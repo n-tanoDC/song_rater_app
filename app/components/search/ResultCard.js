@@ -1,5 +1,5 @@
 import React from 'react';
-import { Body, Left, ListItem, Text, Thumbnail } from 'native-base';
+import { Body, ListItem, Text } from 'native-base';
 
 export default ({ artist, navigation }) => {
   return (

@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from '../components/screens/HomeScreen'
-import Search from '../components/screens/SearchScreen'
+import Home from '../components/HomeScreen'
+import Search from '../components/search/SearchScreen'
 
 import { UserNavigator, FeedNavigator, ContentNavigator } from './StackNavigators';
 import TabIcon from './TabIcon';

@@ -1,8 +1,8 @@
-import { Input, List, Content, Text, CheckBox, View, ListItem, Body, Spinner, Button, Container } from 'native-base';
-import React, { useContext, useEffect, useState } from 'react';
+import { Input, Content, Text, Spinner, Button, Container } from 'native-base';
+import React, { useContext, useState } from 'react';
 import { SpotifyContext } from '../../App';
 import { search } from '../../data/spotify';
-import SearchResults from '../search/SearchResults';
+import SearchResults from './SearchResults';
 
 export default ({ navigation }) => {
   const [results, setResults] = useState(null);
@@ -15,7 +15,6 @@ export default ({ navigation }) => {
     setLoading(true)
     search(value, spotify.token)
       .then(res => {
-        console.log(res);
         setResults({
           artists: res.artists,
           tracks: res.tracks,

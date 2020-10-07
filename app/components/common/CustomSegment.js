@@ -1,15 +1,15 @@
-import { Segment, Button, Text, Body } from 'native-base';
+import { Segment, Button, Text } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 export default ({ data, state }) => {
+
   const buttons = data.map((item, key) => 
     <Button
       key={key}
-      onPress={() => state.cb(item)}
+      onPress={() => state.callback(item)}
       first={key === 0}
       last={key === data.length}
-      active={state.selected === item}>
+      active={state.value === item}>
       <Text>
         {item.toUpperCase()}
       </Text>
@@ -17,7 +17,7 @@ export default ({ data, state }) => {
   )
 
   return (
-    <Segment >
+    <Segment>
       {buttons}
     </Segment>
   )

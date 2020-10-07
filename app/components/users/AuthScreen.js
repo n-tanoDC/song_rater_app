@@ -1,9 +1,9 @@
-import { Container, Header, Left, Body, Right, Button, Icon, Segment, Content, Text } from 'native-base';
+import { Container, Content } from 'native-base';
 import React, { useContext, useState } from 'react';
-import LoginForm from '../auth/LoginForm';
-import RegistrationForm from '../auth/RegistrationForm';
+import LoginForm from './LoginForm';
+import RegistrationForm from './RegistrationForm';
 import { UserContext } from '../../App';
-import CustomSegment from '../CustomSegment';
+import CustomSegment from '../common/CustomSegment';
 
 export default ({ navigation }) => {
   const [selected, setSelected] = useState('login');
@@ -15,7 +15,7 @@ export default ({ navigation }) => {
   
   return(
     <Container>
-      <CustomSegment data={['login', 'register']} state={{ selected, cb: setSelected }}/>
+      <CustomSegment data={['login', 'register']} state={{ value: selected, callback: setSelected }}/>
       <Content padder>
         {content}
       </Content>

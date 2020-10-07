@@ -1,14 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import ContentScreen from '../components/screens/ContentScreen';
-import FeedScreen from '../components/screens/FeedScreen';
-import ArtistScreen from '../components/screens/ArtistScreen';
-import ReviewScreen from '../components/screens/ReviewScreen';
-import TrackScreen from '../components/screens/TrackScreen';
-import AlbumScreen from '../components/screens/AlbumScreen';
-import ProfileScreen from '../components/screens/ProfileScreen';
-import AuthScreen from '../components/screens/AuthScreen';
+import ContentScreen from '../components/content/ContentScreen';
+import ArtistScreen from '../components/content/ArtistScreen';
+import TrackScreen from '../components/content/TrackScreen';
+import AlbumScreen from '../components/content/AlbumScreen';
+import FeedScreen from '../components/reviews/FeedScreen';
+import ReviewScreen from '../components/reviews/ReviewScreen';
+import ProfileScreen from '../components/users/ProfileScreen';
+import AuthScreen from '../components/users/AuthScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
