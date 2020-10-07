@@ -1,13 +1,15 @@
 import { API_URL } from "../config";
 import { getReqOptions } from "./functions";
 
-export const authenticate = (body, action) => {
-  return (
-    fetch(API_URL + 'auth/' + action, getReqOptions(body))
+export const authenticate = (body, action) =>
+  fetch(API_URL + 'auth/' + action, getReqOptions(body))
     .then(res => res.json())
     .catch(err => console.log(err))
-  )
-}
+
+export const getUser = username => 
+  fetch(API_URL + 'user/' + username)
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
 export const addToFavorites = (element_id, userContext) => {
   const { user, setUser } = userContext;

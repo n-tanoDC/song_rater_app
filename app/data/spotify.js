@@ -30,3 +30,17 @@ export const search = (query, token) => {
   )
 }
 
+export const getFavorites = (favorites, token) => {
+  const ids = favorites.join();
+  const options = {
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  }
+  return (
+    fetch(EXTERNAL_API.spotify + 'artists?ids=' + ids, options)
+      .then(res => res.json())
+      .catch(err => console.log(err))
+  )
+}
+
