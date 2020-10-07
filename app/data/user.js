@@ -1,5 +1,4 @@
 import { API_URL } from "../config";
-import { getReqOptions } from "./functions";
 
 export const authenticate = (body, action) =>
   fetch(API_URL + 'auth/' + action, getReqOptions(body))
@@ -24,4 +23,14 @@ export const addToFavorites = (element_id, userContext) => {
       } 
     })
     .catch(err => console.log(err))
+}
+
+const getReqOptions = body => {
+  return {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  }
 }

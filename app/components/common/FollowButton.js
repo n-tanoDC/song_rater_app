@@ -2,10 +2,12 @@ import { Button, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-export default ({ text, state }) => {
-  const bg = state.value ? '#1DB954' : '#FFB906'
+export default ({ state }) => {
+  const { following, setFollowing } = state;
+  const bg = following ? '#1DB954' : '#FFB906';
+  const text = following ? 'Suivi' : 'Suivre';
   return (
-    <Button small style={{...style.button, backgroundColor: bg }} onPress={() => state.callback(!state.value)}>
+    <Button small style={{...style.button, backgroundColor: bg }} onPress={() => setFollowing(!following)}>
       <Text uppercase={false} style={style.text}>
         {text}
       </Text>

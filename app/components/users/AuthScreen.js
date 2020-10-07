@@ -5,13 +5,13 @@ import RegistrationForm from './RegistrationForm';
 import { UserContext } from '../../App';
 import CustomSegment from '../common/CustomSegment';
 
-export default ({ navigation }) => {
+export default () => {
   const [selected, setSelected] = useState('login');
   const userContext = useContext(UserContext);
 
   const content = selected === 'login' ? 
-    <LoginForm userContext={userContext} navigation={navigation}/> :
-    <RegistrationForm userContext={userContext}/>
+    <LoginForm userContext={userContext} /> :
+    <RegistrationForm userContext={userContext} />
   
   return(
     <Container>

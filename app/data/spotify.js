@@ -1,5 +1,4 @@
 import { TOKENS, EXTERNAL_API } from '../config';
-import { getQuery } from './functions';
 
 export const generateToken = setter => {
   const options = {
@@ -42,5 +41,13 @@ export const getFavorites = (favorites, token) => {
       .then(res => res.json())
       .catch(err => console.log(err))
   )
+}
+
+const getQuery = (query, platform = 'spotify') => {
+  switch(platform) {
+    case 'spotify':
+      return 'search?q=' + query + '&type=track,album,artist&market=FR'
+      break;
+  }
 }
 
