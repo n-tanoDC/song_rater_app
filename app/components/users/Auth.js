@@ -1,19 +1,16 @@
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 import { Container, Content } from 'native-base';
-import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../App';
+
 import CustomSegment from '../common/CustomSegment';
 import AuthForm from './AuthForm';
 
-export default ({ navigation }) => {
+export default () => {
+  const navigation = useNavigation()
+
   const [selected, setSelected] = useState(0);
-  const { user } = useContext(UserContext);
-
-  useEffect(() => { 
-    if (user) {
-      navigation.navigate('Profile', { user })
-    }
-  })
-
+  
   const action = selected === 0 ? 'login' : 'register'
   
   return (

@@ -1,18 +1,22 @@
-import { Text, Content, Container, Thumbnail, Grid, Col, Row } from 'native-base';
 import React, { useContext, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
-import { UserContext } from '../../App';
+import { Text, Content, Container, Thumbnail, Grid, Col, Row } from 'native-base';
+
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
 import FollowButton from '../common/FollowButton';
 import ReviewsList from '../reviews/ReviewsList';
 import FavsList from './FavsList';
+
 import { logout } from '../../data/user'
 
-export default ({ navigation, route }) => {
-  const { user } = route.params;
+import { UserContext } from '../../App';
+
+export default ({ user }) => {
   const userContext = useContext(UserContext);
-  
+  const navigation = useNavigation()
+
   const [selected, setSelected] = useState(0);
   const [following, setFollowing] = useState(false);
 
@@ -20,7 +24,7 @@ export default ({ navigation, route }) => {
 
   const button = visitor ?
     <FollowButton state={{ following, setFollowing }} /> :
-    <ButtonIcon onPress={() => logout(userContext.setUser, navigation)} name='ellipsis-horizontal' color='#3A3A3A' />
+    <ButtonIcon onPress={() => logout(userContext.setUser)} name='ellipsis-horizontal' color='#3A3A3A' />
     
   return (
     <Container>
