@@ -6,7 +6,7 @@ import { UserContext } from '../../App';
 import { login, register } from '../../data/user'
 
 
-export default ({ action, navigation }) => {
+export default ({ action }) => {
   const [username, setUsername] = useState('test');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('password');
@@ -21,7 +21,7 @@ export default ({ action, navigation }) => {
   const isLogin = action === 'login';
 
   const handleSubmit = () => {
-    isLogin? login(setUser, data, navigation) : register(data);
+    isLogin? login(setUser, data) : register(data);
   }
 
   const emailInput = !isLogin ?

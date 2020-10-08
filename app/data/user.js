@@ -8,7 +8,6 @@ export const login = (setUser, data, navigation) => {
       const { user, token, reviews } = res;
       setUser({...user, token, reviews})
     })
-    .then(() => navigation.navigate('Profile'))
     .catch(err => console.log(err))
 }
 
@@ -18,7 +17,6 @@ export const register = data => {
 
 export const logout = (callback, navigation) => {
   callback(null);
-  navigation.navigate('Auth')
 }
 
 const authenticate = (body, action) =>
