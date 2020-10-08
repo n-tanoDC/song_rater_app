@@ -1,31 +1,27 @@
-import { Text, Content, Container, Thumbnail, Grid, Col, Row, Button, Icon } from 'native-base';
-import React, { useContext, useEffect, useState } from 'react';
+import { Text, Content, Container, Thumbnail, Grid, Col, Row } from 'native-base';
+import React, { useContext, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { UserContext } from '../../App';
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
 import FollowButton from '../common/FollowButton';
 import ReviewsList from '../reviews/ReviewsList';
-import AuthScreen from './AuthScreen';
 import FavsList from './FavsList';
+import { logout } from '../../data/user'
 
-export default ({ navigation }) => {
+export default ({ navigation, route }) => {
+  const { user } = route.params;
   const userContext = useContext(UserContext);
   
   const [selected, setSelected] = useState(0);
   const [following, setFollowing] = useState(false);
-  const [user, setUser] = useState(null);
 
-  useEffect(() => { setUser(userContext.user) }, [userContext])
-  
-  if (!user) {
-    return <AuthScreen />
-  }
-  
-  const button = user === userContext.user ?
-    <ButtonIcon onPress={() => userContext.setUser(null)} name='ellipsis-horizontal' color='#3A3A3A' /> :
-    <FollowButton state={{ following, setFollowing }} />
+  const visitor = user !== userContext.user;
 
+  const button = visitor ?
+    <FollowButton state={{ following, setFollowing }} /> :
+    <ButtonIcon onPress={() => logout(userContext.setUser, navigation)} name='ellipsis-horizontal' color='#3A3A3A' />
+    
   return (
     <Container>
       <Content padder>
@@ -54,7 +50,7 @@ export default ({ navigation }) => {
         </Grid>
         <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
         {!selected ? 
-          <ReviewsList navigation={navigation} size='small' reviews={user.reviews}/> : 
+          <ReviewsList navigation={navigation} size='large' reviews={user.reviews}/> : 
           <FavsList user={user} navigation={navigation} />}
       </Content>
     </Container>

@@ -14,8 +14,8 @@ const { Navigator, Screen } = createStackNavigator();
 
 export const UserNavigator = () => 
   <Navigator headerMode='none' backBehavior='history'>
-    <Screen name="Profile" component={ProfileScreen} />
     <Screen name="Auth" component={AuthScreen} />
+    <Screen name="Profile" component={ProfileScreen} />
   </Navigator>
 
 export const FeedNavigator = () => 
