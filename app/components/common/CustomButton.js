@@ -1,16 +1,31 @@
 import { Button, Text } from 'native-base';
 import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { color } from 'react-native-reanimated';
 
 export default ({ text, color, onPress }) => {
-  console.log(color);
   return (
-    <Button
-      info
-      rounded
-      onPress={onPress}
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => onPress()}
       transparent={!color}
       >
-      <Text uppercase={false}>{text}</Text>
-    </Button>
+      <Text style={styles.text}>{text}</Text>
+    </TouchableOpacity>
   )
 };
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#FFB906',
+    alignSelf: 'flex-end', 
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    elevation: 2
+  },
+  text: { 
+    color: '#FDFDFD',
+    fontWeight: 'bold'
+  },
+})

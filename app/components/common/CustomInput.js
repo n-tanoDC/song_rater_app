@@ -2,7 +2,7 @@ import { Input, Item, Icon, View } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-export default ({ placeholder, icon, state }) => {
+export default ({ secure, placeholder, icon, state }) => {
   let iconContainer = null;
   if (icon) {
     iconContainer = (
@@ -14,7 +14,7 @@ export default ({ placeholder, icon, state }) => {
 
   return (
     <Item regular style={styles.inputContainer}>
-      <Input style={styles.input} value={state.value} onChangeText={state.callback} placeholder={placeholder}/>
+      <Input secureTextEntry={secure} style={styles.input} value={state.value} onChangeText={state.callback} placeholder={placeholder}/>
       {iconContainer}
     </Item>
   )
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   }, 
   inputContainer: {
     paddingLeft: 10,
-    marginBottom: 30,
+    marginBottom: 50,
     overflow: "hidden",
     borderRadius: 10
   }
