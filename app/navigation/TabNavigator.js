@@ -4,9 +4,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from '../components/HomeScreen'
 import Search from '../components/search/SearchScreen'
-
-import { UserNavigator, FeedNavigator, ContentNavigator } from './StackNavigators';
+import UserScreen from '../components/users/UserScreen';
 import TabIcon from './TabIcon';
+
+import { FeedNavigator, ContentNavigator } from './StackNavigators';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -69,7 +70,7 @@ export default () => {
           component={FeedNavigator} />
         <Screen 
         name="User" 
-        component={UserNavigator} />
+        component={UserScreen} />
       </Navigator>
     </NavigationContainer>
   )

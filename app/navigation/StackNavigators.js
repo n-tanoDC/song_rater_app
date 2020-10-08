@@ -7,25 +7,17 @@ import TrackScreen from '../components/content/TrackScreen';
 import AlbumScreen from '../components/content/AlbumScreen';
 import FeedScreen from '../components/reviews/FeedScreen';
 import ReviewScreen from '../components/reviews/ReviewScreen';
-import ProfileScreen from '../components/users/ProfileScreen';
-import AuthScreen from '../components/users/AuthScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const UserNavigator = () => 
-  <Navigator headerMode='none' backBehavior='history'>
-    <Screen name="Auth" component={AuthScreen} />
-    <Screen name="Profile" component={ProfileScreen} />
-  </Navigator>
-
 export const FeedNavigator = () => 
-  <Navigator headerMode='none' backBehavior='history'>
+  <Navigator headerMode='none'>
     <Screen name="Feed" component={FeedScreen} />
     <Screen name="Review" component={ReviewScreen} />
   </Navigator>
 
 export const ContentNavigator = () => 
-  <Navigator headerMode='none' backBehavior='history'>
+  <Navigator headerMode='none'>
     <Screen name="Content" component={ContentScreen} />
     <Screen name="Artist" component={ArtistScreen} />
     <Screen name="Track" component={TrackScreen} />
