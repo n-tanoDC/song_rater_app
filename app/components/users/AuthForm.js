@@ -4,24 +4,37 @@ import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import { UserContext } from '../../App';
 import { login, register } from '../../data/user'
+import { Alert } from 'react-native';
 
 
 export default ({ action }) => {
-  const [username, setUsername] = useState('test');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('password');
   const [data, setData] = useState({})
-
-  useEffect(() => { 
-    setData({ username, email, password })
-  }, [username, email, password])
-
+  
+  const isLogin = action === 'login';
   const { setUser } = useContext(UserContext)
 
-  const isLogin = action === 'login';
+  useEffect(() => { 
+    isLogin? setData({ username, password }) : setData({ username, password, email })
+  }, [username, email, password])
+  
+  const checkForm = () => {
+    for (let item of Object.values(data)) {
+      if (item === '') {
+        return false
+      }
+    }
+    return true;
+  }
 
   const handleSubmit = () => {
-    isLogin? login(setUser, data) : register(data);
+    if (checkForm()) {
+      isLogin? login(setUser, data) : register(setUser, data);
+    } else {
+      Alert.alert('Veuillez remplir tous les champs.')
+    }
   }
 
   const emailInput = !isLogin ?

@@ -54,7 +54,7 @@ export default ({ user }) => {
         </Grid>
         <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
         {!selected ? 
-          <ReviewsList navigation={navigation} size='large' reviews={user.reviews}/> : 
+          <ReviewsList navigation={navigation} size='large' reviews={user.reviews ? user.reviews : []}/> : 
           <FavsList user={user} navigation={navigation} />}
       </Content>
     </Container>

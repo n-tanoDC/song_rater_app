@@ -1,28 +1,83 @@
-import { API_URL } from "../config";
+import { Alert } from 'react-native';
+import { API_URL } from '../config';
 
 // Authentication functions
 
-export const login = (setUser, data, navigation) => {
-  authenticate(data, 'login')
+export const login = (setUser, data) => {
+  fetch(API_URL + 'auth/login', getReqOptions(data))
     .then(res => {
-      const { user, token, reviews } = res;
-      setUser({...user, token, reviews})
+      switch (res.status) {
+        case 200: 
+          return res.json()
+        case 401:
+          throw new Error('Unauthorized')
+        default:
+          throw new Error()
+      }
     })
-    .catch(err => console.log(err))
+    .then(data => {
+      const { user, token, reviews } = data;
+      setUser({ ...user, token, reviews })
+    })
+    .catch(err => {
+      switch (err.message) {
+        case 'Unauthorized':
+          Alert.alert('Mot de passe ou nom d\'utilisateur incorrect')
+          break;
+        default :
+          Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+      }
+    })
 }
 
-export const register = data => {
-  authenticate(data, 'signup')
+export const register = (setUser, data) => {
+  fetch(API_URL + 'auth/signup', getReqOptions(data))
+    .then(async res => {
+      switch (res.status) {
+        case 201: 
+          return res.json()
+        case 400:
+          const error = await res.json()
+          throw error
+        default:
+          throw new Error()
+      }
+    })
+    .then(data => {
+      const { user, token } = data;
+      setUser({ ...user, token })
+    })
+    .catch(err => {
+      if (err.error) {
+        const { error } = err;
+        let keys = {
+          email: 'Email',
+          password: 'Mot de passe',
+          username: 'Nom d\'utilisateur'
+        }
+  
+        switch (error.type) {
+          case 'syntax':
+            Alert.alert(keys[error.key] + ' incorrect.');
+            break;
+          case 'duplicate':
+            Alert.alert(keys[error.key] + ' déjà existant.');
+            break;
+          default:
+            Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+        }
+      } else {
+        Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+      }
+
+      
+    })
+
 }
 
-export const logout = (callback, navigation) => {
+export const logout = (callback) => {
   callback(null);
 }
-
-const authenticate = (body, action) =>
-  fetch(API_URL + 'auth/' + action, getReqOptions(body))
-    .then(res => res.json())
-    .catch(err => console.log(err))
 
 
 // User related functions
@@ -51,7 +106,7 @@ const getReqOptions = body => {
   return {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(body)
   }
