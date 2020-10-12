@@ -1,4 +1,4 @@
-import { Form } from 'native-base';
+import { Form, Toast } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
@@ -8,9 +8,9 @@ import { Alert } from 'react-native';
 
 
 export default ({ action }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('password');
+  const [username, setUsername] = useState('testrn');
+  const [email, setEmail] = useState('nicolas@gmail');
+  const [password, setPassword] = useState('Password22');
   const [data, setData] = useState({})
   
   const isLogin = action === 'login';
@@ -33,7 +33,7 @@ export default ({ action }) => {
     if (checkForm()) {
       isLogin? login(setUser, data) : register(setUser, data);
     } else {
-      Alert.alert('Veuillez remplir tous les champs.')
+      Toast.show({ text: 'Veuillez remplir tous les champs.', buttonText: 'Ok', type: 'warning' })
     }
   }
 

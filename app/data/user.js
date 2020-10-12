@@ -1,3 +1,4 @@
+import { Toast } from 'native-base';
 import { Alert } from 'react-native';
 import { API_URL } from '../config';
 
@@ -22,10 +23,11 @@ export const login = (setUser, data) => {
     .catch(err => {
       switch (err.message) {
         case 'Unauthorized':
-          Alert.alert('Mot de passe ou nom d\'utilisateur incorrect')
+          Toast.show({ text: 'Nom d\'utilisateur ou mot de passe incorrect.', buttonText: 'Ok', type: 'warning' })
           break;
         default :
-          Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+          Toast.show({ text: 'Une erreur s\'est produite, veuillez réessayer ultérieurement.', buttonText: 'Ok', type: 'warning' })
+
       }
     })
 }
@@ -58,16 +60,16 @@ export const register = (setUser, data) => {
   
         switch (error.type) {
           case 'syntax':
-            Alert.alert(keys[error.key] + ' incorrect.');
+            Toast.show({ text: keys[error.key] + ' incorrect.', buttonText: 'Ok', type: 'warning' })
             break;
           case 'duplicate':
-            Alert.alert(keys[error.key] + ' déjà existant.');
+            Toast.show({ text: keys[error.key] + ' déjà existant', buttonText: 'Ok', type: 'warning' });
             break;
           default:
-            Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+            Toast.show({ text: 'Une erreur s\'est produite, veuillez réessayer ultérieurement.', buttonText: 'Ok', type: 'warning' })
         }
       } else {
-        Alert.alert('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
+        Toast.show({ text: 'Une erreur s\'est produite, veuillez réessayer ultérieurement.', buttonText: 'Ok', type: 'warning' })
       }
 
       
