@@ -4,13 +4,12 @@ import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import { UserContext } from '../../App';
 import { login, register } from '../../data/user'
-import { Alert } from 'react-native';
-
 
 export default ({ action }) => {
-  const [username, setUsername] = useState('testrn');
-  const [email, setEmail] = useState('nicolas@gmail');
-  const [password, setPassword] = useState('Password22');
+  const [username, setUsername] = useState('test');
+  const [email, setEmail] = useState('nicolas@mail.com');
+  const [password, setPassword] = useState('password');
+  const [passwordConf, setPasswordConf] = useState('Password')
   const [data, setData] = useState({})
   
   const isLogin = action === 'login';
@@ -18,22 +17,28 @@ export default ({ action }) => {
 
   useEffect(() => { 
     isLogin? setData({ username, password }) : setData({ username, password, email })
-  }, [username, email, password])
+  }, [username, email, password, passwordConf])
   
-  const checkForm = () => {
+  const formValidator = () => {
     for (let item of Object.values(data)) {
       if (item === '') {
-        return false
+        return { valid: false, message: 'Veuillez remplir tous les champs.'}
       }
     }
-    return true;
+
+    if (passwordConf !== password && !isLogin) {
+      return { valid: false, message: 'Les mots de passes ne sont pas identiques.'}
+    }
+
+    return { valid: true };
   }
 
   const handleSubmit = () => {
-    if (checkForm()) {
+    const { valid, message } = formValidator()
+    if (valid) {
       isLogin? login(setUser, data) : register(setUser, data);
     } else {
-      Toast.show({ text: 'Veuillez remplir tous les champs.', buttonText: 'Ok', type: 'warning' })
+      Toast.show({ text: message, type: 'warning' })
     }
   }
 
@@ -42,6 +47,13 @@ export default ({ action }) => {
       icon='mail-outline'
       placeholder="Email"
       state={{ value: email, callback: setEmail }} /> : null
+
+  const passwordConfInput = !isLogin ?
+  <CustomInput 
+    icon='checkmark'
+    secure
+    placeholder="Confirmer le mot de passe"
+    state={{ value: passwordConf, callback: setPasswordConf }} /> : null
 
   return (
     <Form>
@@ -55,6 +67,7 @@ export default ({ action }) => {
         placeholder="Mot de passe"
         secure
         state={{ value: password, callback: setPassword }} />
+      {passwordConfInput}
       <CustomButton
         color='#FFB906'
         onPress={handleSubmit}
