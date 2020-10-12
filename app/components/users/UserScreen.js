@@ -1,11 +1,16 @@
 import React, { useContext } from 'react';
+import { Container } from 'native-base';
 import { UserContext } from '../../App';
 
 import UserProfile from './UserProfile';
-import Auth from './Auth';
+import AuthForm from './AuthForm';
 
 export default ({  }) => {
   const { user } = useContext(UserContext);
 
-  return user ? <UserProfile user={user} /> : <Auth />
+  return (
+    <Container>
+      {user ? <UserProfile user={user} /> : <AuthForm />}
+    </Container>
+  )
 }

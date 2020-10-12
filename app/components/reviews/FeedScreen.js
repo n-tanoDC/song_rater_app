@@ -1,4 +1,4 @@
-import { Body, Container, Content, H1, Header, Right, Spinner } from 'native-base';
+import { Container, Content, H1, Spinner, View } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { getReviews } from '../../data/reviews';
@@ -18,14 +18,10 @@ export default () => {
 
   return(
     <Container>
-      <Header style={styles.header} transparent>
-        <Body>
-          <H1 style={styles.title}>Critiques</H1>
-        </Body>
-        <Right>
-          <ButtonIcon name='sync' size={30} color='#9E00FF' onPress={() => synchronize()} />
-        </Right>
-      </Header>
+      <View style={styles.header}>
+        <H1>Critiques</H1>
+        <ButtonIcon name='sync' color='#9E00FF' onPress={() => synchronize()} />
+      </View>
       <Content padder>
         {reviews ? <ReviewsList showUser reviews={reviews} /> : <Spinner />}
       </Content>
@@ -34,10 +30,12 @@ export default () => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    marginVertical: 15,
-  },
   header: {
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
+    borderColor: '#F4F4F4',
+    padding: 10,
+    flexDirection: "row",
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 })
