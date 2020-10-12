@@ -2,8 +2,9 @@ import { Input, Item, Icon, View } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-export default ({ secure, placeholder, icon, state }) => {
+export default ({ secure, placeholder, icon, state, multiline }) => {
   let iconContainer = null;
+
   if (icon) {
     iconContainer = (
     <View style={styles.iconContainer}>
@@ -14,7 +15,13 @@ export default ({ secure, placeholder, icon, state }) => {
 
   return (
     <Item regular style={styles.inputContainer}>
-      <Input secureTextEntry={secure} style={styles.input} value={state.value} onChangeText={state.callback} placeholder={placeholder}/>
+      <Input
+        multiline={multiline}
+        secureTextEntry={secure}
+        style={styles.input}
+        value={state.value}
+        onChangeText={state.callback}
+        placeholder={placeholder}/>
       {iconContainer}
     </Item>
   )
