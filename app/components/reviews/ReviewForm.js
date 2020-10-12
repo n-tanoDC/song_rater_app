@@ -46,7 +46,7 @@ export default ({ navigation, route }) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title, rating, content, element: element.id })
+      body: JSON.stringify({ title, rating, content, element: element.id, element_type: element.type })
     })
       .then(res => console.log(res))
       .catch(err => console.log(err))

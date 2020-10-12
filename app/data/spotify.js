@@ -17,13 +17,8 @@ export const generateToken = setter => {
 }
 
 export const search = (query, token) => {
-  const options = {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
   return (
-    fetch(EXTERNAL_API.spotify + getQuery(query), options)
+    fetch(EXTERNAL_API.spotify + getQuery(query), getOptions(token))
     .then(res => res.json())
     .catch(err => console.log(err))
   )
@@ -31,23 +26,23 @@ export const search = (query, token) => {
 
 export const getFavorites = (favorites, token) => {
   const ids = favorites.join();
-  const options = {
-    headers: {
-      Authorization: 'Bearer ' + token
-    }
-  }
   return (
-    fetch(EXTERNAL_API.spotify + 'artists?ids=' + ids, options)
+    fetch(EXTERNAL_API.spotify + 'artists?ids=' + ids, getOptions(token))
       .then(res => res.json())
       .catch(err => console.log(err))
   )
 }
 
-const getQuery = (query, platform = 'spotify') => {
-  switch(platform) {
-    case 'spotify':
-      return 'search?q=' + query + '&type=track,album,artist&market=FR'
-      break;
-  }
-}
+export const getOneElement = (id, type, token) => 
+  fetch(EXTERNAL_API.spotify + type + 's/' + id, getOptions(token))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
+// helpers
+
+const getQuery = query => 'search?q=' + query + '&type=track,album,artist&market=FR'
+
+
+const getOptions = token => { 
+  return { headers: { Authorization: 'Bearer ' + token } }
+}
