@@ -7,6 +7,7 @@ import TrackScreen from '../components/content/TrackScreen';
 import AlbumScreen from '../components/content/AlbumScreen';
 import FeedScreen from '../components/reviews/FeedScreen';
 import ReviewScreen from '../components/reviews/ReviewScreen';
+import ReviewForm from '../components/reviews/ReviewForm';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -14,6 +15,7 @@ export const FeedNavigator = () =>
   <Navigator headerMode='none'>
     <Screen name="Feed" component={FeedScreen} />
     <Screen name="Review" component={ReviewScreen} />
+    <Screen name="Form" component={ReviewForm} />
   </Navigator>
 
 export const ContentNavigator = () => 
