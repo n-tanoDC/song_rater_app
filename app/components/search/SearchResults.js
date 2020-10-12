@@ -8,9 +8,9 @@ export default ({ navigation, results }) => {
 
   console.log(tracks.next);
   
-  const jsxArtists = artists.items.map((item, index) => <ResultCard key={index} navigation={navigation} artist={item} />)
-  const jsxAlbums = albums.items.map((item, index) => <ResultCard key={index} navigation={navigation} artist={item} />)
-  const jsxTracks = tracks.items.map((item, index) => <ResultCard key={index} navigation={navigation} artist={item} />)
+  const jsxArtists = artists.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
+  const jsxAlbums = albums.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
+  const jsxTracks = tracks.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
 
   return (
     <List>
@@ -19,7 +19,6 @@ export default ({ navigation, results }) => {
       </ListItem>
       {jsxArtists}
       {artists.next ? <Button onPress={() => console.log('voir plus')}><Text>Voir plus</Text></Button> : null}
-      
       <ListItem itemDivider>
         <Text>Morceaux</Text>
       </ListItem>
