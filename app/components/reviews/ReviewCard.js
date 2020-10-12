@@ -32,14 +32,15 @@ export default ({ showUser, review }) => {
           <Text note>{created_at}</Text>
         </Body>
       </CardItem>
-      <CardItem>
+      {content ? 
+      (<CardItem>
         <Body>
           <Text style={styles.body}>{content}</Text>
         </Body>
-      </CardItem>
+      </CardItem>) : null}
       <View style={styles.footer}>
         <View style={styles.footerElement}>
-          <Image style={styles.footerImg} source={{ uri: data.album.images[0].url}} />
+          <Image style={styles.footerImg} source={{ uri: data.album.images[0].url }} />
           <View style={styles.footerText}>
             <Text style={styles.contentName}>{data.name}</Text>
             <Text style={styles.artistName}>{data.artists[0].name}</Text>
@@ -57,6 +58,7 @@ export default ({ showUser, review }) => {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
+    marginBottom: 20,
     overflow: 'hidden',
   },
   header: {
