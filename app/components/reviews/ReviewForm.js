@@ -1,6 +1,7 @@
-import { Container, Content, Form, Right, Left, Body, Header, Text, View, Title } from 'native-base';
+import { Container, Content, Form, View } from 'native-base';
 import React, { useContext, useState } from 'react';
-import SwipeableRating from 'react-native-swipeable-rating';import { Alert } from 'react-native';
+import SwipeableRating from 'react-native-swipeable-rating';
+import { Alert } from 'react-native';
 import { UserContext } from '../../App';
 import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
@@ -14,10 +15,6 @@ export default ({ navigation, route }) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
   const [rating, setRating] = useState(5)
-  
-  const postReview = () => {
-
-  }
 
   if (!user) {
     Alert.alert(
@@ -48,7 +45,14 @@ export default ({ navigation, route }) => {
       },
       body: JSON.stringify({ title, rating, content, element: element.id, element_type: element.type })
     })
-      .then(res => console.log(res))
+      .then(res => {
+        if (res.status === 201) {
+          res.json()
+        } else {
+          throw new Error('Une erreur s\'est produite.')
+        }
+      })
+      .then(data => navigation.replace('Review', { review: data }))
       .catch(err => console.log(err))
   }
 
