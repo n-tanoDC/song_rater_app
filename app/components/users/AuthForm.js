@@ -10,10 +10,10 @@ import { UserContext } from '../../App';
 import { login, register } from '../../data/user'
 
 export default () => {
-  const [username, setUsername] = useState('test');
-  const [email, setEmail] = useState('nicolas@mail.com');
-  const [password, setPassword] = useState('password');
-  const [passwordConf, setPasswordConf] = useState('Password')
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConf, setPasswordConf] = useState('')
   const [data, setData] = useState({})
   const [selected, setSelected] = useState(0);
   const isLogin = !selected;
@@ -49,13 +49,13 @@ export default () => {
 
   const emailInput = !isLogin ?
     <CustomInput 
-      icon='mail-outline'
+      icon='email'
       placeholder="Email"
       state={{ value: email, callback: setEmail }} /> : null
 
   const passwordConfInput = !isLogin ?
     <CustomInput 
-      icon='checkmark'
+      icon='lock-check'
       secure
       placeholder="Confirmer le mot de passe"
       state={{ value: passwordConf, callback: setPasswordConf }} /> : null
@@ -67,12 +67,12 @@ export default () => {
       </View>
       <View style={styles.form}>
         <CustomInput
-          icon='person-circle-outline'
+          icon='account'
           placeholder="Nom d'utilisateur"
           state={{ value: username, callback: setUsername }} />
         {emailInput}
         <CustomInput 
-          icon='lock-closed-outline'
+          icon='lock'
           placeholder="Mot de passe"
           secure
           state={{ value: password, callback: setPassword }} />
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     height: '100%',
     width: '100%',
+    backgroundColor: '#F6F6F6',
     position: 'relative',
     padding: 10,
   },
