@@ -17,8 +17,8 @@ export const login = (setUser, data) => {
       }
     })
     .then(data => {
-      const { user, token, reviews } = data;
-      setUser({ ...user, token, reviews })
+      const { user, token } = data;
+      setUser({ ...user, token })
     })
     .catch(err => {
       switch (err.message) {

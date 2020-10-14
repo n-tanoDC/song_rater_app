@@ -1,11 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
-import { Text, Content, Container, Thumbnail, Grid, Col, Row } from 'native-base';
+import { StyleSheet, View, Text, Image } from 'react-native';
 
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
-import FollowButton from '../common/FollowButton';
 import ReviewsList from '../reviews/ReviewsList';
 import FavsList from './FavsList';
 
@@ -18,63 +16,68 @@ export default ({ user }) => {
   const navigation = useNavigation()
 
   const [selected, setSelected] = useState(0);
-  const [following, setFollowing] = useState(false);
 
   const visitor = user !== userContext.user;
 
-  const button = visitor ?
-    <FollowButton state={{ following, setFollowing }} /> :
-    <ButtonIcon onPress={() => logout(userContext.setUser)} name='ellipsis-horizontal' color='#3A3A3A' />
-    
+  const button = !visitor ?
+    <ButtonIcon onPress={() => logout(userContext.setUser)} name='ellipsis-horizontal' color='#3A3A3A' /> : null
+  
   return (
-    <Content padder>
-      <Grid>
-        <Row>
-          <Col style={styles.avatarContainer}>
-            <Thumbnail large source={{ 
-              uri:  'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' 
-              }} />
-          </Col>
-          <Col>
-            <Row style={styles.spacedRow}>
-                <Text style={{ fontWeight: 'bold'}}>{user.username}</Text>
-                {button}
-            </Row>
-            <Row>
-              <Text style={{ fontSize: 14 }}>{user.description}</Text>
-            </Row>
-          </Col>
-        </Row>
-        <Row style={styles.spacedRow}>
-          <Text style={styles.stats}>X Critiques</Text>
-          <Text style={styles.stats}>X Abonnés</Text>
-          <Text style={styles.stats}>X Abonnements</Text>
-        </Row>
-      </Grid>
-      <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
-      {!selected ? 
-        <ReviewsList reviews={user.reviews ? user.reviews : []}/> : 
-        <FavsList user={user} navigation={navigation} />}
-    </Content>
+    <>
+      <View style={styles.header}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.username}>{user.username}</Text>
+          <Text style={styles.description}>{user.description}</Text>
+          <View style={styles.buttonContainer}>
+            {button}
+          </View>
+        </View>
+      </View>
+      <View style={styles.content}>
+        <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
+        {!selected ? 
+          <ReviewsList user={user}/> : 
+          <FavsList user={user} navigation={navigation} />}
+      </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  avatarContainer: { 
-    marginTop: 10, 
-    width: '30%', 
-    alignItems: 'center'
+  header: {
+    height: '15%',
+    flexDirection: 'row',
   },
-  spacedRow: {
-    marginVertical: 10,
-    height: 'auto',
-    justifyContent: 'space-between'
+  content: {
+    height: '85%'
   },
-  centeredRow: {
+  imageContainer: {
     justifyContent: 'center'
   },
-  stats: { 
-    fontSize: 14,
-    fontWeight: 'bold'
+  image: {
+    height: 80,
+    width: 80,
+    borderRadius: 100,
+    aspectRatio: 1
+  }, 
+  textContainer: {
+    justifyContent: 'space-evenly',
+    flex: 5,
+    paddingHorizontal: 10
   },
+  username: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 14,
+  },
+  buttonContainer: {
+    position: "absolute",
+    right: 0,
+    top: 0
+  }
 })

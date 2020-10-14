@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, Text } from 'react-native';
 import { getReviews } from '../../data/reviews';
 import ReviewCard from './ReviewCard';
 
-export default ({ showUser }) => {
+export default ({ showUser, user }) => {
   const loadData = () => {
-    const promise = next ? getReviews(next) : getReviews()
+    const promise = next ? getReviews(user, next) : getReviews(user)
     promise
       .then(res => {
         const data = next ? [...reviews, ...res.reviews] : res.reviews
@@ -17,14 +17,14 @@ export default ({ showUser }) => {
 
   useEffect(() => loadData(), [])
 
-  const [reviews, setReviews] = useState(null)
+  const [reviews, setReviews] = useState([])
   const [next, setNext] = useState(null)
 
   const renderItem = ({ item }) => <ReviewCard showUser={showUser} review={item} />
 
   const onEndReached = () => next ? loadData() : null;
   
-  return (
+  return reviews.length > 0 ? (
     <FlatList
       style={styles.list}
       data={reviews}
@@ -33,7 +33,7 @@ export default ({ showUser }) => {
       onEndReached={() => onEndReached()}
       onEndReachedThreshold={0.5}
     />
-  )
+  ) : (<Text>Aucune critique.</Text>)
 };
 
 const styles = StyleSheet.create({
