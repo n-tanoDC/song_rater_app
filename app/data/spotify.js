@@ -24,15 +24,6 @@ export const search = (query, token) => {
   )
 }
 
-export const getFavorites = (favorites, token) => {
-  const ids = favorites.join();
-  return (
-    fetch(EXTERNAL_API.spotify + 'artists?ids=' + ids, getOptions(token))
-      .then(res => res.json())
-      .catch(err => console.log(err))
-  )
-}
-
 export const getOneElement = (id, type, token) => 
   fetch(EXTERNAL_API.spotify + type + 's/' + id, getOptions(token))
     .then(res => res.json())
@@ -40,7 +31,7 @@ export const getOneElement = (id, type, token) =>
 
 // helpers
 
-const getQuery = query => 'search?q=' + query + '&type=track,album,artist&market=FR'
+const getQuery = query => 'search?q=' + query + '&type=track,album&market=FR'
 
 
 const getOptions = token => { 

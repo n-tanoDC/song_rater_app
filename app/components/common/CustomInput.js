@@ -1,21 +1,33 @@
-import { Input, Item, Icon, View } from 'native-base';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { Icon } from 'native-base';
 
-export default ({ secure, placeholder, icon, state, multiline }) => {
+export default (props) => {
+  const { 
+    color = '#9E00FF',
+    handleSubmit,
+    autoFocus,
+    secure,
+    placeholder,
+    icon,
+    state,
+    multiline } = props;
+
   let iconContainer = null;
 
   if (icon) {
     iconContainer = (
-    <View style={styles.iconContainer}>
-      <Icon style={styles.icon} name={icon} />
+    <View style={{...styles.iconContainer, backgroundColor: color}}>
+      <Icon style={styles.icon} type='MaterialCommunityIcons' name={icon} />
     </View>
     )
   }
 
   return (
-    <Item regular style={styles.inputContainer}>
-      <Input
+    <View style={styles.inputContainer}>
+      <TextInput
+        onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
+        autoFocus={autoFocus}
         multiline={multiline}
         secureTextEntry={secure}
         style={styles.input}
@@ -23,14 +35,26 @@ export default ({ secure, placeholder, icon, state, multiline }) => {
         onChangeText={state.callback}
         placeholder={placeholder}/>
       {iconContainer}
-    </Item>
+    </View>
   )
   
 }
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    flexDirection: 'row',
+    margin: 10,
+    overflow: "hidden",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E9E9E9'
+  },
+  input: {
+    backgroundColor: '#FDFDFD',
+    paddingLeft: 10,
+    flex: 1
+  },
   iconContainer: {
-    backgroundColor: '#9E00FF',
     height: 50,
     width: 50,
     justifyContent: "center",
@@ -39,10 +63,4 @@ const styles = StyleSheet.create({
   icon: {
     color: '#FDFDFD'
   }, 
-  inputContainer: {
-    paddingLeft: 10,
-    marginBottom: 50,
-    overflow: "hidden",
-    borderRadius: 10
-  }
 })

@@ -1,33 +1,23 @@
 import React from 'react';
-import { List, ListItem, Text, Button } from 'native-base';
+import { FlatList } from 'react-native';
+
 import ResultCard from './ResultCard';
 
-export default ({ navigation, results }) => {
-  
-  const { artists, albums, tracks } = results;
+export default ({ results }) => {
+    
+  const renderItem = ({ item }) => <ResultCard result={item} />
 
-  console.log(tracks.next);
-  
-  const jsxArtists = artists.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
-  const jsxAlbums = albums.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
-  const jsxTracks = tracks.items.map((item, index) => <ResultCard key={index} navigation={navigation} element={item} />)
+  const onEndReached = () => console.log('end reached');
 
   return (
-    <List>
-      <ListItem itemDivider>
-        <Text>Artistes</Text>
-      </ListItem>
-      {jsxArtists}
-      {artists.next ? <Button onPress={() => console.log('voir plus')}><Text>Voir plus</Text></Button> : null}
-      <ListItem itemDivider>
-        <Text>Morceaux</Text>
-      </ListItem>
-      {jsxTracks}
-      <ListItem itemDivider>
-        <Text>Albums</Text>
-      </ListItem>
-      {jsxAlbums}
-    </List>
+    <FlatList
+      style={{ marginTop: 20, width: '100%' }}
+      data={results.items}
+      renderItem={renderItem}
+      keyExtractor={item => item.id}
+      onEndReached={() => onEndReached()}
+      onEndReachedThreshold={0.5}
+    />
   )
 };
   
