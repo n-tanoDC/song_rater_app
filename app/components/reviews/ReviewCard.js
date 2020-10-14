@@ -1,10 +1,10 @@
-import { Card, CardItem, Icon, Text, Body, View, Spinner, Left, Thumbnail } from 'native-base';
-import React, { useContext, useEffect, useState } from 'react';
-import { Image, StyleSheet } from 'react-native';
+import { Icon, Spinner } from 'native-base';
+import React, { memo, useContext, useEffect, useState } from 'react';
+import { Image, StyleSheet, View, Text } from 'react-native';
 import { SpotifyContext } from '../../App';
 import { getOneElement } from '../../data/spotify';
 
-export default ({ showUser, review }) => {
+const ReviewCard = ({ showUser, review }) => {
   useEffect(() => {
     getOneElement(element, element_type, token)
       .then(res => loadData(res))
@@ -19,25 +19,21 @@ export default ({ showUser, review }) => {
   }
 
   const thumbnail = showUser? (
-    <Left>
-      <Thumbnail small source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />
-    </Left>) : null
+      <Image small style={styles.avatar} source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />) : null
 
   return (
-    <Card style={styles.card}>
-      <CardItem style={styles.header}>
+    <View style={styles.card}>
+      <View style={styles.header}>
+        <View style={styles.headerText}>
+          <Text style={styles.title}>"{title}"</Text>
+          <Text style={styles.date}>{created_at}</Text>
+        </View>
         {thumbnail}
-        <Body style={styles.headerText}>
-          <Text style={styles.bold}>{title}</Text>
-          <Text note>{created_at}</Text>
-        </Body>
-      </CardItem>
+      </View>
       {content ? 
-      (<CardItem>
-        <Body>
+      (<View>
           <Text style={styles.body}>{content}</Text>
-        </Body>
-      </CardItem>) : null}
+      </View>) : null}
       <View style={styles.footer}>
         <View style={styles.footerElement}>
           <Image style={styles.footerImg} source={{ uri: data.album.images[0].url }} />
@@ -51,26 +47,44 @@ export default ({ showUser, review }) => {
           <Icon name='star' style={styles.ratingIcon} /> 
         </View>
       </View>
-    </Card>
+    </View>
   )
 };
 
+export default memo(ReviewCard);
+
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 10,
     marginBottom: 20,
-    overflow: 'hidden',
+    overflow:'hidden',
+    borderRadius: 10,
+    elevation: 5,
+    backgroundColor: '#FDFDFD',
+
   },
   header: {
     backgroundColor: '#F9F9F9',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+  avatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 100
   },
   headerText: {
     flex: 4,
     justifyContent: 'center',
     textAlign: "left",
   },
-  bold: {
+  title: {
     fontWeight: 'bold',
+  },
+  date: {
+    fontSize: 12,
+    fontStyle: 'italic',
+    color: 'grey'
   },
   ratingContainer: { 
     padding: 10,
@@ -87,6 +101,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 14,
+    padding: 10
   },
   footer: { 
     flexDirection: 'row', 

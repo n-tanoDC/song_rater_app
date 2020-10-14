@@ -17,9 +17,7 @@ export default ({ user }) => {
 
   const [selected, setSelected] = useState(0);
 
-  const visitor = user !== userContext.user;
-
-  const button = !visitor ?
+  const button = user === userContext.user ?
     <ButtonIcon onPress={() => logout(userContext.setUser)} name='ellipsis-horizontal' color='#3A3A3A' /> : null
   
   return (

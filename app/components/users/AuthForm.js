@@ -1,11 +1,13 @@
-import { Form, Toast, Content } from 'native-base';
 import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Toast } from 'native-base';
+
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import CustomSegment from '../common/CustomSegment';
+
 import { UserContext } from '../../App';
 import { login, register } from '../../data/user'
-import { StyleSheet, View } from 'react-native';
 
 export default () => {
   const [username, setUsername] = useState('test');
@@ -59,11 +61,11 @@ export default () => {
       state={{ value: passwordConf, callback: setPasswordConf }} /> : null
 
   return (    
-    <Content contentContainerStyle={styles.contentContainer} padder>
+    <View style={styles.contentContainer}>
       <View style={styles.segmentContainer}>
         <CustomSegment data={['Se connecter', 'Créer un compte']} state={{ selected, setSelected }}/>
       </View>
-      <Form style={styles.form}>
+      <View style={styles.form}>
         <CustomInput
           icon='person-circle-outline'
           placeholder="Nom d'utilisateur"
@@ -79,8 +81,8 @@ export default () => {
           color='#FFB906'
           onPress={handleSubmit}
           text={isLogin ? 'Se connecter' : 'Créer un compte'} />
-      </Form>
-    </Content>
+      </View>
+    </View>
   )
 };
 
@@ -89,6 +91,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     position: 'relative',
+    padding: 10,
   },
   segmentContainer: {
     height: '10%'
