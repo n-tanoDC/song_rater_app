@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Toast } from 'native-base';
 
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import CustomSegment from '../common/CustomSegment';
+import { login, register } from '../../data/user'
+import { showToast } from '../../functions';
 
 import { UserContext } from '../../App';
-import { login, register } from '../../data/user'
 
 export default () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('')
+
   const [data, setData] = useState({})
   const [selected, setSelected] = useState(0);
   const isLogin = !selected;
@@ -38,12 +39,23 @@ export default () => {
     return { valid: true };
   }
 
+  
+
   const handleSubmit = () => {
     const { valid, message } = formValidator()
     if (valid) {
-      isLogin ? login(setUser, data) : register(setUser, data);
+      const authFunction = isLogin ? login : register;
+      authFunction(data)
+        .then(res => {
+          if (res instanceof Error) {
+            throw res
+          }
+          const { user, token } = res;
+          setUser({ ...user, token })
+        })
+        .catch(err => showToast(err.message))
     } else {
-      Toast.show({ text: message, type: 'warning' })
+      showToast(message);
     }
   }
 
