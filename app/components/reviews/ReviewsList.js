@@ -6,7 +6,7 @@ import { getReviews } from '../../data/reviews';
 import Loader from '../common/Loader';
 
 export default ({ showUser, user }) => {
-  const loadData = () => {
+  const loadReviews = () => {
     const promise = next ? getReviews(user, next) : getReviews(user)
     promise
       .then(res => {
@@ -17,14 +17,14 @@ export default ({ showUser, user }) => {
       .catch(err => console.log(err))
   }
 
-  useEffect(() => loadData(), [])
+  useEffect(() => loadReviews(), [])
 
   const [reviews, setReviews] = useState([])
   const [next, setNext] = useState(null)
 
   const renderItem = ({ item }) => <ReviewCard showUser={showUser} review={item} />
 
-  const onEndReached = () => next ? loadData() : null;
+  const onEndReached = () => next ? loadReviews() : null;
   
   return reviews.length > 0 ? (
     <FlatList

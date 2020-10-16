@@ -16,10 +16,13 @@ export const getReviews = (user, page = 1) => {
 export const postReview = (body, token) =>
   fetch(API_URL + 'reviews?secret_token=' + token, getPostOptions(body))
     .then(res => {
-      if (res.status === 201) {
-        return res.json()
-      } else {
-        throw new Error('Une erreur s\'est produite.')
+      switch(res.status) {
+        case 201:
+          return res.json();
+        case 409:
+          return new Error('Vous avez déjà publié une critique sur ce contenu.')
+        default:
+          return new Error('Une erreur s\'est produite. Réessayer ultérieurment.')
       }
     })
     .catch(err => console.log(err))

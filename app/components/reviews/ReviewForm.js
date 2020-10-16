@@ -7,7 +7,7 @@ import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import MessageView from '../common/MessageView';
 
-import { getFormattedArtists } from '../../functions';
+import { getFormattedArtists, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
 
 export default ({ element, user, setReview }) => {
@@ -27,8 +27,14 @@ export default ({ element, user, setReview }) => {
       element: { id, element_type: type, name, artists, image }
     }
     postReview(body, user.token)
-      .then(res => setReview(res))
-      .catch(err => console.log(err))
+      .then(res => {
+        if (res instanceof Error) {
+          throw res
+        }
+        setReview(res)
+        showToast('Publication réussie.')
+      })
+      .catch(err => showToast(err.message))
   }
 
   console.log(user);
