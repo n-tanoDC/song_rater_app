@@ -1,6 +1,7 @@
 import { TOKENS, EXTERNAL_API } from '../config';
+import { getAuthOptions, getQuery } from './helpers';
 
-export const generateToken = setter => {
+export const generateToken = () => {
   const options = {
     method: 'POST',
     headers: {
@@ -10,30 +11,25 @@ export const generateToken = setter => {
     body: (encodeURIComponent('grant_type') + '=' + encodeURIComponent('client_credentials')),
   };
 
-  fetch(TOKENS.spotify.url, options)
-    .then(res => res.json())
-    .then(data => setter(data.access_token))
-    .catch(error => console.log('error', error));
-}
-
-export const search = (query, token) => {
   return (
-    fetch(EXTERNAL_API.spotify + getQuery(query), getOptions(token))
-    .then(res => res.json())
-    .catch(err => console.log(err))
+    fetch(TOKENS.spotify.url, options)
+      .then(res => res.json())
+      .catch(error => console.log('error', error))
   )
 }
 
-export const getOneElement = (id, type, token) => 
-  fetch(EXTERNAL_API.spotify + type + 's/' + id, getOptions(token))
+export const search = (query, token) => 
+  fetch(EXTERNAL_API.spotify + getQuery(query), getAuthOptions(token))
+  .then(res => res.json())
+  .catch(err => console.log(err))
+
+export const loadMore = (url, token) => 
+  fetch(url, getAuthOptions(token))
     .then(res => res.json())
     .catch(err => console.log(err))
 
-// helpers
 
-const getQuery = query => 'search?q=' + query + '&type=track,album&market=FR'
-
-
-const getOptions = token => { 
-  return { headers: { Authorization: 'Bearer ' + token } }
-}
+export const getOneElement = (id, type, token) => 
+  fetch(EXTERNAL_API.spotify + type + 's/' + id, getAuthOptions(token))
+    .then(res => res.json())
+    .catch(err => console.log(err))

@@ -1,11 +1,11 @@
 import { Toast } from 'native-base';
-import { Alert } from 'react-native';
 import { API_URL } from '../config';
+import { getPostOptions } from './helpers';
 
 // Authentication functions
 
 export const login = (setUser, data) => {
-  fetch(API_URL + 'auth/login', getReqOptions(data))
+  fetch(API_URL + 'auth/login', getPostOptions(data))
     .then(res => {
       switch (res.status) {
         case 200: 
@@ -102,14 +102,4 @@ export const addToFavorites = (element_id, userContext) => {
       } 
     })
     .catch(err => console.log(err))
-}
-
-const getReqOptions = body => {
-  return {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  }
 }
