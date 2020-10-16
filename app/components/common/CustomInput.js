@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base';
 
 export default (props) => {
   const { 
     color = '#9E00FF',
     handleSubmit,
+    onPress,
     autoFocus,
     secure,
     placeholder,
@@ -17,20 +18,26 @@ export default (props) => {
 
   if (icon) {
     iconContainer = (
-    <View style={{...styles.iconContainer, backgroundColor: color}}>
+    <TouchableOpacity 
+      onPress={onPress ? () => onPress() : null}
+      style={{...styles.iconContainer, backgroundColor: color}}>
       <Icon style={styles.icon} type='MaterialCommunityIcons' name={icon} />
-    </View>
+    </TouchableOpacity>
     )
   }
 
+  const containerStyle = multiline ? { ...styles.inputContainer, flex: 1, minHeight: 100, } : styles.inputContainer;
+  const inputStyle = multiline ? { ...styles.input, textAlignVertical: 'top' } : styles.input;
+
   return (
-    <View style={styles.inputContainer}>
+    <View style={containerStyle}>
       <TextInput
         onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
+        numberOfLines={multiline ? 5 : 1}
         autoFocus={autoFocus}
         multiline={multiline}
         secureTextEntry={secure}
-        style={styles.input}
+        style={inputStyle}
         value={state.value}
         onChangeText={state.callback}
         placeholder={placeholder}/>
@@ -51,7 +58,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#FDFDFD',
-    paddingLeft: 10,
+    padding: 10,
     flex: 1
   },
   iconContainer: {

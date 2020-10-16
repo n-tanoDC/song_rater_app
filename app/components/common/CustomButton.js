@@ -1,14 +1,13 @@
-import { Button, Text } from 'native-base';
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { color } from 'react-native-reanimated';
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
-export default ({ text, color, onPress }) => {
+export default ({ disabled, text, color = '#FFB906', onPress }) => {
+  const buttonColor = disabled ? 'grey' : color;
   return (
     <TouchableOpacity
-      style={styles.button}
+      disabled={disabled}
+      style={{ ...styles.button, backgroundColor: buttonColor}}
       onPress={() => onPress()}
-      transparent={!color}
       >
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
@@ -17,10 +16,9 @@ export default ({ text, color, onPress }) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#FFB906',
     alignSelf: 'flex-end', 
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     borderRadius: 20,
     elevation: 2
   },
