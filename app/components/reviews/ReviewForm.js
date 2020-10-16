@@ -5,6 +5,7 @@ import SwipeableRating from 'react-native-swipeable-rating';
 
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
+import MessageView from '../common/MessageView';
 
 import { getFormattedArtists } from '../../functions';
 import { postReview } from '../../data/reviews';
@@ -30,7 +31,9 @@ export default ({ element, user, setReview }) => {
       .catch(err => console.log(err))
   }
 
-  return (
+  console.log(user);
+
+  return !user ? (<MessageView message='Connectez-vous pour publier une critique.' />) : (
     <View style={styles.form}>
       <View style={styles.ratingContainer}>
         <View style={styles.ratingDisplay}>

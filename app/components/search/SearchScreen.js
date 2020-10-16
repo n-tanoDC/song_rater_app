@@ -4,10 +4,11 @@ import { SpotifyContext } from '../../App';
 import { loadMore, search } from '../../data/spotify';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
+import Loader from '../common/Loader';
 import SearchResults from './SearchResults';
 
 export default () => {
-  const [results, setResults] = useState(false);
+  const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false)
   const [next, setNext] = useState(null)
 
@@ -17,6 +18,7 @@ export default () => {
   const { token } = useContext(SpotifyContext)
 
   const handleSubmit = () => {
+    setResults(null)
     setLoading(true);
     search(value, token)
       .then(res => {
@@ -30,6 +32,7 @@ export default () => {
           tracks: res.tracks.next
         })
       })
+      .then(() => setLoading(false))
       .catch(err => console.log(err))
   }
 
@@ -46,7 +49,7 @@ export default () => {
     }
   }
 
-  let content = loading ? (<ActivityIndicator />) : (<Text>Veuillez effectuer une recherche.</Text>)
+  let content = loading ? (<Loader />) : (<Text>Veuillez effectuer une recherche.</Text>)
   
   if (results) {
     content = (

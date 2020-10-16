@@ -1,3 +1,5 @@
+import { ToastAndroid } from "react-native";
+
 // return formatted string of artists from an Array (provided in the Spotify API response object)
 export const getArtists = artists => {
   let artistsNames = '';

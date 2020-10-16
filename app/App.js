@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import React, { createContext, useEffect, useState } from 'react';
-import { Text } from 'react-native';
-import TabNavigator from './navigation/TabNavigator'
 
+import TabNavigator from './navigation/TabNavigator'
+import Loader from './components/common/Loader';
 import { generateToken } from './data/spotify'
 
 export const UserContext = createContext();
@@ -19,7 +19,7 @@ export default () => {
   const [token, setToken] = useState(null)
 
   if (!token) {
-    return (<Text>Loading</Text>)
+    return (<Loader />)
   }
 
   return (
