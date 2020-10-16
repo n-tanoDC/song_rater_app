@@ -1,33 +1,66 @@
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { SpotifyContext } from '../../App';
-import { search } from '../../data/spotify';
+import { loadMore, search } from '../../data/spotify';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
 import SearchResults from './SearchResults';
 
 export default () => {
-  const [results, setResults] = useState(null);
-  const [selected, setSelected] = useState(0)
+  const [results, setResults] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [next, setNext] = useState(null)
+
+  const [selected, setSelected] = useState(0);
   const [value, setValue] = useState('fugees');
 
-  const spotify = useContext(SpotifyContext)
+  const { token } = useContext(SpotifyContext)
 
   const handleSubmit = () => {
-    search(value, spotify.token)
+    setLoading(true);
+    search(value, token)
       .then(res => {
+        const albums = res.albums.items.filter(album => album.album_type === 'album')
         setResults({
-          albums: res.albums,
-          tracks: res.tracks,
+          albums: albums,
+          tracks: res.tracks.items,
+        })
+        setNext({
+          albums: res.albums.next,
+          tracks: res.tracks.next
         })
       })
       .catch(err => console.log(err))
+  }
+
+  const onEndReached = () => {
+    const url = selected ? next.albums : next.tracks;
+    const type = selected ? 'albums' : 'tracks';
+    if (url) {
+      loadMore(url, token)
+        .then(res => {
+          setResults({ ...results, [type]: [...results[type], ...res[type].items]})
+          setNext({ ...next, [type]: res[type].next })
+        })
+        .catch(err => console.log(err))
+    }
+  }
+
+  let content = loading ? (<ActivityIndicator />) : (<Text>Veuillez effectuer une recherche.</Text>)
+  
+  if (results) {
+    content = (
+      <SearchResults 
+        results={selected ? results.albums : results.tracks}
+        onEndReached={onEndReached} />
+    )
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <CustomInput 
         autoFocus
+        onPress={handleSubmit}
         handleSubmit={handleSubmit}
         color='#FFB906'
         icon='magnify'
@@ -35,8 +68,8 @@ export default () => {
         state={{ value, callback: setValue }}
       />
       <CustomSegment data={['Morceaux', 'Albums']} state={{ selected, setSelected }} />
-      <View style={styles.resultsContainer}>
-        {results ? <SearchResults results={selected ? results.albums : results.tracks} /> : <Text>Veuillez effectuer une recherche.</Text> }
+      <View style={styles.content}>
+        {content}
       </View>
     </SafeAreaView>
   )
@@ -50,7 +83,7 @@ const styles = StyleSheet.create({
     width: '100%', 
     overflow: 'scroll'
   },
-  resultsContainer: {
+  content: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'

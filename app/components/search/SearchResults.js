@@ -3,20 +3,18 @@ import { FlatList } from 'react-native';
 
 import ResultCard from './ResultCard';
 
-export default ({ results }) => {
-    
-  const renderItem = ({ item }) => <ResultCard result={item} />
+export default ({ results, onEndReached }) => {  
 
-  const onEndReached = () => console.log('end reached');
+  const renderItem = ({ item }) => <ResultCard result={item} />
 
   return (
     <FlatList
       style={{ marginTop: 20, width: '100%' }}
-      data={results.items}
+      data={results}
       renderItem={renderItem}
       keyExtractor={item => item.id}
       onEndReached={() => onEndReached()}
-      onEndReachedThreshold={0.5}
+      onEndReachedThreshold={2}
     />
   )
 };

@@ -1,21 +1,19 @@
-import React from 'react';
-import { StyleSheet, View, Image, Text, ImageBackground } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default ({ result }) => {
+import { getArtists } from '../../functions';
 
-  const getArtists = artists => {
-    let artistsNames = '';
-    for (const [index, artist] of artists.entries()) {
-      const suffix = index < artists.length - 1 ? ', ' : '';
-      artistsNames += (artist.name + suffix)
-    }
-    return artistsNames;
-  }
+export default memo(({ result }) => {
+
+  const navigation = useNavigation()
 
   const image = result.type === 'track' ? result.album.images[0].url : result.images[0].url;
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity 
+      onPress={() => navigation.navigate('Feed', { screen: 'Review', params: { element: result } })}
+      style={styles.card}>
       <View style={styles.imageContainer}>
         <ImageBackground source={{ uri: image }} style={styles.image} />
       </View>
@@ -23,9 +21,9 @@ export default ({ result }) => {
         <Text numberOfLines={1} style={styles.title}>{result.name}</Text>
         <Text numberOfLines={1} style={styles.artist}>{getArtists(result.artists)}</Text>
       </View>
-    </View> 
+    </TouchableOpacity> 
   )
-};
+});
 
 const styles = StyleSheet.create({
   card: {
