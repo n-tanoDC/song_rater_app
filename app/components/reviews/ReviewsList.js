@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text } from 'react-native';
-import { getReviews } from '../../data/reviews';
+
 import ReviewCard from './ReviewCard';
+import { getReviews } from '../../data/reviews';
 
 export default ({ showUser, user }) => {
   const loadData = () => {

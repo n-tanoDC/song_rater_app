@@ -1,23 +1,12 @@
-import { Icon, Spinner } from 'native-base';
-import React, { memo, useContext, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import { Image, StyleSheet, View, Text } from 'react-native';
-import { SpotifyContext } from '../../App';
-import { getOneElement } from '../../data/spotify';
+import { Icon } from 'native-base';
+
+import { getArtists } from '../../functions';
 
 const ReviewCard = ({ showUser, review }) => {
-  useEffect(() => {
-    getOneElement(element, element_type, token)
-      .then(res => loadData(res))
-      .catch(err => console.log(err))
-  }, []);
-  const [data, loadData] = useState(null);
-  const { token } = useContext(SpotifyContext);
-  const { title, content, element, element_type, rating, created_at } = review;
 
-  if (!data) {
-    return <Spinner />
-  }
-
+  const { title, content, element, rating, created_at } = review;
   const thumbnail = showUser? (
       <Image small style={styles.avatar} source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />) : null
 
@@ -36,10 +25,10 @@ const ReviewCard = ({ showUser, review }) => {
       </View>) : null}
       <View style={styles.footer}>
         <View style={styles.footerElement}>
-          <Image style={styles.footerImg} source={{ uri: data.album.images[0].url }} />
+          <Image style={styles.footerImg} source={{ uri: element.image }} />
           <View style={styles.footerText}>
-            <Text style={styles.contentName}>{data.name}</Text>
-            <Text style={styles.artistName}>{data.artists[0].name}</Text>
+            <Text style={styles.contentName}>{element.name}</Text>
+            <Text style={styles.artistName}>{getArtists(element.artists)}</Text>
           </View>
         </View>
         <View style={styles.ratingContainer}>

@@ -1,95 +1,88 @@
-import { Container, Content, Form, View } from 'native-base';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
 import SwipeableRating from 'react-native-swipeable-rating';
-import { Alert } from 'react-native';
-import { UserContext } from '../../App';
-import CustomButton from '../common/CustomButton';
+
 import CustomInput from '../common/CustomInput';
-import { API_URL } from '../../config';
+import CustomButton from '../common/CustomButton';
 
-export default ({ navigation, route }) => {
+import { getFormattedArtists } from '../../functions';
+import { postReview } from '../../data/reviews';
 
-  const { element } = route.params;
-  const { user } = useContext(UserContext);
+export default ({ element, user, setReview }) => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [rating, setRating] = useState(5);
 
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [rating, setRating] = useState(5)
-
-  if (!user) {
-    Alert.alert(
-      'Connexion nécessaire',
-      'Veuillez-vous connecter pour publier une critique.',
-      [
-        {
-          text: 'Pas maintenant',
-          onPress: () => navigation.goBack()
-        },
-        {
-          text: 'Me connecter',
-          onPress: () => navigation.navigate('User')
-        }
-      ],
-      { cancelable: false }
-    )
-    return <></>
-  }
-
+  const { id, type, name } = element;
+  const image = type === 'track' ? element.album.images[0].url : element.images[0].url;
+  const artists = getFormattedArtists(element.artists);
+    
   const handleSubmit = () => {
-    const body = { title, rating, content, element: element.id }
-    console.log(body);
-    fetch(API_URL + 'review?secret_token=' + user.token, { 
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title, rating, content, element: element.id, element_type: element.type })
-    })
-      .then(res => {
-        if (res.status === 201) {
-          res.json()
-        } else {
-          throw new Error('Une erreur s\'est produite.')
-        }
-      })
-      .then(data => navigation.replace('Review', { review: data }))
+    const body = { 
+      title, 
+      content, 
+      rating, 
+      element: { id, element_type: type, name, artists, image }
+    }
+    postReview(body, user.token)
+      .then(res => setReview(res))
       .catch(err => console.log(err))
   }
 
   return (
-    <Container>
-      <Content padder>
-      <Text>{element.name}</Text>
-      <View style={{ alignItems: 'center' }}>
+    <View style={styles.form}>
+      <View style={styles.ratingContainer}>
+        <View style={styles.ratingDisplay}>
+          <Text style={styles.ratingText}>{rating}/10</Text>
+        </View>
         <SwipeableRating
+          color='#FFB906'
+          emptyColor='#FFB906'
+          style={styles.rating}
           rating={rating}
           minRating={1}
           maxRating={10}
-          size={28}
-          gap={1}
-          gap={4}
+          size={24}
           onPress={input => setRating(input)}
         />
       </View>
-        <Form>
-          <CustomInput 
-            placeholder='Titre'
-            state={{ value: title, callback: setTitle }}
-          />
-          
-          <CustomInput 
-            placeholder='Rédigez votre critique...'
-            multiline
-            state={{ value: content, callback: setContent }}
-          />
-
-          <CustomButton 
-            color='#FFB906'
-            onPress={() => handleSubmit()}
-            text='Publier'
-          />
-        </Form>
-      </Content>
-    </Container>
+      <CustomInput 
+        placeholder='Titre'
+        state={{ value: title, callback: setTitle }} />
+      <CustomInput 
+        placeholder='Rédiger une critique...'
+        state={{ value: content, callback: setContent }}
+        multiline
+        />
+      <CustomButton text='Publier' disabled={!user} color='#9E00FF' onPress={() => handleSubmit()} />
+    </View>
   )
 };
+
+const styles = StyleSheet.create({
+  form: {
+    padding: 10,
+    flex: 1
+  },
+  ratingContainer: {
+    marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center'
+  },
+  rating: {
+    justifyContent: 'center',
+    flex: 0
+  },
+  ratingDisplay: {
+    backgroundColor: '#FFB906',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20
+  },
+  ratingText: {
+    color: '#FDFDFD',
+    fontWeight: 'bold',
+  }
+})
