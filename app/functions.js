@@ -20,3 +20,11 @@ export const showToast = message => {
   ToastAndroid.show(message, ToastAndroid.SHORT)
 }
 
+// return a string corresponding to the right url to use to display an element cover
+export const getCover = element => {
+  if (element.image) {
+    return element.image;
+  } 
+  return element.type === 'track' ? element.album.images[0].url : element.images[0].url;
+}
+

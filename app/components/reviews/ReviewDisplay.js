@@ -1,0 +1,65 @@
+import React from 'react';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+
+export default ({ review }) => {
+  return (
+    <ScrollView style={styles.container}>
+      <View style={styles.titleContainer}>
+        <Text numberOfLines={2} style={styles.title}>{review.title}</Text>
+        <View style={styles.ratingContainer}>
+          <Text style={styles.rating}>{review.rating}/10</Text>
+        </View>
+      </View>
+      <View style={styles.contentContainer}>
+        <Text style={styles.content}>{review.content}</Text>
+      </View>
+    </ScrollView>
+  )
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#FDFDFD',
+    flex: 1
+  },
+  titleContainer: {
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#F9F9F9',
+    borderTopWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 20,
+    width: '100%',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    width: '75%',
+    paddingVertical: 5,
+  },
+  ratingContainer: {
+    alignItems: 'center',
+    backgroundColor: '#FFB906',
+    borderRadius: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    width: '20%',
+  },
+  rating: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FDFDFD'
+  },
+  contentContainer: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderColor: '#F9F9F9'
+  },
+  content: {
+    textAlign: 'justify'
+  }
+
+})

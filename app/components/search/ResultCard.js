@@ -12,7 +12,7 @@ export default memo(({ result }) => {
 
   return (
     <TouchableOpacity 
-      onPress={() => navigation.navigate('Feed', { screen: 'Review', params: { element: result } })}
+      onPress={() => navigation.navigate('Feed', { screen: 'Review', params: { element: result, reviewToShow: null } })}
       style={styles.card}>
       <View style={styles.imageContainer}>
         <ImageBackground source={{ uri: image }} style={styles.image} />

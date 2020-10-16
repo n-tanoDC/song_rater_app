@@ -8,19 +8,25 @@ import CustomButton from './CustomButton';
 import UserAvatar from './UserAvatar';
 import ButtonIcon from './ButtonIcon';
 import { getArtists } from '../../functions';
+import ContentSection from './ContentSection';
 
-export default ({ user, element }) => {
+export default ({ user, element, form }) => {
   const navigation = useNavigation();
 
   const userSection = user ? 
     <View style={styles.user}>
-      <Text style={styles.username}>username</Text>
+      <Text style={styles.username}>{user.username}</Text>
       <UserAvatar user={user} small />
     </View>
     :
     <CustomButton onPress={() => navigation.navigate('User')} text='Se connecter' color='#9E00FF'/>
 
-  const elementImage = element.type === 'track' ? element.album.images[0].url : element.images[0].url;
+  let elementImage;
+  if (form) {
+    elementImage = element.type === 'track' ? element.album.images[0].url : element.images[0].url;
+  } else {
+    elementImage = element.image;
+  }
 
   return (
     <View style={styles.header}>
@@ -28,22 +34,7 @@ export default ({ user, element }) => {
         <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.navigate('Feed')}/>
         {userSection}
       </View>
-      <View style={styles.headerBottom}>
-        <View style={styles.elementInfosContainer}>
-          <TouchableOpacity style={styles.elementImageContainer} onPress={() => console.log('press')}>
-            <ImageBackground source={{ uri: elementImage }} style={styles.elementImage} />
-          </TouchableOpacity>
-          <View style={styles.elementInfos}>
-            <Text style={styles.username}>{element.name}</Text>
-            <Text style={styles.artist}>{getArtists(element.artists)}</Text>
-            <Text style={styles.year}>{element.type === 'track' ? element.album.name : element.year}</Text>
-          </View>
-        </View>
-        <View style={styles.elementRatingContainer}>
-          <Text style={styles.username}>8,2</Text>
-          <Icon color='#FFB906' size={28} name='star' />
-        </View>
-      </View>
+      <ContentSection element={element} />
     </View>
   ) 
 };
@@ -78,14 +69,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   elementImageContainer: {
-    marginRight: 10
+    marginRight: 10,
+    width: '20%',
   },
   elementImage: {
     aspectRatio: 1,
     resizeMode: 'cover',
-    height: 70
   },
   elementInfos: {
+    width: '80%',
     justifyContent: 'space-evenly'
   },
   artist: {
@@ -102,10 +94,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center'
-  },
-  icon: { 
-    fontSize: 18,
-    marginLeft: 5,
-    color: '#FFB906'
-  }, 
+  }
 })
