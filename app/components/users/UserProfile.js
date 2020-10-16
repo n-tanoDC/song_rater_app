@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
@@ -18,7 +18,7 @@ export default ({ user }) => {
   const [selected, setSelected] = useState(0);
 
   const button = user === userContext.user ?
-    <ButtonIcon onPress={() => logout(userContext.setUser)} name='ellipsis-horizontal' color='#3A3A3A' /> : null
+    <ButtonIcon onPress={() => logout(userContext.setUser)} name='dots-horizontal' color='#3A3A3A' /> : null
   
   return (
     <>

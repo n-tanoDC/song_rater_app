@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
-import { Icon } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default (props) => {
   const { 
@@ -21,7 +21,7 @@ export default (props) => {
     <TouchableOpacity 
       onPress={onPress ? () => onPress() : null}
       style={{...styles.iconContainer, backgroundColor: color}}>
-      <Icon style={styles.icon} type='MaterialCommunityIcons' name={icon} />
+      <Icon color='#FDFDFD' name={icon} size={28}/>
     </TouchableOpacity>
     )
   }

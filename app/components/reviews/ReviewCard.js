@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet, View, Text } from 'react-native';
-import { Icon } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { getArtists } from '../../functions';
 
@@ -33,7 +33,7 @@ const ReviewCard = ({ showUser, review }) => {
         </View>
         <View style={styles.ratingContainer}>
           <Text style={styles.ratingText}>{rating} </Text>
-          <Icon name='star' style={styles.ratingIcon} /> 
+          <Icon name='star' color='#FFB906' size={28} /> 
         </View>
       </View>
     </View>
@@ -84,9 +84,6 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 18, 
     fontWeight: "bold",
-  },
-  ratingIcon: {
-    color: '#FFB906',
   },
   body: {
     fontSize: 14,

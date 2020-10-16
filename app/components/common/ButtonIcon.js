@@ -1,8 +1,9 @@
-import { Button, Icon } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 
 export default ({ name, color, onPress }) => 
-  <Button transparent onPress={() => onPress()}>
-    <Icon style={{ color: color, fontSize: 28 }} name={name} />
-  </Button>
+  <TouchableOpacity onPress={() => onPress()}>
+    <Icon color={color} size={28} name={name} />
+  </TouchableOpacity>
 

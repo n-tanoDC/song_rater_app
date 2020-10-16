@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Icon } from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,7 +25,7 @@ export default ({ user, element }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <ButtonIcon name='chevron-back' color='#3A3A3A' onPress={() => navigation.navigate('Feed')}/>
+        <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.navigate('Feed')}/>
         {userSection}
       </View>
       <View style={styles.headerBottom}>
@@ -41,7 +41,7 @@ export default ({ user, element }) => {
         </View>
         <View style={styles.elementRatingContainer}>
           <Text style={styles.username}>8,2</Text>
-          <Icon style={styles.icon} name='star' />
+          <Icon color='#FFB906' size={28} name='star' />
         </View>
       </View>
     </View>
