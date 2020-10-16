@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import ReviewCard from './ReviewCard';
 import { getReviews } from '../../data/reviews';
+import Loader from '../common/Loader';
 
 export default ({ showUser, user }) => {
   const loadData = () => {
@@ -34,7 +35,7 @@ export default ({ showUser, user }) => {
       onEndReached={() => onEndReached()}
       onEndReachedThreshold={0.5}
     />
-  ) : (<Text>Aucune critique.</Text>)
+  ) : (<Loader />)
 };
 
 const styles = StyleSheet.create({
