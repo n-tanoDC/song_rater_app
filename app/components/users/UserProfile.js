@@ -5,11 +5,11 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
-import FavsList from './FavsList';
 
 import { logout } from '../../data/user'
 
 import { UserContext } from '../../App';
+import UserAvatar from '../common/UserAvatar';
 
 export default ({ user }) => {
   const userContext = useContext(UserContext);
@@ -23,9 +23,7 @@ export default ({ user }) => {
   return (
     <>
       <View style={styles.header}>
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />
-        </View>
+        <UserAvatar user={user} />
         <View style={styles.textContainer}>
           <Text style={styles.username}>{user.username}</Text>
           <Text style={styles.description}>{user.description}</Text>

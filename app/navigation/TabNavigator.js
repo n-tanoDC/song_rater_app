@@ -2,12 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Home from '../components/HomeScreen'
 import Search from '../components/search/SearchScreen'
 import UserScreen from '../components/users/UserScreen';
 import TabIcon from './TabIcon';
 
-import { FeedNavigator, ContentNavigator } from './StackNavigators';
+import FeedNavigator from './FeedNavigator';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -15,8 +14,8 @@ export default () => {
   const tabBarOptions = {
     showLabel: false,
     activeTintColor: '#9E00FF',
-    inactiveTintColor: 'transparent',
-    tabStyle: {
+    inactiveTintColor: '#3A3A3A',
+    style: {
       backgroundColor: '#FDFDFD',
     }
   }
@@ -50,7 +49,7 @@ export default () => {
       <Navigator 
         backBehavior='history'
         headerMode="none"
-        initialRouteName="Home"
+        initialRouteName="Feed"
         tabBarOptions={tabBarOptions}
         screenOptions={({ route }) => ({ 
           tabBarIcon: ({ color }) => getIcons(route, color)
@@ -59,12 +58,6 @@ export default () => {
         <Screen
           name="Search"
           component={Search} />
-        <Screen 
-          name="Content"
-          component={ContentNavigator} />
-        <Screen 
-          name="Home"
-          component={Home} />
         <Screen 
           name="Feed"
           component={FeedNavigator} />
