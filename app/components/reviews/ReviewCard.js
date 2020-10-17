@@ -14,15 +14,24 @@ const ReviewCard = ({ showUser, review }) => {
   const { user } = useContext(UserContext);
   const navigation = useNavigation()
 
+  let userProp, onPress;
+  
+  if (isVisiting(user, author)) {
+    userProp = author;
+    onPress = () => navigation.navigate('User', { user: author })
+  } else {
+    userProp = user
+    onPress = () => navigation.navigate('Account')
+  }
+
   let avatar;
   
   if (showUser) {
     avatar = (
       <UserAvatar 
         small 
-        redirect 
-        visit={isVisiting(user, author)} 
-        user={author} />
+        user={userProp}
+        onPress={onPress} />
     )
   }
 

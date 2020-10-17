@@ -1,23 +1,13 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import { API_URL } from '../../config';
 
-export default ({ user, small, redirect, visit }) => {
-  const navigation = useNavigation()
+export default ({ user, small, onPress }) => {
   const { avatar } = user;
   const size = small ? 40 : 80;
-  let onPress, source;
+  let source;
 
-  if (redirect) {
-    if (visit) {
-      onPress = () => navigation.navigate('User', { user })
-    } else {
-      onPress = () => navigation.navigate('Account')
-    }
-  } 
-  
   if (avatar) {
     source = { uri: API_URL + 'uploads/' + avatar };
   } else {
