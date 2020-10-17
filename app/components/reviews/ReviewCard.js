@@ -1,18 +1,33 @@
-import React, { memo } from 'react';
-import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, { memo, useContext } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import ContentSection from '../common/ContentSection';
-import UserAvatar from '../common/UserAvatar';
+import UserAvatar from '../users/UserAvatar';
+import { isVisiting } from '../../functions';
+
+import { UserContext } from '../../App';
 
 const ReviewCard = ({ showUser, review }) => {
-  const { title, content, element, rating, created_at } = review;
+  const { title, content, element, rating, created_at, author } = review;
+
+  const { user } = useContext(UserContext);
   const navigation = useNavigation()
 
-  const avatar = showUser? (<UserAvatar small redirect user={review.author} />) : null
+  let avatar;
+  
+  if (showUser) {
+    avatar = (
+      <UserAvatar 
+        small 
+        redirect 
+        visit={isVisiting(user, author)} 
+        user={author} />
+    )
+  }
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review })} style={styles.card}>
+    <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review } )} style={styles.card}>
       <View style={styles.header}>
         <View style={styles.headerText}>
           <Text style={styles.title}>"{title}"</Text>

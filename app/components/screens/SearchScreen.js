@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
 import { SpotifyContext } from '../../App';
 import { loadMore, search } from '../../data/spotify';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
 import Loader from '../common/Loader';
-import SearchResults from './SearchResults';
+import SearchResults from '../search/SearchResults';
 
 export default () => {
   const [results, setResults] = useState(null);

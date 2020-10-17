@@ -1,23 +1,21 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import ButtonIcon from '../common/ButtonIcon';
-import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
-import UserAvatar from '../common/UserAvatar';
-
-import { logout } from '../../data/user'
+import CustomButton from '../common/CustomButton';
+import UserAvatar from './UserAvatar';
+import { logout } from '../../data/user';
 
 import { UserContext } from '../../App';
 
-export default ({ user }) => {
-  const [selected, setSelected] = useState(0);
+export default ({ user, visit }) => {
+  let logoutButton;
 
-  const userContext = useContext(UserContext);
+  if (!visit) {
+    const { setUser } = useContext(UserContext)
+    logoutButton = (<CustomButton onPress={() => logout(setUser)} text='Se déconnecter' />)
+  }
 
-  const button = user === userContext.user ?
-    <ButtonIcon onPress={() => logout(userContext.setUser)} name='dots-horizontal' color='#3A3A3A' /> : null
-  
   return (
     <>
       <View style={styles.header}>
@@ -26,15 +24,12 @@ export default ({ user }) => {
           <Text style={styles.username}>{user.username}</Text>
           <Text style={styles.description}>{user.description}</Text>
           <View style={styles.buttonContainer}>
-            {button}
+            {logoutButton}
           </View>
         </View>
       </View>
       <View style={styles.content}>
-        <CustomSegment data={['Critiques', 'Favoris']} state={{ selected, setSelected }}/>
-        {!selected ? 
-          <ReviewsList user={user}/> : 
-          <FavsList user={user} navigation={navigation} />}
+        <ReviewsList user={user}/>
       </View>
     </>
   )

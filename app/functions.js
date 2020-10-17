@@ -28,3 +28,10 @@ export const getCover = element => {
   return element.type === 'track' ? element.album.images[0].url : element.images[0].url;
 }
 
+export const isVisiting = (user, author) => {
+  if (user) {
+    return user.username !== author.username;
+  }
+  return true;
+}
+

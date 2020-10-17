@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../App';
-
-import UserProfile from './UserProfile';
-import AuthForm from './AuthForm';
 import { SafeAreaView } from 'react-native';
 
-export default ({  }) => {
+import UserProfile from '../users/UserProfile';
+import AuthForm from '../users/AuthForm';
+
+import { UserContext } from '../../App';
+
+export default () => {
   const { user } = useContext(UserContext);
 
   return (

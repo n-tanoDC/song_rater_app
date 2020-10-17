@@ -1,16 +1,13 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import CustomButton from './CustomButton';
-import UserAvatar from './UserAvatar';
+import UserAvatar from '../users/UserAvatar';
 import ButtonIcon from './ButtonIcon';
-import { getArtists } from '../../functions';
 import ContentSection from './ContentSection';
 
-export default ({ user, element, form }) => {
+export default ({ user, element }) => {
   const navigation = useNavigation();
 
   const userSection = user ? 
@@ -21,17 +18,10 @@ export default ({ user, element, form }) => {
     :
     <CustomButton onPress={() => navigation.navigate('User')} text='Se connecter' color='#9E00FF'/>
 
-  let elementImage;
-  if (form) {
-    elementImage = element.type === 'track' ? element.album.images[0].url : element.images[0].url;
-  } else {
-    elementImage = element.image;
-  }
-
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.navigate('Feed')}/>
+        <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.goBack()}/>
         {userSection}
       </View>
       <ContentSection element={element} />

@@ -4,12 +4,25 @@ import { useNavigation } from '@react-navigation/native';
 
 import { API_URL } from '../../config';
 
-export default ({ user, small, redirect }) => {
+export default ({ user, small, redirect, visit }) => {
   const navigation = useNavigation()
   const { avatar } = user;
   const size = small ? 40 : 80;
-  const onPress = redirect ? () => navigation.navigate('User', { user }) : null;
-  const source = avatar ? { uri: API_URL + 'uploads/' + avatar } : require('../../assets/images/avatar_placeholder.png');
+  let onPress, source;
+
+  if (redirect) {
+    if (visit) {
+      onPress = () => navigation.navigate('User', { user })
+    } else {
+      onPress = () => navigation.navigate('Account')
+    }
+  } 
+  
+  if (avatar) {
+    source = { uri: API_URL + 'uploads/' + avatar };
+  } else {
+    source = require('../../assets/images/avatar_placeholder.png');
+  }
   
   return (
     <TouchableOpacity 

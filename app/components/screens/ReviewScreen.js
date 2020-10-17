@@ -1,11 +1,9 @@
-import { useIsFocused } from '@react-navigation/native';
-import React, { useContext, useEffect, useState } from 'react';
-import { ActivityIndicator, SafeAreaView, Text, View } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { UserContext } from '../../App';
-import Loader from '../common/Loader';
 import ReviewHeader from '../common/ReviewHeader';
-import ReviewDisplay from './ReviewDisplay';
-import ReviewForm from './ReviewForm';
+import ReviewDisplay from '../reviews/ReviewDisplay';
+import ReviewForm from '../reviews/ReviewForm';
 
 export default ({ route }) => {
   const { reviewToShow = null, element = null } = route.params;

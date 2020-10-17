@@ -2,11 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Search from '../components/search/SearchScreen'
-import UserScreen from '../components/users/UserScreen';
-import TabIcon from './TabIcon';
 
-import FeedNavigator from './FeedNavigator';
+import HomeNavigator from './HomeNavigator';
+import SearchScreen from '../components/screens/SearchScreen'
+import AccountScreen from '../components/screens/AccountScreen';
+import TabIcon from './TabIcon';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -27,16 +27,10 @@ export default () => {
         case 'Search':
           iconName = 'magnify';
           break;
-        case 'Content':
-          iconName = 'music-note-quarter-dotted';
-          break;
         case 'Home':
           iconName = 'home';
           break;
-        case 'Feed':
-          iconName = 'playlist-star';
-          break;
-        case 'User':
+        case 'Account':
           iconName = 'account';
           break;
       }
@@ -49,7 +43,7 @@ export default () => {
       <Navigator 
         backBehavior='history'
         headerMode="none"
-        initialRouteName="Feed"
+        initialRouteName="Home"
         tabBarOptions={tabBarOptions}
         screenOptions={({ route }) => ({ 
           tabBarIcon: ({ color }) => getIcons(route, color)
@@ -57,13 +51,13 @@ export default () => {
       >
         <Screen
           name="Search"
-          component={Search} />
+          component={SearchScreen} />
         <Screen 
-          name="Feed"
-          component={FeedNavigator} />
+          name="Home"
+          component={HomeNavigator} />
         <Screen 
-        name="User" 
-        component={UserScreen} />
+          name="Account" 
+          component={AccountScreen} />
       </Navigator>
     </NavigationContainer>
   )
