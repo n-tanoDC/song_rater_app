@@ -3,13 +3,13 @@ import { Image, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import ContentSection from '../common/ContentSection';
+import UserAvatar from '../common/UserAvatar';
 
 const ReviewCard = ({ showUser, review }) => {
   const { title, content, element, rating, created_at } = review;
   const navigation = useNavigation()
 
-  const thumbnail = showUser? (
-      <Image small style={styles.avatar} source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }} />) : null
+  const avatar = showUser? (<UserAvatar small redirect user={review.author} />) : null
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review })} style={styles.card}>
@@ -18,7 +18,7 @@ const ReviewCard = ({ showUser, review }) => {
           <Text style={styles.title}>"{title}"</Text>
           <Text style={styles.date}>{created_at}</Text>
         </View>
-        {thumbnail}
+        {avatar}
       </View>
       {content ? 
       (<View>

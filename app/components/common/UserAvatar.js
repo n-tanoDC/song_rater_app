@@ -1,19 +1,35 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default ({ user, small }) => {
-  const height = small ? 40 : 80;
+import { API_URL } from '../../config';
+
+export default ({ user, small, redirect }) => {
+  const navigation = useNavigation()
+  const { avatar } = user;
+  const size = small ? 40 : 80;
+  const onPress = redirect ? () => navigation.navigate('User', { user }) : null;
+  const source = avatar ? { uri: API_URL + 'uploads/' + avatar } : require('../../assets/images/avatar_placeholder.png');
+  
   return (
-    <Image 
-      source={{ uri: 'https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80' }}
-      style={{ ...styles.image, height: height }} />
+    <TouchableOpacity 
+      style={{ ...styles.imageWrapper, height: size, width: size }}
+      onPress={onPress}>
+      <ImageBackground
+        source={source}
+        style={styles.image}
+         />
+    </TouchableOpacity>
   )
 }
   
-
 const styles = StyleSheet.create({
-  image: {
+  imageWrapper: {
     borderRadius: 100,
-    aspectRatio: 1
+    overflow: 'hidden',
+  }, 
+  image: {
+    aspectRatio: 1,
+    resizeMode: 'cover',
   }
 })
