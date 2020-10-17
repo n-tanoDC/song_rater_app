@@ -1,31 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import ButtonIcon from '../common/ButtonIcon';
 import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
 import UserAvatar from '../common/UserAvatar';
-import Loader from '../common/Loader';
 
 import { logout } from '../../data/user'
 
 import { UserContext } from '../../App';
 
 export default ({ user }) => {
-  const isFocused = useIsFocused()
-  const navigation = useNavigation()
-
-  const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(0);
 
-  useEffect(() => setLoading(!isFocused), [isFocused])
-  
   const userContext = useContext(UserContext);
-  
-  if (loading) {
-    return (<Loader />)
-  }
 
   const button = user === userContext.user ?
     <ButtonIcon onPress={() => logout(userContext.setUser)} name='dots-horizontal' color='#3A3A3A' /> : null

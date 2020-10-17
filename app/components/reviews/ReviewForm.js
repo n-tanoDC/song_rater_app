@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import SwipeableRating from 'react-native-swipeable-rating';
@@ -9,11 +9,14 @@ import MessageView from '../common/MessageView';
 
 import { getFormattedArtists, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
+import { AppContext } from '../../App';
 
 export default ({ element, user, setReview }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(5);
+
+  const { setUpdates } = useContext(AppContext);
 
   const { id, type, name } = element;
   const image = type === 'track' ? element.album.images[0].url : element.images[0].url;
@@ -34,6 +37,7 @@ export default ({ element, user, setReview }) => {
         setReview(res)
         showToast('Publication réussie.')
       })
+      .then(() => setUpdates(true))
       .catch(err => showToast(err.message))
   }
 

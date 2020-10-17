@@ -9,21 +9,11 @@ import ReviewForm from './ReviewForm';
 
 export default ({ route }) => {
   const { reviewToShow = null, element = null } = route.params;
-  const isFocused = useIsFocused();
-
   const [review, setReview] = useState(reviewToShow);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => setLoading(!isFocused), [isFocused])
-  useEffect(() => setReview(reviewToShow), [reviewToShow])
 
   const { user } = useContext(UserContext);
 
   let content;
-
-  if (loading) {
-    return (<Loader />)
-  }
 
   if (!review) {
     content = (<ReviewForm setReview={setReview} element={element} user={user} />)

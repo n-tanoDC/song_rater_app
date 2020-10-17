@@ -7,6 +7,7 @@ import { generateToken } from './data/spotify'
 
 export const UserContext = createContext();
 export const SpotifyContext = createContext();
+export const AppContext = createContext();
 
 export default () => {
   useEffect(() => { 
@@ -17,16 +18,19 @@ export default () => {
 
   const [user, setUser] = useState(null)
   const [token, setToken] = useState(null)
+  const [updates, setUpdates] = useState(false)
 
   if (!token) {
     return (<Loader />)
   }
 
   return (
-    <SpotifyContext.Provider value={{ token, setToken }}>
-      <UserContext.Provider value={{user, setUser}}>
-        <TabNavigator />
-      </UserContext.Provider>
-    </SpotifyContext.Provider>
+    <AppContext.Provider value={{ updates, setUpdates }}>
+      <SpotifyContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{user, setUser}}>
+          <TabNavigator />
+        </UserContext.Provider>
+      </SpotifyContext.Provider>
+    </AppContext.Provider>
   )
 }
