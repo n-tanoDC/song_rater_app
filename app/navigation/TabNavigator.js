@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
-import HomeNavigator from './HomeNavigator';
+import { HomeNavigator, AccountNavigator } from './StackNavigators';
 import SearchScreen from '../components/screens/SearchScreen'
 import AccountScreen from '../components/screens/AccountScreen';
 import TabIcon from './TabIcon';
@@ -57,7 +57,7 @@ export default () => {
           component={HomeNavigator} />
         <Screen 
           name="Account" 
-          component={AccountScreen} />
+          component={AccountNavigator} />
       </Navigator>
     </NavigationContainer>
   )
