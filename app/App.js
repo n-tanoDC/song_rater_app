@@ -1,6 +1,8 @@
 import 'react-native-gesture-handler';
 import React, { createContext, useEffect, useState } from 'react';
 
+import { MenuProvider } from 'react-native-popup-menu';
+
 import TabNavigator from './navigation/TabNavigator'
 import Loader from './components/common/Loader';
 import { generateToken } from './data/spotify'
@@ -25,12 +27,15 @@ export default () => {
   }
 
   return (
-    <AppContext.Provider value={{ updates, setUpdates }}>
-      <SpotifyContext.Provider value={{ token, setToken }}>
-        <UserContext.Provider value={{user, setUser}}>
-          <TabNavigator />
-        </UserContext.Provider>
-      </SpotifyContext.Provider>
-    </AppContext.Provider>
+    <MenuProvider>
+      <AppContext.Provider value={{ updates, setUpdates }}>
+        <SpotifyContext.Provider value={{ token, setToken }}>
+          <UserContext.Provider value={{user, setUser}}>
+            <TabNavigator />
+          </UserContext.Provider>
+        </SpotifyContext.Provider>
+      </AppContext.Provider>
+    </MenuProvider>
+
   )
 }

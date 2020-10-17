@@ -1,19 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import ReviewsList from '../reviews/ReviewsList';
-import CustomButton from '../common/CustomButton';
 import UserAvatar from './UserAvatar';
-import { logout } from '../../data/user';
-
-import { UserContext } from '../../App';
+import PopMenu from '../common/PopMenu';
 
 export default ({ user, visit }) => {
-  let logoutButton;
+  let menuButton, onPress;
 
   if (!visit) {
-    const { setUser } = useContext(UserContext)
-    logoutButton = (<CustomButton onPress={() => logout(setUser)} text='Se déconnecter' />)
+    menuButton = <PopMenu />
   }
 
   return (
@@ -23,9 +19,9 @@ export default ({ user, visit }) => {
         <View style={styles.textContainer}>
           <Text style={styles.username}>{user.username}</Text>
           <Text style={styles.description}>{user.description}</Text>
-          <View style={styles.buttonContainer}>
-            {logoutButton}
-          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          {menuButton}
         </View>
       </View>
       <View style={styles.content}>
@@ -37,8 +33,10 @@ export default ({ user, visit }) => {
 
 const styles = StyleSheet.create({
   header: {
+    padding: 20,
     height: '15%',
     flexDirection: 'row',
+    alignItems: 'center'
   },
   content: {
     height: '85%'
@@ -64,9 +62,4 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 14,
   },
-  buttonContainer: {
-    position: "absolute",
-    right: 0,
-    top: 0
-  }
 })
