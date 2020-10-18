@@ -1,6 +1,8 @@
-import React, { useContext, useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { AppContext } from '../../AppContext';
+import Loader from '../common/Loader';
 import ReviewHeader from '../common/ReviewHeader';
 import ReviewDisplay from '../reviews/ReviewDisplay';
 import ReviewForm from '../reviews/ReviewForm';
@@ -8,7 +10,9 @@ import ReviewForm from '../reviews/ReviewForm';
 export default ({ route }) => {
   const { reviewToShow = null, element = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
-
+  
+  useEffect(() => setReview(reviewToShow), [reviewToShow])
+  
   const { user } = useContext(AppContext);
 
   let content;

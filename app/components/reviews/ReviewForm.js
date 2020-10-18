@@ -10,12 +10,13 @@ import MessageView from '../common/MessageView';
 import { getFormattedArtists, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
 import { AppContext } from '../../AppContext';
+import { useNavigation } from '@react-navigation/native';
 
 export default ({ element, user, setReview }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(5);
-
+  const navigation = useNavigation();
   const { setUpdates } = useContext(AppContext);
 
   const { id, type, name } = element;
@@ -29,19 +30,33 @@ export default ({ element, user, setReview }) => {
       rating, 
       element: { id, element_type: type, name, artists, image }
     }
+
+    if (!title && content) {
+      return showToast('Veuillez saisir un titre.')
+    } else if (title && !content) {
+      return showToast('Veuillez saisir une critique.')
+    }
+
+    let ratingOnly = (!title || !content)
+
     postReview(body, user.token)
       .then(res => {
         if (res instanceof Error) {
           throw res
         }
         setReview(res)
-        showToast('Publication réussie.')
+        showToast('Critique publiée')
       })
-      .then(() => setUpdates(true))
+      .then(() => {
+        if (ratingOnly) {
+          showToast('Note publiée')
+          navigation.goBack();
+        } else {
+          setUpdates(true)
+        }
+      })
       .catch(err => showToast(err.message))
   }
-
-  console.log(user);
 
   return !user ? (<MessageView message='Connectez-vous pour publier une critique.' />) : (
     <View style={styles.form}>
