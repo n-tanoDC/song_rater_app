@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default (props) => {
@@ -12,9 +12,19 @@ export default (props) => {
     placeholder,
     icon,
     state,
+    label,
+    maxLength,
     multiline } = props;
 
-  let iconContainer = null;
+  let iconContainer, labelContainer;
+
+  if (label) {
+    labelContainer = (
+      <View>
+        <Text style={styles.label}>{label}</Text>
+      </View>
+    )
+  }
 
   if (icon) {
     iconContainer = (
@@ -30,21 +40,24 @@ export default (props) => {
   const inputStyle = multiline ? { ...styles.input, textAlignVertical: 'top' } : styles.input;
 
   return (
-    <View style={containerStyle}>
-      <TextInput
-        onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
-        numberOfLines={multiline ? 5 : 1}
-        autoFocus={autoFocus}
-        multiline={multiline}
-        secureTextEntry={secure}
-        style={inputStyle}
-        value={state.value}
-        onChangeText={state.callback}
-        placeholder={placeholder}/>
-      {iconContainer}
+    <View>
+      {labelContainer}
+      <View style={containerStyle}>
+        <TextInput
+          maxLength={maxLength}
+          onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
+          numberOfLines={multiline ? 5 : 1}
+          autoFocus={autoFocus}
+          multiline={multiline}
+          secureTextEntry={secure}
+          style={inputStyle}
+          value={state.value}
+          onChangeText={state.callback}
+          placeholder={placeholder}/>
+        {iconContainer}
+      </View>
     </View>
-  )
-  
+  )  
 }
 
 const styles = StyleSheet.create({
@@ -67,7 +80,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  icon: {
-    color: '#FDFDFD'
-  }, 
+  label: {
+    fontSize: 12,
+    fontWeight: 'bold'
+  }
 })

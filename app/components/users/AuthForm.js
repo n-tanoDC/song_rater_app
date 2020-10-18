@@ -10,9 +10,9 @@ import { showToast } from '../../functions';
 import { UserContext } from '../../App';
 
 export default () => {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('NicolasT');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('password');
   const [passwordConf, setPasswordConf] = useState('')
 
   const [data, setData] = useState({})
@@ -61,12 +61,14 @@ export default () => {
 
   const emailInput = !isLogin ?
     <CustomInput 
+      label='Adresse email'
       icon='email'
       placeholder="Email"
       state={{ value: email, callback: setEmail }} /> : null
 
   const passwordConfInput = !isLogin ?
     <CustomInput 
+      label='Confirmer le mot de passe'
       icon='lock-check'
       secure
       placeholder="Confirmer le mot de passe"
@@ -79,11 +81,13 @@ export default () => {
       </View>
       <View style={styles.form}>
         <CustomInput
+          label="Nom d'utilisateur"
           icon='account'
           placeholder="Nom d'utilisateur"
           state={{ value: username, callback: setUsername }} />
         {emailInput}
-        <CustomInput 
+        <CustomInput
+          label='Mot de passe' 
           icon='lock'
           placeholder="Mot de passe"
           secure
