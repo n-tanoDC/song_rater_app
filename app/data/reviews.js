@@ -1,5 +1,5 @@
 import { API_URL } from "../config";
-import { getPostOptions } from "./helpers";
+import { getOptions } from "./helpers";
 
 // get all reviews from one or every users
 export const getReviews = (user, page = 1) => {
@@ -14,7 +14,7 @@ export const getReviews = (user, page = 1) => {
 
 // post a review to the API
 export const postReview = (body, token) =>
-  fetch(API_URL + 'reviews', getPostOptions(body, token))
+  fetch(API_URL + 'reviews', getOptions(body, token))
     .then(res => {
       switch(res.status) {
         case 201:

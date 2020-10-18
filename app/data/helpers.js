@@ -1,6 +1,6 @@
-export const getPostOptions = (body, token) => {
+export const getOptions = (body, token, method = 'POST') => {
   return {
-    method: 'POST',
+    method: method,
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token

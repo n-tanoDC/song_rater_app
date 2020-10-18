@@ -6,12 +6,6 @@ import UserAvatar from './UserAvatar';
 import PopMenu from '../common/PopMenu';
 
 export default ({ user, visit }) => {
-  let menuButton, onPress;
-
-  if (!visit) {
-    menuButton = <PopMenu />
-  }
-
   return (
     <>
       <View style={styles.header}>
@@ -21,7 +15,7 @@ export default ({ user, visit }) => {
           <Text style={styles.description}>{user.description}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          {menuButton}
+          {!visit ? <PopMenu /> : null}
         </View>
       </View>
       <View style={styles.content}>
