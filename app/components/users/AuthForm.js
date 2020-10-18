@@ -7,7 +7,7 @@ import CustomSegment from '../common/CustomSegment';
 import { login, register } from '../../data/user'
 import { showToast } from '../../functions';
 
-import { UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 
 export default () => {
   const [username, setUsername] = useState('NicolasT');
@@ -19,7 +19,7 @@ export default () => {
   const [selected, setSelected] = useState(0);
   const isLogin = !selected;
   
-  const { setUser } = useContext(UserContext)
+  const { setUser } = useContext(AppContext)
 
   useEffect(() => { 
     isLogin ? setData({ username, password }) : setData({ username, password, email })

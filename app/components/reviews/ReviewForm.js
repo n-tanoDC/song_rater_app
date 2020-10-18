@@ -9,7 +9,7 @@ import MessageView from '../common/MessageView';
 
 import { getFormattedArtists, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
-import { AppContext } from '../../App';
+import { AppContext } from '../../AppContext';
 
 export default ({ element, user, setReview }) => {
   const [title, setTitle] = useState('');

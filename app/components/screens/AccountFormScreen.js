@@ -4,7 +4,7 @@ import { pickImage, showToast } from '../../functions';
 import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 import { postChanges } from '../../data/user';
-import { AppContext, UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 import { useNavigation } from '@react-navigation/native';
 import { API_URL } from '../../config';
 
@@ -17,7 +17,7 @@ export default ({ route }) => {
   const [avatar, setAvatar] = useState(user.avatar);
   const [newAvatar, setNewAvatar] = useState(null);
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(AppContext);
   const { setUpdates } = useContext(AppContext);
 
   const navigation = useNavigation();

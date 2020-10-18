@@ -6,12 +6,12 @@ import ContentSection from '../common/ContentSection';
 import UserAvatar from '../users/UserAvatar';
 import { isVisiting } from '../../functions';
 
-import { UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 
 const ReviewCard = ({ showUser, review }) => {
   const { title, content, element, rating, created_at, author } = review;
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AppContext);
   const navigation = useNavigation()
 
   let userProp, onPress;

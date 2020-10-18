@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
-import { SpotifyContext } from '../../App';
+import { AppContext } from '../../AppContext';
 import { loadMore, search } from '../../data/spotify';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
@@ -15,7 +15,7 @@ export default () => {
   const [selected, setSelected] = useState(0);
   const [value, setValue] = useState('fugees');
 
-  const { token } = useContext(SpotifyContext)
+  const { token } = useContext(AppContext)
 
   const handleSubmit = () => {
     setResults(null)

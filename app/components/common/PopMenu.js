@@ -6,10 +6,10 @@ import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-m
 
 import { logout } from '../../data/user';
 
-import { UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 
 export default () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(AppContext);
   const navigation = useNavigation()
 
   return (

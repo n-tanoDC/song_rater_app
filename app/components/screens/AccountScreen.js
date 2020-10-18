@@ -4,10 +4,10 @@ import { SafeAreaView } from 'react-native';
 import UserProfile from '../users/UserProfile';
 import AuthForm from '../users/AuthForm';
 
-import { UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 
 export default () => {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AppContext);
 
   return (
     <SafeAreaView>

@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import ReviewCard from './ReviewCard';
 import { getReviews } from '../../data/reviews';
 import Loader from '../common/Loader';
-import { AppContext } from '../../App';
+import { AppContext } from '../../AppContext';
 import MessageView from '../common/MessageView';
 
 export default ({ showUser, user }) => {

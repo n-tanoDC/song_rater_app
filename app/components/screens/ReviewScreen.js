@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { UserContext } from '../../App';
+import { AppContext } from '../../AppContext';
 import ReviewHeader from '../common/ReviewHeader';
 import ReviewDisplay from '../reviews/ReviewDisplay';
 import ReviewForm from '../reviews/ReviewForm';
@@ -9,7 +9,7 @@ export default ({ route }) => {
   const { reviewToShow = null, element = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
 
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AppContext);
 
   let content;
 
