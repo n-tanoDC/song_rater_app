@@ -16,7 +16,7 @@ export default ({ user, element }) => {
       <UserAvatar user={user} small />
     </View>
     :
-    <CustomButton onPress={() => navigation.navigate('User')} text='Se connecter' color='#9E00FF'/>
+    <CustomButton onPress={() => navigation.navigate('Account')} text='Se connecter' color='#9E00FF'/>
 
   return (
     <View style={styles.header}>
