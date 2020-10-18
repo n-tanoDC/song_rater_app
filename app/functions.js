@@ -1,4 +1,5 @@
-import { ToastAndroid } from "react-native";
+import { ToastAndroid } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 // return formatted string of artists from an Array (provided in the Spotify API response object)
 export const getArtists = artists => {
@@ -33,5 +34,25 @@ export const isVisiting = (user, author) => {
     return user.username !== author.username;
   }
   return true;
+}
+
+export const pickImage = (callback) => {
+  ImagePicker.showImagePicker({
+    noData: true,
+    title: 'Sélectionner une image',
+    storageOption: {
+      skipBackup: true
+    }
+  }, res => {
+    if (res.didCancel) {
+      console.log('did cancel');
+      showToast('Modification annulée')
+    } else if (res.error) {
+      console.log('ImagePicker Error: ', res.error);
+      showToast('Une erreur s\'est produite, veuillez réessayer ultériement')
+    } else {
+      callback(res);
+    }
+  })
 }
 
