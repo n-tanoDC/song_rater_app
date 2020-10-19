@@ -1,22 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import CustomButton from './CustomButton';
 import UserAvatar from '../users/UserAvatar';
 import ButtonIcon from './ButtonIcon';
 import ContentSection from './ContentSection';
+import { isVisiting } from '../../functions';
+import { AppContext } from '../../AppContext';
 
 export default ({ user, element }) => {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
+  
+  let userSection = (
+    <CustomButton 
+      onPress={() => navigation.navigate('Account')}
+      text='Se connecter'
+      color='#9E00FF' />)
+  
+  if (user) {
+    let onPress = () => navigation.navigate('User', { user })
+    if (!isVisiting(context.user, user)) {
+      onPress = () => navigation.navigate('Account')
+    }
 
-  const userSection = user ? 
-    <View style={styles.user}>
-      <Text style={styles.username}>{user.username}</Text>
-      <UserAvatar user={user} small />
-    </View>
-    :
-    <CustomButton onPress={() => navigation.navigate('Account')} text='Se connecter' color='#9E00FF'/>
+    userSection = (
+      <View style={styles.user}>
+        <Text style={styles.username}>{user.username}</Text>
+        <UserAvatar user={user} small onPress={onPress} />
+      </View>)
+  }
 
   return (
     <View style={styles.header}>
