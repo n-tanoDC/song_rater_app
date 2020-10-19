@@ -56,15 +56,6 @@ export const logout = (callback) => {
   callback(null);
 }
 
-
-// User related functions
-
-export const getUser = username => 
-  fetch(API_URL + 'user/' + username)
-    .then(res => res.json())
-    .catch(err => console.log(err))
-
-
 export const postChanges = (inputs, token, newAvatar) => {
   let body = [];
   for (const [key, value] of Object.entries(inputs)) {

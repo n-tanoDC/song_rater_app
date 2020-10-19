@@ -18,7 +18,7 @@ export default ({ showUser, user }) => {
   // get reviews page by page and setUpdates to false when done
   
   // load all reviews on first render
-  useEffect(() => loadReviews(), [isRefreshing])
+  useEffect(() => loadReviews(), [])
   // load all reviews when there has been updates
   useEffect(() => { if (updates) { loadReviews() }})
   
