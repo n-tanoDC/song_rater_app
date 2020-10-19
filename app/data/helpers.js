@@ -1,12 +1,16 @@
 export const getOptions = (body, token, method = 'POST') => {
-  return {
-    method: method,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + token
-    },
-    body: JSON.stringify(body)
+  const headers = new Headers();
+  let reqBody,
+      options = { method, headers }
+  headers.append('Authorization', 'Bearer ' + token);
+
+  if (body) {
+    headers.append('Content-Type', 'application/json');
+    reqBody = JSON.stringify(body)
+    options.body = reqBody
   }
+
+  return options
 }
 
 export const getQuery = (query) => {

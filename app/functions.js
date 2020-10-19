@@ -56,3 +56,9 @@ export const pickImage = (callback) => {
   })
 }
 
+
+export const isFollowing = (connectedUser, userToTest) => {
+  return connectedUser.following.some(userFollowed => userFollowed === userToTest._id)
+}
+
+
