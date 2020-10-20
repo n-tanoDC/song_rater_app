@@ -8,17 +8,18 @@ import MessageView from '../common/MessageView';
 
 import { AppContext } from '../../AppContext';
 
-export default ({ showUser, user }) => {
+export default ({ showFollowsOnly, showUser, user }) => {
   // initial state to null, will be set to an empty array (truthy) if fetch returns nothing 
   const [reviews, setReviews] = useState(null)
   const [next, setNext] = useState(null)
   const [isRefreshing, setRefresh] = useState(false)
   const { updates, setUpdates } = useContext(AppContext)
+  const currentUser = useContext(AppContext).user
 
   // get reviews page by page and setUpdates to false when done
   
   // load all reviews on first render
-  useEffect(() => loadReviews(), [])
+  useEffect(() => loadReviews(), [showFollowsOnly])
   // load all reviews when there has been updates
   useEffect(() => { if (updates) { loadReviews() }})
   
@@ -29,7 +30,11 @@ export default ({ showUser, user }) => {
         // add news reviews to the list if we are
         const data = next ? [...reviews, ...res.reviews] : res.reviews
         // filter to only display reviews with a title and a content
-        const filteredData = data.filter(review => review.content && review.title)
+        let filteredData = data.filter(review => review.content && review.title)
+        // if showFollowsOnly is true, filter to only show reviews written by people followed by the currentUser
+        if (showFollowsOnly) {
+          filteredData = filteredData.filter(review => currentUser.following.some(userId => review.author._id === userId))
+        }
         setReviews(filteredData)
         setNext(res.next)
       })

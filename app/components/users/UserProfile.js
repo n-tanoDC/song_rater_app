@@ -20,16 +20,16 @@ export default ({ user, visit }) => {
       .then(res => { 
         if (res.status === 200) {
           if (action === 'follow') {
-            setCurrentUser({...currentUser, following: [...currentUser.following, userToFollow._id]})
+            setCurrentUser({...currentUser, following: [...currentUser.following, user._id]})
           } else {
-            const userIndex = currentUser.following.findIndex(userId => userId === userToFollow._id)
+            const userIndex = currentUser.following.findIndex(userId => userId === user._id)
             let updatedFollowing = currentUser.following;
             updatedFollowing.splice(userIndex, userIndex+1);
             setCurrentUser({...currentUser, following: updatedFollowing})
           }
         }
       })  
-      .catch(err => console.log('Error :', err.data))
+      .catch(err => console.log('Error :', err))
   }
 
   if (currentUser) {
