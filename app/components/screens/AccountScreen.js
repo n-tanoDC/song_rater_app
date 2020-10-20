@@ -4,14 +4,14 @@ import { SafeAreaView } from 'react-native';
 import UserProfile from '../users/UserProfile';
 import AuthForm from '../users/AuthForm';
 
-import { AppContext } from '../../AppContext';
+import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
-  const { user } = useContext(AppContext);
+  const { connectedUser } = useContext(UserContext);
 
   return (
     <SafeAreaView>
-      {user ? <UserProfile user={user} /> : <AuthForm />}
+      {connectedUser ? <UserProfile user={connectedUser} /> : <AuthForm />}
     </SafeAreaView>
   )
 }

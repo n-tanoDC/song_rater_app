@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { useNavigation } from '@react-navigation/native';
 import SwipeableRating from 'react-native-swipeable-rating';
 
 import CustomInput from '../common/CustomInput';
@@ -9,17 +9,20 @@ import MessageView from '../common/MessageView';
 
 import { getFormattedArtists, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
-import { AppContext } from '../../AppContext';
-import { useNavigation } from '@react-navigation/native';
+import { AppContext } from '../../contexts/AppContext';
 
 export default ({ element, user, setReview }) => {
+  const { id, type, name } = element;
+  
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(5);
+
   const navigation = useNavigation();
+  
   const { setUpdates } = useContext(AppContext);
 
-  const { id, type, name } = element;
+  // get image source depending on the type of media
   const image = type === 'track' ? element.album.images[0].url : element.images[0].url;
   const artists = getFormattedArtists(element.artists);
     
@@ -77,12 +80,13 @@ export default ({ element, user, setReview }) => {
       </View>
       <CustomInput 
         placeholder='Titre'
-        state={{ value: title, callback: setTitle }} />
+        value={title}
+        onChangeText={setTitle} />
       <CustomInput 
         placeholder='Rédiger une critique...'
-        state={{ value: content, callback: setContent }}
-        multiline
-        />
+        value={content}
+        onChangeText={setContent}
+        multiline />
       <CustomButton text='Publier' disabled={!user} color='#9E00FF' onPress={() => handleSubmit()} />
     </View>
   )

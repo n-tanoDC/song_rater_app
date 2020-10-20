@@ -3,18 +3,21 @@ import { FlatList, RefreshControl, StyleSheet } from 'react-native';
 
 import ReviewCard from './ReviewCard';
 import Loader from '../common/Loader';
-import { getReviews } from '../../data/reviews';
 import MessageView from '../common/MessageView';
 
-import { AppContext } from '../../AppContext';
+import { getReviews } from '../../data/reviews';
+
+import { UserContext } from '../../contexts/UserContext';
+import { AppContext } from '../../contexts/AppContext';
 
 export default ({ showFollowsOnly, showUser, user }) => {
   // initial state to null, will be set to an empty array (truthy) if fetch returns nothing 
   const [reviews, setReviews] = useState(null)
   const [next, setNext] = useState(null)
   const [isRefreshing, setRefresh] = useState(false)
+
   const { updates, setUpdates } = useContext(AppContext)
-  const currentUser = useContext(AppContext).user
+  const { connectedUser } = useContext(UserContext)
 
   // get reviews page by page and setUpdates to false when done
   
@@ -31,9 +34,9 @@ export default ({ showFollowsOnly, showUser, user }) => {
         const data = next ? [...reviews, ...res.reviews] : res.reviews
         // filter to only display reviews with a title and a content
         let filteredData = data.filter(review => review.content && review.title)
-        // if showFollowsOnly is true, filter to only show reviews written by people followed by the currentUser
+        // if showFollowsOnly is true, filter to only show reviews written by people followed by the connectedUser
         if (showFollowsOnly) {
-          filteredData = filteredData.filter(review => currentUser.following.some(userId => review.author._id === userId))
+          filteredData = filteredData.filter(review => connectedUser.following.some(userId => review.author._id === userId))
         }
         setReviews(filteredData)
         setNext(res.next)

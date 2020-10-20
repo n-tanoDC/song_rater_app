@@ -32,38 +32,38 @@ export default ({ element, rating }) => {
 
 const styles = StyleSheet.create({
   container: { 
+    backgroundColor: '#FDFDFD',
+    borderColor: '#F4F4F4',
+    borderTopWidth: 1, 
     flexDirection: 'row', 
     justifyContent: 'space-between',
-    borderTopWidth: 1, 
-    borderColor: '#F4F4F4',
-    backgroundColor: '#FDFDFD',
   },
   elementContainer: {
     flexDirection: 'row',
     width: '80%',
   },
   elementImg: { 
+    aspectRatio: 1,
     width: '20%',
-    aspectRatio: 1
   },
   elementInfos: { 
-    width: '80%',
+    justifyContent: 'space-evenly',
     marginHorizontal: 10, 
-    justifyContent: 'space-evenly'
+    width: '80%',
   },
   elementName: { 
     fontSize: 14, 
     fontWeight: 'bold',
   },
   artistName: { 
+    color: '#A0A0A0',
     fontSize: 12,
-    color: '#A0A0A0'
   },
   ratingContainer: {
-    padding: 10,
-    flexDirection: "row", 
     alignItems: "center", 
+    flexDirection: "row", 
     justifyContent: 'flex-end',
+    padding: 10,
   },
   ratingText: {
     fontSize: 16, 

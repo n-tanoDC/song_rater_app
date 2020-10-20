@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 export default ({ disabled, text, color = '#FFB906', onPress }) => {
   const buttonColor = disabled ? 'grey' : color;
+
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -17,13 +18,13 @@ export default ({ disabled, text, color = '#FFB906', onPress }) => {
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-end', 
+    borderRadius: 20,
+    elevation: 2,
     paddingHorizontal: 15,
     paddingVertical: 8,
-    borderRadius: 20,
-    elevation: 2
   },
   text: { 
     color: '#FDFDFD',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
 })

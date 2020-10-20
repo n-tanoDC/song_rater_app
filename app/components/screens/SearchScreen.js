@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../contexts/AppContext';
 import { loadMore, search } from '../../data/spotify';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
@@ -68,9 +68,9 @@ export default () => {
         color='#FFB906'
         icon='magnify'
         placeholder='Rechercher du contenu...'
-        state={{ value, callback: setValue }}
-      />
-      <CustomSegment data={['Morceaux', 'Albums']} state={{ selected, setSelected }} />
+        value={value}
+        onChangeText={setValue} />
+      <CustomSegment data={['Morceaux', 'Albums']} index={selected} callback={setSelected} />
       <View style={styles.content}>
         {content}
       </View>
@@ -80,15 +80,15 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    overflow: 'scroll',
     paddingHorizontal: 10,
     paddingTop: 10,
-    flex: 1,
     width: '100%', 
-    overflow: 'scroll'
   },
   content: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
   }
 })

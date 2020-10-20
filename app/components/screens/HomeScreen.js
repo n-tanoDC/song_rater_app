@@ -1,23 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { AppContext } from '../../AppContext';
-import CustomSegment from '../common/CustomSegment';
+import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
 
+import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
+
+import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
   const [selected, setSelected] = useState(0);
-  const { user } = useContext(AppContext);
+  const { connectedUser } = useContext(UserContext);
   let segmentedControl;
 
-  if (user) {
+  if (connectedUser) {
     segmentedControl = (
-      <CustomSegment data={['Toutes', 'Abonnements']} state={{ selected, setSelected }} />
+      <CustomSegment data={['Toutes', 'Abonnements']} index={selected} callback={setSelected} />
     )
   }
-
-  console.log(selected);
   
   return (
     <SafeAreaView style={styles.container}>

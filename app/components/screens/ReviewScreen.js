@@ -1,11 +1,11 @@
-import { useIsFocused } from '@react-navigation/native';
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { AppContext } from '../../AppContext';
-import Loader from '../common/Loader';
+
 import ReviewHeader from '../common/ReviewHeader';
 import ReviewDisplay from '../reviews/ReviewDisplay';
 import ReviewForm from '../reviews/ReviewForm';
+
+import { UserContext } from '../../contexts/UserContext';
 
 export default ({ route }) => {
   const { reviewToShow = null, element = null } = route.params;
@@ -13,19 +13,19 @@ export default ({ route }) => {
   
   useEffect(() => setReview(reviewToShow), [reviewToShow])
   
-  const { user } = useContext(AppContext);
+  const { connectedUser } = useContext(UserContext);
 
   let content;
 
   if (!review) {
-    content = (<ReviewForm setReview={setReview} element={element} user={user} />)
+    content = (<ReviewForm setReview={setReview} element={element} user={connectedUser} />)
   } else {
     content = (<ReviewDisplay review={review} />)
   }
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ReviewHeader user={review ? review.author : user} form={!review} element={review ? review.element : element} />
+      <ReviewHeader user={review ? review.author : connectedUser} form={!review} element={review ? review.element : element} />
       {content}
     </SafeAreaView>
   )

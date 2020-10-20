@@ -6,21 +6,22 @@ import ContentSection from '../common/ContentSection';
 import UserAvatar from '../users/UserAvatar';
 import { isVisiting } from '../../functions';
 
-import { AppContext } from '../../AppContext';
+import { UserContext } from '../../contexts/UserContext';
 
 const ReviewCard = ({ showUser, review }) => {
   const { title, content, element, rating, created_at, author } = review;
 
-  const { user } = useContext(AppContext);
   const navigation = useNavigation()
+  
+  const { connectedUser } = useContext(UserContext);
 
   let userProp, onPress;
   
-  if (isVisiting(user, author)) {
+  if (isVisiting(connectedUser, author)) {
     userProp = author;
     onPress = () => navigation.navigate('User', { user: author })
   } else {
-    userProp = user
+    userProp = connectedUser
     onPress = () => navigation.navigate('Account')
   }
 

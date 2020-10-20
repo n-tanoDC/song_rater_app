@@ -3,18 +3,20 @@ import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-nativ
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default (props) => {
-  const { 
+  const {
+    disabled,
+    autoFocus,
     color = '#9E00FF',
     handleSubmit,
-    onPress,
-    autoFocus,
-    secure,
-    placeholder,
     icon,
-    state,
     label,
     maxLength,
-    multiline } = props;
+    multiline,
+    onChangeText,
+    onPress,
+    placeholder,
+    secure,
+    value, } = props;
 
   let iconContainer, labelContainer;
 
@@ -44,6 +46,7 @@ export default (props) => {
       {labelContainer}
       <View style={containerStyle}>
         <TextInput
+          editable={!disabled}
           maxLength={maxLength}
           onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
           numberOfLines={multiline ? 5 : 1}
@@ -51,8 +54,8 @@ export default (props) => {
           multiline={multiline}
           secureTextEntry={secure}
           style={inputStyle}
-          value={state.value}
-          onChangeText={state.callback}
+          value={value}
+          onChangeText={onChangeText}
           placeholder={placeholder}/>
         {iconContainer}
       </View>
@@ -62,23 +65,23 @@ export default (props) => {
 
 const styles = StyleSheet.create({
   inputContainer: {
+    borderColor: '#E9E9E9',
+    borderRadius: 10,
+    borderWidth: 1,
     flexDirection: 'row',
     margin: 10,
     overflow: "hidden",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E9E9E9'
   },
   input: {
     backgroundColor: '#FDFDFD',
+    flex: 1,
     padding: 10,
-    flex: 1
   },
   iconContainer: {
+    alignItems: "center",
     height: 50,
-    width: 50,
     justifyContent: "center",
-    alignItems: "center"
+    width: 50,
   },
   label: {
     fontSize: 12,

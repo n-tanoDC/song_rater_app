@@ -1,16 +1,16 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import AppContextProvider from './AppContext';
 import { MenuProvider } from 'react-native-popup-menu';
 
 import TabNavigator from './navigation/TabNavigator'
+import ContextProvider from './ContextProvider';
 
 export default () => {
   return ( 
     <MenuProvider>
-      <AppContextProvider>
+      <ContextProvider>
         <TabNavigator />
-      </AppContextProvider>
+      </ContextProvider>
     </MenuProvider>
    )
 }

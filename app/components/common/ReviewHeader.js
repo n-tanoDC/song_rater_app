@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import CustomButton from './CustomButton';
-import UserAvatar from '../users/UserAvatar';
 import ButtonIcon from './ButtonIcon';
 import ContentSection from './ContentSection';
+import UserAvatar from '../users/UserAvatar';
+
 import { isVisiting } from '../../functions';
-import { AppContext } from '../../AppContext';
+
+import { UserContext } from '../../contexts/UserContext';
 
 export default ({ user, element }) => {
   const navigation = useNavigation();
-  const context = useContext(AppContext);
+  const { connectedUser } = useContext(UserContext);
   
   let userSection = (
     <CustomButton 
@@ -21,7 +23,7 @@ export default ({ user, element }) => {
   
   if (user) {
     let onPress = () => navigation.navigate('User', { user })
-    if (!isVisiting(context.user, user)) {
+    if (!isVisiting(connectedUser, user)) {
       onPress = () => navigation.navigate('Account')
     }
 

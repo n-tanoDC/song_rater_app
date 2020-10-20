@@ -1,39 +1,41 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import ReviewsList from '../reviews/ReviewsList';
 import UserAvatar from './UserAvatar';
+import ReviewsList from '../reviews/ReviewsList';
 import PopMenu from '../common/PopMenu';
 import CustomButton from '../common/CustomButton';
-import { AppContext } from '../../AppContext';
-import { isFollowing } from '../../functions';
+
 import { API_URL } from '../../config';
+import { isFollowing } from '../../functions';
 import { getOptions } from '../../data/helpers';
 
-export default ({ user, visit }) => {
-  const currentUser = useContext(AppContext).user;
-  const setCurrentUser = useContext(AppContext).setUser;
-  let followButton;
+import { UserContext } from '../../contexts/UserContext';
 
+export default ({ user, visit }) => {
+  const { connectedUser, setConnectedUser } = useContext(UserContext);
+  
   const follow = (action) => {
-    fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, currentUser.token, 'GET'))
-      .then(res => { 
-        if (res.status === 200) {
-          if (action === 'follow') {
-            setCurrentUser({...currentUser, following: [...currentUser.following, user._id]})
-          } else {
-            const userIndex = currentUser.following.findIndex(userId => userId === user._id)
-            let updatedFollowing = currentUser.following;
-            updatedFollowing.splice(userIndex, userIndex+1);
-            setCurrentUser({...currentUser, following: updatedFollowing})
-          }
+    fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
+    .then(res => { 
+      if (res.status === 200) {
+        if (action === 'follow') {
+          setConnectedUser({...connectedUser, following: [...connectedUser.following, user._id]})
+        } else {
+          const userIndex = connectedUser.following.findIndex(userId => userId === user._id)
+          let updatedFollowing = connectedUser.following;
+          updatedFollowing.splice(userIndex, userIndex+1);
+          setConnectedUser({...connectedUser, following: updatedFollowing})
         }
-      })  
-      .catch(err => console.log('Error :', err))
+      }
+    })  
+    .catch(err => console.log('Error :', err))
   }
 
-  if (currentUser) {
-    const following = isFollowing(currentUser, user);
+  let followButton;
+  
+  if (connectedUser) {
+    const following = isFollowing(connectedUser, user);
     const action = following ? 'unfollow' : 'follow';
 
     followButton = (

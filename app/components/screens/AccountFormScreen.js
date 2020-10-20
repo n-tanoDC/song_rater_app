@@ -1,12 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { pickImage, showToast } from '../../functions';
+import { useNavigation } from '@react-navigation/native';
+
 import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
-import { postChanges } from '../../data/user';
-import { AppContext } from '../../AppContext';
-import { useNavigation } from '@react-navigation/native';
+
 import { API_URL } from '../../config';
+import { pickImage, showToast } from '../../functions';
+import { postChanges } from '../../data/user';
+
+import { UserContext } from '../../contexts/UserContext';
+import { AppContext } from '../../contexts/AppContext';
 
 export default ({ route }) => {
   const { user } = route.params;
@@ -17,7 +21,7 @@ export default ({ route }) => {
   const [avatar, setAvatar] = useState(user.avatar);
   const [newAvatar, setNewAvatar] = useState(null);
 
-  const { setUser } = useContext(AppContext);
+  const { setConnectedUser } = useContext(UserContext);
   const { setUpdates } = useContext(AppContext);
 
   const navigation = useNavigation();
@@ -30,7 +34,7 @@ export default ({ route }) => {
         if (res instanceof Error) {
           throw res
         }
-        setUser(res)
+        setConnectedUser(res)
         showToast('Modifications enregistrées')
       })
       .then(() => {
@@ -49,25 +53,30 @@ export default ({ route }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image source={{ uri: source }} style={styles.image} />
         <CustomInput
+          disabled
           label="Photo de profil"
           icon='image'
           onPress={() => pickImage(setNewAvatar)}
           placeholder="Choisissez une photo..."
-          state={{ value: newAvatar ? newAvatar.uri : '', callback: setNewAvatar }} />
+          value={newAvatar ? newAvatar.uri : ''}
+          onChangeText={setNewAvatar} />
         <View>
           <CustomInput 
             label="Nom d'utilisateur"
             placeholder="Nom d'utilisateur" 
-            state={{ value: username, callback: setUsername }} />
+            value={username}
+            onChangeText={setUsername} />
           <CustomInput 
             label="Adresse email"
             placeholder="Email" 
-            state={{ value: email, callback: setEmail }} />
+            value={email}
+            onChangeText={setEmail} />
           <CustomInput 
             label="Description"
             placeholder="Description" 
             multiline 
-            state={{ value: description, callback: setDescription }} />
+            value={description}
+            onChangeText={setDescription} />
         </View>
         <CustomButton 
           text='Mettre à jour' 
@@ -82,13 +91,13 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scrollContainer: {
-    minHeight: '100%',
     justifyContent: "space-around",
+    minHeight: '100%',
   },
   image: {
-    width: '40%',
-    aspectRatio: 1,
     alignSelf: 'center',
+    aspectRatio: 1,
     borderRadius: 100,
+    width: '40%',
   },
 })

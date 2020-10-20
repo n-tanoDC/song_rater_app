@@ -6,10 +6,10 @@ import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-m
 
 import { logout } from '../../data/user';
 
-import { AppContext } from '../../AppContext';
+import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
-  const { user, setUser } = useContext(AppContext);
+  const { connectedUser, setConnectedUser } = useContext(UserContext);
   const navigation = useNavigation()
 
   return (
@@ -18,11 +18,11 @@ export default () => {
         <Icon name='dots-horizontal' color='#3A3A3A' size={28} />
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
-        <MenuOption style={styles.option} onSelect={() => logout(setUser)}>
+        <MenuOption style={styles.option} onSelect={() => logout(setConnectedUser)}>
           <Icon style={styles.optionIcon} name='account-remove' size={24} color='#3A3A3A' />
           <Text style={styles.optionText}>Déconnexion</Text>
         </MenuOption>
-        <MenuOption style={styles.option} onSelect={() => navigation.navigate('AccountForm', { user })}>
+        <MenuOption style={styles.option} onSelect={() => navigation.navigate('AccountForm', { user: connectedUser })}>
           <Icon style={styles.optionIcon} name='account-edit' size={24} color='#3A3A3A' />
           <Text style={styles.optionText}>Modifier mes informations</Text>
         </MenuOption>

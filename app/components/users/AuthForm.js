@@ -4,27 +4,29 @@ import { StyleSheet, View } from 'react-native';
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import CustomSegment from '../common/CustomSegment';
+
 import { login, register } from '../../data/user'
 import { showToast } from '../../functions';
 
-import { AppContext } from '../../AppContext';
+import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
-  const [username, setUsername] = useState('NicolasT');
+  const [username, setUsername] = useState('admin');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('password');
+  const [password, setPassword] = useState('Password22');
   const [passwordConf, setPasswordConf] = useState('')
 
   const [data, setData] = useState({})
   const [selected, setSelected] = useState(0);
   const isLogin = !selected;
   
-  const { setUser } = useContext(AppContext)
+  const { setConnectedUser } = useContext(UserContext)
 
   useEffect(() => { 
     isLogin ? setData({ username, password }) : setData({ username, password, email })
   }, [username, email, password, passwordConf])
   
+
   const formValidator = () => {
     for (let item of Object.values(data)) {
       if (item === '') {
@@ -40,7 +42,6 @@ export default () => {
   }
 
   
-
   const handleSubmit = () => {
     const { valid, message } = formValidator()
     if (valid) {
@@ -51,7 +52,7 @@ export default () => {
             throw res
           }
           const { user, token } = res;
-          setUser({ ...user, token })
+          setConnectedUser({ ...user, token })
         })
         .catch(err => showToast(err.message))
     } else {
@@ -59,39 +60,46 @@ export default () => {
     }
   }
 
-  const emailInput = !isLogin ?
-    <CustomInput 
-      label='Adresse email'
-      icon='email'
-      placeholder="Email"
-      state={{ value: email, callback: setEmail }} /> : null
+  let emailInput, passwordConfInput;
 
-  const passwordConfInput = !isLogin ?
-    <CustomInput 
-      label='Confirmer le mot de passe'
-      icon='lock-check'
-      secure
-      placeholder="Confirmer le mot de passe"
-      state={{ value: passwordConf, callback: setPasswordConf }} /> : null
+  if (!isLogin) {
+    emailInput = (
+      <CustomInput 
+        label='Adresse email'
+        icon='email'
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail} />)
+    passwordConfInput = (
+      <CustomInput 
+        label='Confirmer le mot de passe'
+        icon='lock-check'
+        secure
+        placeholder="Confirmer le mot de passe"
+        value={passwordConf}
+        onChangeText={setPasswordConf} />)
+  }
 
   return (    
     <View style={styles.contentContainer}>
       <View style={styles.segmentContainer}>
-        <CustomSegment data={['Se connecter', 'Créer un compte']} state={{ selected, setSelected }}/>
+        <CustomSegment data={['Se connecter', 'Créer un compte']} index={selected} callback={setSelected} />
       </View>
       <View style={styles.form}>
         <CustomInput
           label="Nom d'utilisateur"
           icon='account'
           placeholder="Nom d'utilisateur"
-          state={{ value: username, callback: setUsername }} />
+          value={username}
+          onChangeText={setUsername} />
         {emailInput}
         <CustomInput
           label='Mot de passe' 
           icon='lock'
           placeholder="Mot de passe"
           secure
-          state={{ value: password, callback: setPassword }} />
+          value={password}
+          onChangeText={setPassword} />
         {passwordConfInput}
         <CustomButton
           color='#FFB906'
@@ -104,17 +112,17 @@ export default () => {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    height: '100%',
-    width: '100%',
     backgroundColor: '#F6F6F6',
-    position: 'relative',
+    height: '100%',
     padding: 10,
+    position: 'relative',
+    width: '100%',
   },
   segmentContainer: {
     height: '10%'
   },
   form: {
+    height: '90%',
     justifyContent: 'center',
-    height: '90%' 
   }
 })
