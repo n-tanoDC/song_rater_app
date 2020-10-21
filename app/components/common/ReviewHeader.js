@@ -11,7 +11,7 @@ import { isVisiting } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
 
-export default ({ user, element }) => {
+export default ({ user, media }) => {
   const navigation = useNavigation();
   const { connectedUser } = useContext(UserContext);
   
@@ -40,7 +40,7 @@ export default ({ user, element }) => {
         <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.goBack()}/>
         {userSection}
       </View>
-      <ContentSection element={element} />
+      <ContentSection media={media} />
     </View>
   ) 
 };
@@ -70,19 +70,19 @@ const styles = StyleSheet.create({
     borderColor: '#E5E5E5',
     width: '100%'
   },
-  elementInfosContainer: {
+  mediaInfosContainer: {
     width: '80%',
     flexDirection: 'row',
   },
-  elementImageContainer: {
+  mediaImageContainer: {
     marginRight: 10,
     width: '20%',
   },
-  elementImage: {
+  mediaImage: {
     aspectRatio: 1,
     resizeMode: 'cover',
   },
-  elementInfos: {
+  mediaInfos: {
     width: '80%',
     justifyContent: 'space-evenly'
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontWeight: 'bold'
   },
-  elementRatingContainer: {
+  mediaRatingContainer: {
     width: '20%',
     padding: 10,
     flexDirection: 'row',

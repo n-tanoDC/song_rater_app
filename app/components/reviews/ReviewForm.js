@@ -7,12 +7,13 @@ import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
 import MessageView from '../common/MessageView';
 
-import { getFormattedArtists, showToast } from '../../functions';
+import { getCover, getFormattedArtists, getLink, showToast } from '../../functions';
 import { postReview } from '../../data/reviews';
+
 import { AppContext } from '../../contexts/AppContext';
 
-export default ({ element, user, setReview }) => {
-  const { id, type, name } = element;
+export default ({ media, user, setReview }) => {
+  const { id, type, name } = media;
   
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -23,15 +24,23 @@ export default ({ element, user, setReview }) => {
   const { setUpdates } = useContext(AppContext);
 
   // get image source depending on the type of media
-  const image = type === 'track' ? element.album.images[0].url : element.images[0].url;
-  const artists = getFormattedArtists(element.artists);
+  const image = getCover(media)
+  const link = getLink(media);
+  const artists = getFormattedArtists(media.artists);
     
   const handleSubmit = () => {
     const body = { 
-      title, 
+      title,
       content, 
       rating, 
-      element: { id, element_type: type, name, artists, image }
+      media: { 
+        id, 
+        name, 
+        artists, 
+        media_type: type, 
+        image,
+        link 
+      }
     }
 
     if (!title && content) {

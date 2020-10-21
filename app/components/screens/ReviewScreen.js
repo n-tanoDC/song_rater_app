@@ -8,7 +8,7 @@ import ReviewForm from '../reviews/ReviewForm';
 import { UserContext } from '../../contexts/UserContext';
 
 export default ({ route }) => {
-  const { reviewToShow = null, element = null } = route.params;
+  const { reviewToShow = null, media = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
   
   useEffect(() => setReview(reviewToShow), [reviewToShow])
@@ -18,14 +18,14 @@ export default ({ route }) => {
   let content;
 
   if (!review) {
-    content = (<ReviewForm setReview={setReview} element={element} user={connectedUser} />)
+    content = (<ReviewForm setReview={setReview} media={media} user={connectedUser} />)
   } else {
     content = (<ReviewDisplay review={review} />)
   }
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ReviewHeader user={review ? review.author : connectedUser} form={!review} element={review ? review.element : element} />
+      <ReviewHeader user={review ? review.author : connectedUser} form={!review} media={review ? review.media : media} />
       {content}
     </SafeAreaView>
   )

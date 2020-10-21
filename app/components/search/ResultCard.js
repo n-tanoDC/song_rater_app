@@ -12,14 +12,14 @@ export default memo(({ result }) => {
 
   return (
     <TouchableOpacity 
-      onPress={() => navigation.navigate('Review', { element: result, reviewToShow: null } )}
+      onPress={() => navigation.navigate('Media', { mediaToShow: result } )}
       style={styles.card}>
       <View style={styles.imageContainer}>
         <ImageBackground source={{ uri: image }} style={styles.image} />
       </View>
       <View style={styles.textContainer}>
         <Text numberOfLines={1} style={styles.title}>{result.name}</Text>
-        <Text numberOfLines={1} style={styles.artist}>{getArtists(result.artists)}</Text>
+        <Text numberOfLines={1} style={styles.artist}>{getArtists(result)}</Text>
       </View>
     </TouchableOpacity> 
   )

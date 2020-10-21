@@ -9,7 +9,7 @@ import { isVisiting } from '../../functions';
 import { UserContext } from '../../contexts/UserContext';
 
 const ReviewCard = ({ showUser, review }) => {
-  const { title, content, element, rating, created_at, author } = review;
+  const { title, content, media, rating, created_at, author } = review;
 
   const navigation = useNavigation()
   
@@ -37,20 +37,19 @@ const ReviewCard = ({ showUser, review }) => {
   }
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review } )} style={styles.card}>
-      <View style={styles.header}>
-        <View style={styles.headerText}>
-          <Text style={styles.title}>"{title}"</Text>
-          <Text style={styles.date}>{created_at}</Text>
+    <View style={styles.card}>
+      <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review })}>
+        <View style={styles.header}>
+          <View style={styles.headerText}>
+            <Text style={styles.title}>"{title}"</Text>
+            <Text style={styles.date}>{created_at}</Text>
+          </View>
+          {avatar}
         </View>
-        {avatar}
-      </View>
-      {content ? 
-      (<View>
-          <Text numberOfLines={2} style={styles.body}>{content}</Text>
-      </View>) : null}
-      <ContentSection element={element} rating={rating} />
-    </TouchableOpacity>
+        <Text numberOfLines={2} style={styles.body}>{content}</Text>
+      </TouchableOpacity>
+      <ContentSection media={media} rating={rating} />
+    </View>
   )
 };
 

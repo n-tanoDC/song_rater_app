@@ -1,10 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { getArtists, getCover } from '../../functions';
 
-export default ({ element, rating }) => {
+export default ({ media, rating }) => {
+  const navigation = useNavigation();
+
   let reviewRating = null;
 
   if (rating) {
@@ -17,16 +21,16 @@ export default ({ element, rating }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.elementContainer}>
-        <Image style={styles.elementImg} source={{ uri: getCover(element) }} />
-        <View style={styles.elementInfos}>
-          <Text numberOfLines={1} style={styles.elementName}>{element.name}</Text>
-          <Text numberOfLines={1} style={styles.artistName}>{getArtists(element.artists)}</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('Media', { mediaToShow: media })} style={styles.container}>
+      <View style={styles.mediaContainer}>
+        <Image style={styles.mediaImg} source={{ uri: getCover(media) }} />
+        <View style={styles.mediaInfos}>
+          <Text numberOfLines={1} style={styles.mediaName}>{media.name}</Text>
+          <Text numberOfLines={1} style={styles.artistName}>{getArtists(media)}</Text>
         </View>
       </View>
       {reviewRating}
-    </View>
+    </TouchableOpacity>
   )
 };
 
@@ -38,20 +42,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     justifyContent: 'space-between',
   },
-  elementContainer: {
+  mediaContainer: {
     flexDirection: 'row',
     width: '80%',
   },
-  elementImg: { 
+  mediaImg: { 
     aspectRatio: 1,
     width: '20%',
   },
-  elementInfos: { 
+  mediaInfos: { 
     justifyContent: 'space-evenly',
     marginHorizontal: 10, 
     width: '80%',
   },
-  elementName: { 
+  mediaName: { 
     fontSize: 14, 
     fontWeight: 'bold',
   },
