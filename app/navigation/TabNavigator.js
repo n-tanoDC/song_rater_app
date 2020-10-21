@@ -3,9 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 
-import { HomeNavigator, AccountNavigator } from './StackNavigators';
-import SearchScreen from '../components/screens/SearchScreen'
-import AccountScreen from '../components/screens/AccountScreen';
+import { HomeNavigator, AccountNavigator, SearchNavigator } from './StackNavigators';
 import TabIcon from './TabIcon';
 
 const { Navigator, Screen } = createBottomTabNavigator()
@@ -51,7 +49,7 @@ export default () => {
       >
         <Screen
           name="Search"
-          component={SearchScreen} />
+          component={SearchNavigator} />
         <Screen 
           name="Home"
           component={HomeNavigator} />
