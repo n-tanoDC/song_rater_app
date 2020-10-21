@@ -1,18 +1,25 @@
 import { API_URL } from "../config";
 import { getOptions } from "./helpers";
 
-// get all reviews from one or every users
-export const getReviews = (user, page = 1) => {
-  // add a string to the fetch URL if there's a user specified in the params
-  const userParams = user ? 'users/' + user.username + '/' : '';
-  return (
-  fetch(API_URL + userParams + 'reviews?page=' + page)
+
+export const getAllReviews = (page = 1) => 
+  fetch(API_URL + 'reviews?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
-  )
-}
 
-// post a review to the API
+
+export const getAllReviewsForOneUser = (user, page = 1) => 
+  fetch(API_URL + 'users/' + user.username + '/reviews?page=' + page)
+    .then(res => res.json())
+    .catch(err => console.log(err))
+
+
+export const getAllReviewsForOneMedia = (media, page = 1) =>
+  fetch(API_URL + 'reviews/media/' + media.id + '?page=' + page)
+    .then(res => res.json())
+    .catch(err => console.log(err))
+
+
 export const postReview = (body, token) =>
   fetch(API_URL + 'reviews', getOptions(body, token))
     .then(res => {
@@ -22,6 +29,7 @@ export const postReview = (body, token) =>
         case 409:
           return new Error('Vous avez déjà publié une critique sur ce contenu.')
         default:
+          console.log(res);
           return new Error('Une erreur s\'est produite. Réessayer ultérieurment.')
       }
     })
