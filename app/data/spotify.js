@@ -27,9 +27,3 @@ export const loadMore = (url, token) =>
   fetch(url, getAuthOptions(token))
     .then(res => res.json())
     .catch(err => console.log(err))
-
-
-export const getOneElement = (id, type, token) => 
-  fetch(EXTERNAL_API.spotify + type + 's/' + id, getAuthOptions(token))
-    .then(res => res.json())
-    .catch(err => console.log(err))
