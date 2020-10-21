@@ -44,7 +44,7 @@ export const getLink = media => {
 
 
 export const getAverageRating = reviews => {
-  if (!reviews || reviews.length === []) {
+  if (!reviews || reviews.length === 0) {
     return null;
   }
   const ratings = reviews.map(review => review.rating);

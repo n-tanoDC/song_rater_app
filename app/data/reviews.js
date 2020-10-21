@@ -8,13 +8,13 @@ export const getAllReviews = (page = 1) =>
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneUser = (user, page = 1) => 
+export const getAllReviewsForOneUser = (page = 1, user) => 
   fetch(API_URL + 'users/' + user.username + '/reviews?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneMedia = (media, page = 1) =>
+export const getAllReviewsForOneMedia = (page = 1, media) =>
   fetch(API_URL + 'reviews/media/' + media.id + '?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))

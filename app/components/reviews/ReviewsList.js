@@ -1,45 +1,57 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
 import ReviewCard from './ReviewCard';
 import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
 
-import { getReviews } from '../../data/reviews';
+import { getAverageRating } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
 
-export default ({ showFollowsOnly, showUser, user }) => {
-  // initial state to null, will be set to an empty array (truthy) if fetch returns nothing 
-  const [reviews, setReviews] = useState(null)
-  const [next, setNext] = useState(null)
-  const [isRefreshing, setRefresh] = useState(false)
+export default ({ getReviews, object, setRating, showFollowsOnly }) => {
+  const [reviews, setReviews] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+  const [isRefreshing, setRefresh] = useState(false);
+
+  // Load reviews on first render & when showFollowsOnly changes
+  useEffect(() => loadReviews(), [showFollowsOnly])
+  // Load reviews when there has been updates
+  useEffect(() => { if (updates) { loadReviews() }})
 
   const { updates, setUpdates } = useContext(AppContext)
   const { connectedUser } = useContext(UserContext)
 
-  // get reviews page by page and setUpdates to false when done
-  
-  // load all reviews on first render
-  useEffect(() => loadReviews(), [showFollowsOnly])
-  // load all reviews when there has been updates
-  useEffect(() => { if (updates) { loadReviews() }})
-  
   const loadReviews = () => {
-    getReviews(user, next)
+    getReviews(nextPage, object)
       .then(res => {
-        // check if we are loading a new page of review or not
-        // add news reviews to the list if we are
-        const data = next ? [...reviews, ...res.reviews] : res.reviews
-        // filter to only display reviews with a title and a content
-        let filteredData = data.filter(review => review.content && review.title)
-        // if showFollowsOnly is true, filter to only show reviews written by people followed by the connectedUser
-        if (showFollowsOnly) {
-          filteredData = filteredData.filter(review => connectedUser.following.some(userId => review.author._id === userId))
+        let allReviews;
+
+        // Add response to existing reviews, if we are loading a new page
+        if (nextPage) {
+          allReviews = reviews.concat(res.reviews);
+        } else {
+          allReviews = res.reviews
         }
-        setReviews(filteredData)
-        setNext(res.next)
+
+        // Filter to only display reviews with a title and a content
+        let filteredReviews = allReviews.filter(review => review.content && review.title)
+
+        // Filter to only display reviews from followed users, if showFollowsOnly is true
+        if (showFollowsOnly) {
+          filteredReviews = filteredReviews.filter(review => 
+            connectedUser.following.some(userId => 
+              review.author._id === userId))
+        }
+
+        // Get the average rating of all reviews, if setRating is provided as a prop
+        if (setRating) {
+          setRating(getAverageRating(allReviews));
+        }
+
+        setReviews(filteredReviews)
+        setNextPage(res.next)
       })
       .then(() => {
         setRefresh(false)
@@ -48,31 +60,36 @@ export default ({ showFollowsOnly, showUser, user }) => {
       .catch(err => console.log(err))
   }
 
+  const renderItem = ({ item }) => <ReviewCard showUser review={item} />
+
+  // When the end of the list is reached, load the next page of reviews if there is one.
+  const onEndReached = () => {
+    if (nextPage) {
+      loadReviews()
+    }
+  } 
+
   // show a loader while we load reviews
   if (updates || !reviews) {
     return (<Loader />)
   }
   
-  const renderItem = ({ item }) => <ReviewCard showUser={showUser} review={item} />
-  // load next page of reviews if there is one, when we reach the end of the list
-  const onEndReached = () => next ? loadReviews() : null;
-  const refreshControl = <RefreshControl refreshing={isRefreshing} onRefresh={() => loadReviews()} />
+  if (reviews.length === 0) {
+    return (<MessageView message='Aucune critique.' />)
+  } 
   
-  return reviews.length > 0 ? (
-    <FlatList
-      refreshControl={refreshControl}
-      style={styles.list}
-      data={reviews}
-      renderItem={renderItem}
-      keyExtractor={item => item._id}
-      onEndReached={() => onEndReached()}
-      onEndReachedThreshold={0.5}
-    />
-  ) : (<MessageView message='Aucune critique.' />)
-};
 
-const styles = StyleSheet.create({
-  list: {
-    padding: 10
-  }
-})
+  const refreshControl = <RefreshControl refreshing={isRefreshing} onRefresh={() => loadReviews()} />
+
+  return (
+    <>
+      <FlatList
+        refreshControl={refreshControl}
+        data={reviews}
+        renderItem={renderItem}
+        keyExtractor={item => item._id}
+        onEndReached={() => onEndReached()}
+        onEndReachedThreshold={0.5} />
+    </>
+  )
+};

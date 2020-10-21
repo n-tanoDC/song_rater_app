@@ -11,6 +11,7 @@ import { isFollowing } from '../../functions';
 import { getOptions } from '../../data/helpers';
 
 import { UserContext } from '../../contexts/UserContext';
+import { getAllReviewsForOneUser } from '../../data/reviews';
 
 export default ({ user, visit }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
@@ -60,7 +61,7 @@ export default ({ user, visit }) => {
         </View>
       </View>
       <View style={styles.content}>
-        <ReviewsList user={user}/>
+        <ReviewsList object={user} getReviews={getAllReviewsForOneUser}/>
       </View>
     </>
   )

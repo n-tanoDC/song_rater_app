@@ -5,6 +5,7 @@ import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
 
 import { UserContext } from '../../contexts/UserContext';
+import { getAllReviews } from '../../data/reviews';
 
 export default () => {
   const [selected, setSelected] = useState(0);
@@ -24,7 +25,7 @@ export default () => {
       </View>
       <View style={styles.content}>
         {segmentedControl}
-        <ReviewsList showFollowsOnly={selected} showUser />
+        <ReviewsList showFollowsOnly={selected} getReviews={getAllReviews} />
       </View>
     </SafeAreaView>
   )

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ImageBackground, Linking, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { getArtists, getAverageRating, getCover, getLink } from '../../functions';
+import { Image, ImageBackground, Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { getAllReviewsForOneMedia } from '../../data/reviews';
+import { getArtists, getCover, getLink } from '../../functions';
 import ButtonIcon from '../common/ButtonIcon';
 import ReviewsList from '../reviews/ReviewsList';
 
@@ -8,6 +9,7 @@ export default ({ route, navigation }) => {
   const { mediaToShow } = route.params;
 
   const [media, setMedia] = useState(mediaToShow);
+  const [rating, setRating] = useState(null)
   
   useEffect(() => setMedia(mediaToShow), [mediaToShow])
 
@@ -51,7 +53,7 @@ export default ({ route, navigation }) => {
       </View>
       <View>
         <Text style={styles.pageTitle}>Critiques</Text>
-        <ReviewsList media={media}/>
+        <ReviewsList object={media} getReviews={getAllReviewsForOneMedia} setRating={setRating}/>
       </View>
     </SafeAreaView>
   )
