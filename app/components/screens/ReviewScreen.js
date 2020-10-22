@@ -11,21 +11,19 @@ export default ({ route }) => {
   const { reviewToShow = null, media = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
   
-  useEffect(() => setReview(reviewToShow), [reviewToShow])
+  useEffect(() => setReview(reviewToShow), [reviewToShow, media])
   
   const { connectedUser } = useContext(UserContext);
 
-  let content;
-
-  if (!review) {
-    content = (<ReviewForm setReview={setReview} media={media} user={connectedUser} />)
-  } else {
-    content = (<ReviewDisplay review={review} />)
+  let content = (<ReviewDisplay review={review} />);
+ 
+  if (media && !review) {
+    content = (<ReviewForm setReview={setReview} media={media} user={connectedUser} />);
   }
     
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ReviewHeader user={review ? review.author : connectedUser} form={!review} media={review ? review.media : media} />
+      <ReviewHeader user={review ? review.author : connectedUser} rating={review ? review.rating : null} media={review ? review.media : media} />
       {content}
     </SafeAreaView>
   )
