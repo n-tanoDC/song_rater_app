@@ -70,7 +70,11 @@ export default ({ media, user, setReview }) => {
       .catch(err => showToast(err.message))
   }
 
-  return !user ? (<MessageView message='Connectez-vous pour publier une critique.' />) : (
+  if (!user) {
+    return (<MessageView message='Connectez-vous pour publier une critique.' />)
+  }
+
+  return (
     <View style={styles.form}>
       <View style={styles.ratingContainer}>
         <View style={styles.ratingDisplay}>
@@ -90,13 +94,20 @@ export default ({ media, user, setReview }) => {
       <CustomInput 
         placeholder='Titre'
         value={title}
-        onChangeText={setTitle} />
-      <CustomInput 
-        placeholder='Rédiger une critique...'
-        value={content}
-        onChangeText={setContent}
-        multiline />
-      <CustomButton text='Publier' disabled={!user} color='#9E00FF' onPress={() => handleSubmit()} />
+        onChangeText={setTitle}
+        maxLength={50} />
+      <View style={styles.contentInputWrapper}>
+        <CustomInput 
+          placeholder='Rédiger une critique...'
+          value={content}
+          onChangeText={setContent}
+          multiline />
+      </View>
+      <CustomButton 
+        text='Publier' 
+        disabled={!user} 
+        color='#9E00FF' 
+        onPress={() => handleSubmit()} />
     </View>
   )
 };
@@ -104,7 +115,8 @@ export default ({ media, user, setReview }) => {
 const styles = StyleSheet.create({
   form: {
     padding: 10,
-    flex: 1
+    flex: 1,
+    justifyContent: 'flex-start',
   },
   ratingContainer: {
     marginVertical: 10,
@@ -125,5 +137,9 @@ const styles = StyleSheet.create({
   ratingText: {
     color: '#FDFDFD',
     fontWeight: 'bold',
+  },
+  contentInputWrapper: {
+    flex: 1,
+    paddingBottom: 10
   }
 })

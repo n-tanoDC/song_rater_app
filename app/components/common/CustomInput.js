@@ -12,6 +12,7 @@ export default (props) => {
     label,
     maxLength,
     multiline,
+    numberOfLines,
     onChangeText,
     onPress,
     placeholder,
@@ -38,8 +39,8 @@ export default (props) => {
     )
   }
 
-  const containerStyle = multiline ? { ...styles.inputContainer, flex: 1, minHeight: 100, } : styles.inputContainer;
-  const inputStyle = multiline ? { ...styles.input, textAlignVertical: 'top' } : styles.input;
+  const containerStyle = multiline && !numberOfLines ? { ...styles.inputContainer, marginVertical: 0, minHeight: '100%' } : styles.inputContainer;
+  const inputStyle = multiline && !numberOfLines ? { ...styles.input, textAlignVertical: 'top' } : styles.input;
 
   return (
     <View>
@@ -49,7 +50,7 @@ export default (props) => {
           editable={!disabled}
           maxLength={maxLength}
           onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
-          numberOfLines={multiline ? 5 : 1}
+          numberOfLines={numberOfLines}
           autoFocus={autoFocus}
           multiline={multiline}
           secureTextEntry={secure}
@@ -67,9 +68,9 @@ const styles = StyleSheet.create({
   inputContainer: {
     borderColor: '#E9E9E9',
     borderRadius: 10,
+    margin: 10,
     borderWidth: 1,
     flexDirection: 'row',
-    margin: 10,
     overflow: "hidden",
   },
   input: {
