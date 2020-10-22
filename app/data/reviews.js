@@ -2,19 +2,19 @@ import { API_URL } from "../config";
 import { getOptions } from "./helpers";
 
 
-export const getAllReviews = (page = 1) => 
+export const getAllReviews = (page) => 
   fetch(API_URL + 'reviews?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneUser = (page = 1, user) => 
+export const getAllReviewsForOneUser = (page, user) => 
   fetch(API_URL + 'users/' + user.username + '/reviews?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneMedia = (page = 1, media) =>
+export const getAllReviewsForOneMedia = (page, media) =>
   fetch(API_URL + 'reviews/media/' + media.id + '?page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))

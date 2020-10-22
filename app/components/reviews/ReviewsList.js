@@ -34,7 +34,8 @@ export default (props) => {
   const { connectedUser } = useContext(UserContext)
 
   const loadReviews = () => {
-    getReviews(nextPage, object)
+    const page = nextPage ? nextPage : 1;
+    getReviews(page, object)
       .then(res => {
         let allReviews;
 
