@@ -61,7 +61,7 @@ export default ({ user, visit }) => {
         </View>
       </View>
       <View style={styles.content}>
-        <ReviewsList object={user} getReviews={getAllReviewsForOneUser}/>
+        <ReviewsList padder object={user} getReviews={getAllReviewsForOneUser}/>
       </View>
     </>
   )

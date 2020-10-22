@@ -1,16 +1,26 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 
 import ReviewCard from './ReviewCard';
 import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
 
-import { getAverageRating } from '../../functions';
+import { accountDeleted, getAverageRating } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
 
-export default ({ getReviews, object, setRating, showFollowsOnly }) => {
+export default (props) => {
+  const {
+    getReviews, 
+    hideMedia,
+    object, 
+    setRating, 
+    showFollowsOnly,
+    listHeader,
+    padder,
+  } = props;
+
   const [reviews, setReviews] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [isRefreshing, setRefresh] = useState(false);
@@ -42,7 +52,7 @@ export default ({ getReviews, object, setRating, showFollowsOnly }) => {
         if (showFollowsOnly) {
           filteredReviews = filteredReviews.filter(review => 
             connectedUser.following.some(userId => 
-              review.author._id === userId))
+              !accountDeleted(review.author) && review.author._id === userId))
         }
 
         // Get the average rating of all reviews, if setRating is provided as a prop
@@ -60,7 +70,11 @@ export default ({ getReviews, object, setRating, showFollowsOnly }) => {
       .catch(err => console.log(err))
   }
 
-  const renderItem = ({ item }) => <ReviewCard showUser review={item} />
+  const renderItem = ({ item }) => (
+    <View style={{ paddingHorizontal: padder ? 10 : 0 }}>
+      <ReviewCard hideMedia={hideMedia} showUser review={item} />
+    </View>
+  )
 
   // When the end of the list is reached, load the next page of reviews if there is one.
   const onEndReached = () => {
@@ -73,23 +87,18 @@ export default ({ getReviews, object, setRating, showFollowsOnly }) => {
   if (updates || !reviews) {
     return (<Loader />)
   }
-  
-  if (reviews.length === 0) {
-    return (<MessageView message='Aucune critique.' />)
-  } 
-  
 
   const refreshControl = <RefreshControl refreshing={isRefreshing} onRefresh={() => loadReviews()} />
-
+  
   return (
-    <>
-      <FlatList
-        refreshControl={refreshControl}
-        data={reviews}
-        renderItem={renderItem}
-        keyExtractor={item => item._id}
-        onEndReached={() => onEndReached()}
-        onEndReachedThreshold={0.5} />
-    </>
+    <FlatList
+      ListHeaderComponent={listHeader}
+      ListEmptyComponent={() => <MessageView message='Aucune critique' />}
+      refreshControl={refreshControl}
+      data={reviews}
+      renderItem={renderItem}
+      keyExtractor={item => item._id}
+      onEndReached={() => onEndReached()}
+      onEndReachedThreshold={0.5} />
   )
 };

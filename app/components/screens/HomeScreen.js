@@ -21,7 +21,7 @@ export default () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text>Critiques</Text>
+        <Text style={styles.headerTitle}>Critiques</Text>
       </View>
       <View style={styles.content}>
         {segmentedControl}
@@ -33,16 +33,21 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FDFDFD'
+    backgroundColor: '#FDFDFD',
+    padding: 10,
   },
   header: {
     borderBottomWidth: 1,
+    marginBottom: 10,
     borderColor: '#F0F0F0',
-    padding: 10,
     flexDirection: "row",
     alignItems: 'center',
-    justifyContent: 'space-between',
     height: '10%'
+  },
+  headerTitle: {
+    fontSize: 24,
+    color: '#3A3A3A',
+    fontWeight: 'bold',
   },
   content: {
     height: '90%'
