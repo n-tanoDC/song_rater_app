@@ -15,17 +15,20 @@ import { getAllReviewsForOneUser } from '../../data/reviews';
 
 export default ({ user, visit }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
+  console.log(connectedUser.following);
   
   const follow = (action) => {
     fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
     .then(res => { 
       if (res.status === 200) {
         if (action === 'follow') {
-          setConnectedUser({...connectedUser, following: [...connectedUser.following, user._id]})
+          const updatedFollowing = connectedUser.following;
+          updatedFollowing.push(user._id)
+          setConnectedUser({...connectedUser, following: updatedFollowing})
         } else {
-          const userIndex = connectedUser.following.findIndex(userId => userId === user._id)
-          let updatedFollowing = connectedUser.following;
-          updatedFollowing.splice(userIndex, userIndex+1);
+          const index = connectedUser.following.findIndex(userId => userId === user._id)
+          const updatedFollowing = connectedUser.following;
+          updatedFollowing.splice(index, 1);
           setConnectedUser({...connectedUser, following: updatedFollowing})
         }
       }
