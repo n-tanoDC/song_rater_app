@@ -81,7 +81,7 @@ export default () => {
   }
 
   return (    
-    <View style={styles.contentContainer}>
+    <View style={styles.container}>
       <View style={styles.segmentContainer}>
         <CustomSegment data={['Se connecter', 'Créer un compte']} index={selected} callback={setSelected} />
       </View>
@@ -101,28 +101,31 @@ export default () => {
           value={password}
           onChangeText={setPassword} />
         {passwordConfInput}
-        <CustomButton
-          color='#FFB906'
-          onPress={handleSubmit}
-          text={isLogin ? 'Se connecter' : 'Créer un compte'} />
+        <View style={styles.buttonWrapper}>
+          <CustomButton
+            color='#FFB906'
+            onPress={handleSubmit}
+            text={isLogin ? 'Se connecter' : 'Créer un compte'} />
+        </View>
       </View>
+      
     </View>
   )
 };
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    backgroundColor: '#F6F6F6',
-    height: '100%',
-    padding: 10,
-    position: 'relative',
-    width: '100%',
+  container: {
+    height: '100%'
   },
   segmentContainer: {
-    height: '10%'
+    paddingBottom: 20,
   },
   form: {
-    height: '90%',
+    flexGrow: 1,
+    padding: 10,
     justifyContent: 'center',
+  },
+  buttonWrapper: {
+    marginVertical: 20
   }
 })
