@@ -45,7 +45,7 @@ export const getLink = media => {
 
 export const getAverageRating = reviews => {
   if (!reviews || reviews.length === 0) {
-    return null;
+    return '-';
   }
   const ratings = reviews.map(review => review.rating);
   const sum = ratings.reduce((a, b) => a + b, 0);
@@ -66,6 +66,9 @@ export const isVisiting = (connectedUser, author) => {
 }
 
 
+export const accountDeleted = (author) => !(author instanceof Object) 
+
+
 export const pickImage = (callback) => {
   ImagePicker.showImagePicker({
     noData: true,
@@ -75,10 +78,8 @@ export const pickImage = (callback) => {
     }
   }, res => {
     if (res.didCancel) {
-      console.log('did cancel');
       showToast('Modification annulée')
     } else if (res.error) {
-      console.log('ImagePicker Error: ', res.error);
       showToast('Une erreur s\'est produite, veuillez réessayer ultériement')
     } else {
       callback(res);
