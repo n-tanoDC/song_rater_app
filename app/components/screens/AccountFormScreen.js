@@ -21,7 +21,7 @@ export default ({ route }) => {
   const [avatar, setAvatar] = useState(user.avatar);
   const [newAvatar, setNewAvatar] = useState(null);
 
-  const { setConnectedUser } = useContext(UserContext);
+  const { setConnectedUser, connectedUser } = useContext(UserContext);
   const { setUpdates } = useContext(AppContext);
 
   const navigation = useNavigation();
@@ -34,7 +34,7 @@ export default ({ route }) => {
         if (res instanceof Error) {
           throw res
         }
-        setConnectedUser(res)
+        setConnectedUser({ ...connectedUser, ...res })
         showToast('Modifications enregistrées')
       })
       .then(() => {
@@ -73,8 +73,10 @@ export default ({ route }) => {
             onChangeText={setEmail} />
           <CustomInput 
             label="Description"
+            multiline
+            maxLength={50}
+            numberOfLines={3}
             placeholder="Description" 
-            multiline 
             value={description}
             onChangeText={setDescription} />
         </View>
