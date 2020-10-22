@@ -1,76 +1,80 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Linking, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { getArtists, getCover } from '../../functions';
+import { getArtists, getCover, getLink } from '../../functions';
+import ButtonIcon from './ButtonIcon';
 
-export default ({ media, rating }) => {
+export default ({ media }) => {
   const navigation = useNavigation();
 
-  let reviewRating = null;
-
-  if (rating) {
-    reviewRating = (
-      <View style={styles.ratingContainer}>
-        <Text style={styles.ratingText}>{rating} </Text>
-        <Icon name='star' color='#FFB906' size={20} /> 
-      </View>
-    )
-  }
-
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Media', { mediaToShow: media })} style={styles.container}>
-      <View style={styles.mediaContainer}>
-        <Image style={styles.mediaImg} source={{ uri: getCover(media) }} />
-        <View style={styles.mediaInfos}>
-          <Text numberOfLines={1} style={styles.mediaName}>{media.name}</Text>
-          <Text numberOfLines={1} style={styles.artistName}>{getArtists(media)}</Text>
-        </View>
+    <View style={styles.container}>
+      <TouchableOpacity 
+        style={styles.mediaContainer}
+        containerStyle={styles.mediaContainerStyle} 
+        onPress={() => navigation.navigate('Media', { mediaToShow: media })}>
+            <Image 
+              style={styles.mediaImg} 
+              source={{ uri: getCover(media) }} />
+            <View style={styles.mediaInfos}>
+              <Text 
+                numberOfLines={1} 
+                style={styles.mediaName}>{media.name}</Text>
+              <Text 
+                numberOfLines={1} 
+                style={styles.artistName}>{getArtists(media)}</Text>
+            </View>
+      </TouchableOpacity>
+      <View style={styles.buttonWrapper}>
+        <ButtonIcon
+        name='spotify'
+        color='#1DB954'
+        onPress={() => Linking.openURL(getLink(media))} />
       </View>
-      {reviewRating}
-    </TouchableOpacity>
+    </View>
   )
 };
 
 const styles = StyleSheet.create({
   container: { 
-    backgroundColor: '#FDFDFD',
+    backgroundColor: '#3A3A3A',
     borderColor: '#F4F4F4',
     borderTopWidth: 1, 
     flexDirection: 'row', 
     justifyContent: 'space-between',
+    width: '100%'
   },
   mediaContainer: {
     flexDirection: 'row',
-    width: '80%',
+  },
+  mediaContainerStyle: {
+    width: '85%',
   },
   mediaImg: { 
+    minWidth: '20%',
     aspectRatio: 1,
-    width: '20%',
   },
-  mediaInfos: { 
-    justifyContent: 'space-evenly',
-    marginHorizontal: 10, 
+  mediaInfos: {
     width: '80%',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 10, 
   },
   mediaName: { 
     fontSize: 14, 
+    color: '#FDFDFD',
     fontWeight: 'bold',
   },
   artistName: { 
-    color: '#A0A0A0',
+    color: '#FDFDFD',
     fontSize: 12,
   },
-  ratingContainer: {
+  buttonWrapper: {
+    width: '15%',
     alignItems: "center", 
     flexDirection: "row", 
     justifyContent: 'flex-end',
     padding: 10,
-  },
-  ratingText: {
-    fontSize: 16, 
-    fontWeight: "bold",
   },
 })
