@@ -9,7 +9,7 @@ import AccountScreen from '../components/screens/AccountScreen';
 import AccountFormScreen from '../components/screens/AccountFormScreen';
 
 import SearchScreen from '../components/screens/SearchScreen';
-import MediaScreen from '../components/search/MediaScreen';
+import MediaScreen from '../components/screens/MediaScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 

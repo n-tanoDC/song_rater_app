@@ -35,7 +35,6 @@ export const register = data =>
             username: 'Nom d\'utilisateur'
           }
           let message;
-          console.log(error, data.email);
           switch (error.type) {
             case 'syntax':
               message = keys[error.key] + ' incorrect.';
@@ -73,12 +72,12 @@ export const postChanges = (inputs, token, newAvatar) => {
   return (
     RNFetchBlob.fetch('PUT', API_URL + 'users/account', { Authorization: 'Bearer ' + token }, body)
       .then(async res => {
+        console.log(res, body);
         switch (res.respInfo.status) {
           case 200: 
             return res.json()
           case 400:
             const error = await res.json()
-            console.log(error);
             let keys = {
               email: 'Email',
               password: 'Mot de passe',

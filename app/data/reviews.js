@@ -29,7 +29,6 @@ export const postReview = (body, token) =>
         case 409:
           return new Error('Vous avez déjà publié une critique sur ce contenu.')
         default:
-          console.log(res);
           return new Error('Une erreur s\'est produite. Réessayer ultérieurment.')
       }
     })
