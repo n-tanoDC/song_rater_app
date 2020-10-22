@@ -4,12 +4,11 @@ import { StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { API_URL } from '../../config';
 
 export default ({ user, small, onPress }) => {
-  const { avatar } = user;
   const size = small ? 40 : 80;
   let source;
 
-  if (avatar) {
-    source = { uri: API_URL + 'uploads/' + avatar };
+  if (user && user.avatar) {
+    source = { uri: API_URL + 'uploads/' + user.avatar };
   } else {
     source = require('../../assets/images/avatar_placeholder.png');
   }
