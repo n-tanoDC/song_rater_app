@@ -34,13 +34,14 @@ export default (props) => {
   const { connectedUser } = useContext(UserContext)
 
   const loadReviews = () => {
-    const page = nextPage ? nextPage : 1;
+    // set page to 1 if we are not loading a new page or if there are any updates
+    const page = !nextPage || updates ? 1 : nextPage;
     getReviews(page, object)
       .then(res => {
         let allReviews;
 
-        // Add response to existing reviews, if we are loading a new page
-        if (nextPage) {
+        // Add response to existing reviews, if we are loading a new page and if there's no updates
+        if (nextPage && !updates) {
           allReviews = reviews.concat(res.reviews);
         } else {
           allReviews = res.reviews
