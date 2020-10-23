@@ -50,7 +50,7 @@ export default ({ route, navigation }) => {
                 name='music-note-plus'
                 color='#9E00FF'
                 background='#FDFDFD'
-                onPress={() => navigation.navigate('Review', { media, create: true })} />
+                onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
             </View>  
           </View>
         </View>

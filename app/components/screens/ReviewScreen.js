@@ -10,6 +10,7 @@ import { UserContext } from '../../contexts/UserContext';
 export default ({ route }) => {
   const { reviewToShow = null, media = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
+
   
   useEffect(() => setReview(reviewToShow), [reviewToShow, media])
   
@@ -17,7 +18,7 @@ export default ({ route }) => {
 
   let content = (<ReviewDisplay review={review} />);
  
-  if (media && !review) {
+  if (!review) {
     content = (<ReviewForm setReview={setReview} media={media} user={connectedUser} />);
   }
     
