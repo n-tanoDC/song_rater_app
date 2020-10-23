@@ -28,34 +28,46 @@ export default () => {
   
 
   const formValidator = () => {
+    // Loop on every values of an object and check if one is empty.
+    //  => return false with a message if it is the case.
     for (let item of Object.values(data)) {
       if (item === '') {
         return { valid: false, message: 'Veuillez remplir tous les champs.'}
       }
     }
 
+    // Check if the password and the password confirmation are different.
+    // But only if the user is not trying to login, hence creating an account ('!isLogin').
+    //  => return false with a message if the passwords are different. 
     if (passwordConf !== password && !isLogin) {
       return { valid: false, message: 'Les mots de passes ne sont pas identiques.'}
     }
 
+    // => return true with no message if everything went well.
     return { valid: true };
   }
 
   
   const handleSubmit = () => {
+    // Get valid and messages properties from formValidator function.
     const { valid, message } = formValidator()
     if (valid) {
+      // Pick a function depending on if the user is trying to login or not
       const authFunction = isLogin ? login : register;
       authFunction(data)
         .then(res => {
+          // if the function returned an error, throw it to end the function
           if (res instanceof Error) {
             throw res
           }
+          // if not update the user context with the information in the response
           const { user, token } = res;
           setConnectedUser({ ...user, token })
         })
+        // catch the error thrown in the then() and display its message in the form of a Toast
         .catch(err => showToast(err.message))
     } else {
+      // if the form is not valid, display the error message (defined in the formValidator function)
       showToast(message);
     }
   }
