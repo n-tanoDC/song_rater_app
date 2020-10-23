@@ -33,7 +33,6 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FDFDFD',
     padding: 10,
   },
   header: {

@@ -15,7 +15,6 @@ import { getAllReviewsForOneUser } from '../../data/reviews';
 
 export default ({ user, visit }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
-  console.log(connectedUser.following);
   
   const follow = (action) => {
     fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
