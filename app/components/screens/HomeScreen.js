@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
     height: '10%'
   },
   headerTitle: {
-    fontSize: 24,
+    fontFamily: 'baloo2-semibold',
+    fontSize: 28,
     color: '#3A3A3A',
-    fontWeight: 'bold',
   },
   content: {
     height: '90%'
