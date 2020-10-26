@@ -86,3 +86,14 @@ export const pickImage = (callback) => {
     }
   })
 }
+
+
+export const getUpdatedFields = (inputs, user) => {
+  let newInputs = {};
+  for (const [key, value] of Object.entries(inputs)) {
+    if (inputs[key] !== user[key]) {
+      newInputs[key] = value;
+    }
+  }
+  return newInputs;
+}

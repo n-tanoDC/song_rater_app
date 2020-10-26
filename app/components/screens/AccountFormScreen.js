@@ -6,7 +6,7 @@ import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config';
-import { pickImage, showToast } from '../../functions';
+import { getBody, pickImage, showToast } from '../../functions';
 import { postChanges } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -29,7 +29,8 @@ export default ({ route }) => {
   let source = API_URL + 'uploads/' + avatar;
 
   const handleSubmit = () => {
-    postChanges({ username, description, email }, user.token, newAvatar)
+    const inputs = getUpdatedInputs({ username, email, description }, connectedUser)
+    postChanges(inputs, user.token, newAvatar)
       .then(res => {
         if (res instanceof Error) {
           throw res
