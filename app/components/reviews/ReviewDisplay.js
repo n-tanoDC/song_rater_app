@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     width: '75%',
     paddingVertical: 5,
   },
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     color: '#FDFDFD'
   },
   contentContainer: {

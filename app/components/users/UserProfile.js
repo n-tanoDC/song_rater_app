@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
   },
   description: {
     fontSize: 14,

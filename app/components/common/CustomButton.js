@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
   },
   text: { 
     color: '#FDFDFD',
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
   },
 })

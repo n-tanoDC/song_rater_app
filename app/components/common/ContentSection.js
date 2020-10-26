@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   mediaName: { 
     fontSize: 14, 
     color: '#FDFDFD',
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
   },
   artistName: { 
     color: '#FDFDFD',

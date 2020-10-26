@@ -100,25 +100,22 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
   },
   date: {
     fontSize: 12,
-    fontStyle: 'italic',
     color: 'grey'
   },
   body: {
     padding: 15,
   },
   title: {
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     fontSize: 14,
     color: '#3A3A3A',
-    fontStyle: 'italic',
     marginBottom: 10
   },
   content: {
-    fontStyle: 'italic',
     fontSize: 12
   }
 });

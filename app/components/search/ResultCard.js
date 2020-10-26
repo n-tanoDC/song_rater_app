@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   title: {
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     fontSize: 16
   },
   artist: {

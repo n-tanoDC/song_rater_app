@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   rating: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     marginRight: 5
   },
 })

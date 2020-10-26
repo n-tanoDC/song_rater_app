@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#FDFDFD',
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     fontSize: 18,
     textShadowColor: '#3A3A3A',
     textShadowOffset: { width: -1, height: 1 },
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   },
   artists: {
     color: '#FDFDFD',
-    fontStyle: 'italic',
     textShadowColor: '#3A3A3A',
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10

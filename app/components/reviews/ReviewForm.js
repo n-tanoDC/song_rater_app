@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     color: '#FDFDFD',
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
   },
   contentInputWrapper: {
     flex: 1,

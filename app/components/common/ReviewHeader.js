@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   username: {
-    fontWeight: 'bold',
+    fontFamily: 'baloo2-semibold',
     fontSize: 16,
     marginRight: 10
   },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   year: {
     fontSize: 12,
     color: 'gray',
-    fontWeight: 'bold'
+    fontFamily: 'baloo2-semibold'
   },
   mediaRatingContainer: {
     width: '20%',

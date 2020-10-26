@@ -1,7 +1,7 @@
 import React from 'react';
-import AppContext from './contexts/AppContext';
-import NetworkContext from './contexts/NetworkContext';
-import UserContext from './contexts/UserContext';
+import AppContext from './AppContext';
+import NetworkContext from './NetworkContext';
+import UserContext from './UserContext';
 
 export default ({ children }) => 
   <NetworkContext>

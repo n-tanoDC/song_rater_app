@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 12,
-    fontWeight: 'bold'
+    fontFamily: 'baloo2-semibold'
   }
 })
