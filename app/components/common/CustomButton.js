@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import colors from '../../styles/colors';
 
-export default ({ disabled, text, color = '#FFB906', onPress }) => {
+export default ({ disabled, text, color = colors.secondary, onPress }) => {
   const buttonColor = disabled ? 'grey' : color;
 
   return (
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   text: { 
-    color: '#FDFDFD',
+    color: colors.white,
     fontFamily: 'baloo2-semibold',
   },
 })

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import colors from '../../styles/colors';
 
 export default ({ review }) => {
   return (
@@ -19,7 +20,7 @@ export default ({ review }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
     flex: 1
   },
   titleContainer: {
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     alignItems: 'center',
-    backgroundColor: '#FFB906',
+    backgroundColor: colors.secondary,
     borderRadius: 20,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
   rating: {
     fontSize: 14,
     fontFamily: 'baloo2-semibold',
-    color: '#FDFDFD'
+    color: colors.white
   },
   contentContainer: {
     padding: 15,

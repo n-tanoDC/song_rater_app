@@ -1,6 +1,7 @@
 import SegmentedControl from '@react-native-community/segmented-control';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import colors from '../../styles/colors';
 
 export default ({ data, index, callback }) => {
   
@@ -17,7 +18,7 @@ export default ({ data, index, callback }) => {
       activeFontStyle={styles.active}
       selectedIndex={index}
       onValueChange={value => handleChange(value)}
-      tintColor='#9E00FF'
+      tintColor={colors.primary}
     />
   )
 };
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     fontFamily: 'baloo2-regular',
   },
   container: {
-    backgroundColor: '#C4C4C4', 
+    backgroundColor: colors.lightgrey, 
     margin: 10,
   },
 })

@@ -6,6 +6,7 @@ import ReviewsList from '../reviews/ReviewsList';
 
 import { UserContext } from '../../contexts/UserContext';
 import { getAllReviews } from '../../data/reviews';
+import colors from '../../styles/colors';
 
 export default () => {
   const [selected, setSelected] = useState(0);
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontFamily: 'baloo2-semibold',
     fontSize: 28,
-    color: '#3A3A3A',
+    color: colors.darkgrey,
   },
   content: {
     height: '90%'

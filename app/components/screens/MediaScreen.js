@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Image, ImageBackground, Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { getAllReviewsForOneMedia } from '../../data/reviews';
-import { getArtists, getCover, getLink } from '../../functions';
+
 import ButtonIcon from '../common/ButtonIcon';
 import RatingIcon from '../common/RatingIcon';
 import ReviewsList from '../reviews/ReviewsList';
+import { getArtists, getCover, getLink } from '../../functions';
+import { getAllReviewsForOneMedia } from '../../data/reviews';
+import colors from '../../styles/colors';
 
 export default ({ route, navigation }) => {
   const { mediaToShow } = route.params;
@@ -21,7 +23,7 @@ export default ({ route, navigation }) => {
           <ButtonIcon 
             size={36}
             name='chevron-left' 
-            color='#FDFDFD' 
+            color={colors.white} 
             onPress={() => navigation.goBack()} />
         </View>
         <View style={styles.mediaWrapper}>
@@ -36,20 +38,20 @@ export default ({ route, navigation }) => {
             <RatingIcon rating={rating} />
           </View>
           <View style={styles.actionButtonsWrapper}>
-            <View style={{ ...styles.actionButton, backgroundColor: '#3A3A3A' }}>
+            <View style={{ ...styles.actionButton, backgroundColor: colors.darkgrey }}>
               <ButtonIcon 
                 size={28}
                 name='spotify'
-                color='#1DB954'
-                background='#3A3A3A'
+                color={colors.green}
+                background={colors.darkgrey}
                 onPress={() => Linking.openURL(getLink(media))} />
             </View>
-            <View style={{ ...styles.actionButton, backgroundColor: '#FDFDFD' }}>
+            <View style={{ ...styles.actionButton, backgroundColor: colors.white }}>
               <ButtonIcon 
                 size={28}
                 name='music-note-plus'
-                color='#9E00FF'
-                background='#FDFDFD'
+                color={colors.primary}
+                background={colors.white}
                 onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
             </View>  
           </View>
@@ -106,16 +108,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   title: {
-    color: '#FDFDFD',
+    color: colors.white,
     fontFamily: 'baloo2-semibold',
     fontSize: 18,
-    textShadowColor: '#3A3A3A',
+    textShadowColor: colors.darkgrey,
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10
   },
   artists: {
-    color: '#FDFDFD',
-    textShadowColor: '#3A3A3A',
+    color: colors.white,
+    textShadowColor: colors.darkgrey,
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10
   },
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   rating: {
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
     height: '100%',
     paddingHorizontal: 10,
     alignItems: 'center',
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#9E00FF',
+    backgroundColor: colors.primary,
   },
   reviewsWrapper: {
     flex: 1,

@@ -9,6 +9,7 @@ import { login, register } from '../../data/user'
 import { showToast } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
+import colors from '../../styles/colors';
 
 export default () => {
   const [username, setUsername] = useState('admin');
@@ -115,7 +116,7 @@ export default () => {
         {passwordConfInput}
         <View style={styles.buttonWrapper}>
           <CustomButton
-            color='#FFB906'
+            color={colors.secondary}
             onPress={handleSubmit}
             text={isLogin ? 'Se connecter' : 'Créer un compte'} />
         </View>

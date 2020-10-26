@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
 import { AppContext } from '../../contexts/AppContext';
 import { loadMore, search } from '../../data/spotify';
+import colors from '../../styles/colors';
 import CustomInput from '../common/CustomInput';
 import CustomSegment from '../common/CustomSegment';
 import Loader from '../common/Loader';
@@ -65,7 +66,7 @@ export default () => {
         autoFocus
         onPress={handleSubmit}
         handleSubmit={handleSubmit}
-        color='#FFB906'
+        color={colors.secondary}
         icon='magnify'
         placeholder='Rechercher du contenu...'
         value={value}

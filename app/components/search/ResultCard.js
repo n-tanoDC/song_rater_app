@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react
 import { useNavigation } from '@react-navigation/native';
 
 import { getArtists } from '../../functions';
+import colors from '../../styles/colors';
 
 export default memo(({ result }) => {
 
@@ -27,7 +28,7 @@ export default memo(({ result }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
     elevation: 5,
     flexDirection: 'row',
     marginBottom: 15,

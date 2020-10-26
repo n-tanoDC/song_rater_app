@@ -8,6 +8,7 @@ import { accountDeleted, getDate, isVisiting } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
 import RatingIcon from '../common/RatingIcon';
+import colors from '../../styles/colors';
 
 const ReviewCard = ({ review, hideMedia }) => {
   let { title, content, media, rating, created_at, author } = review;
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F2F2F2',
     elevation: 5,
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
 
   },
   header: {
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'baloo2-semibold',
     fontSize: 14,
-    color: '#3A3A3A',
+    color: colors.darkgrey,
     marginBottom: 10
   },
   content: {

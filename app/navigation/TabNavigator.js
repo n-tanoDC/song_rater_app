@@ -5,16 +5,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { HomeNavigator, AccountNavigator, SearchNavigator } from './StackNavigators';
 import TabIcon from './TabIcon';
+import colors from '../styles/colors';
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
 export default () => {
   const tabBarOptions = {
     showLabel: false,
-    activeTintColor: '#9E00FF',
-    inactiveTintColor: '#3A3A3A',
+    activeTintColor: colors.primary,
+    inactiveTintColor: colors.darkgrey,
     style: {
-      backgroundColor: '#FDFDFD',
+      backgroundColor: colors.white,
     }
   }
 

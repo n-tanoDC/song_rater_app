@@ -7,6 +7,7 @@ import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-m
 import { logout } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';
+import colors from '../../styles/colors';
 
 export default () => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
@@ -15,15 +16,15 @@ export default () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Icon name='dots-horizontal' color='#3A3A3A' size={28} />
+        <Icon name='dots-horizontal' color={colors.darkgrey} size={28} />
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
         <MenuOption style={styles.option} onSelect={() => logout(setConnectedUser)}>
-          <Icon style={styles.optionIcon} name='account-remove' size={24} color='#3A3A3A' />
+          <Icon style={styles.optionIcon} name='account-remove' size={24} color={colors.darkgrey} />
           <Text style={styles.optionText}>Déconnexion</Text>
         </MenuOption>
         <MenuOption style={styles.option} onSelect={() => navigation.navigate('AccountForm', { user: connectedUser })}>
-          <Icon style={styles.optionIcon} name='account-edit' size={24} color='#3A3A3A' />
+          <Icon style={styles.optionIcon} name='account-edit' size={24} color={colors.darkgrey} />
           <Text style={styles.optionText}>Modifier mes informations</Text>
         </MenuOption>
       </MenuOptions>
@@ -42,8 +43,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 'auto',
     alignItems: 'center',
-  },
-  optionText: {
   },
   optionIcon: {
     marginRight: 10,

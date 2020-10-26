@@ -10,6 +10,7 @@ import UserAvatar from '../users/UserAvatar';
 import { isVisiting } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
+import colors from '../../styles/colors';
 
 export default ({ user, media }) => {
   const navigation = useNavigation();
@@ -19,7 +20,7 @@ export default ({ user, media }) => {
     <CustomButton 
       onPress={() => navigation.navigate('Account')}
       text='Se connecter'
-      color='#9E00FF' />)
+      color={colors.primary} />)
   
   if (user) {
     let onPress = () => navigation.navigate('User', { user })
@@ -37,7 +38,7 @@ export default ({ user, media }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <ButtonIcon name='chevron-left' color='#3A3A3A' onPress={() => navigation.goBack()}/>
+        <ButtonIcon name='chevron-left' color={colors.darkgrey} onPress={() => navigation.goBack()}/>
         {userSection}
       </View>
       <ContentSection media={media} />
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: '#E5E5E5'
+    borderColor: colors.grey
   },
   user: {
     flexDirection: 'row',
@@ -63,11 +64,11 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   headerBottom: {
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
     flexDirection: 'row',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#E5E5E5',
+    borderColor: colors.grey,
     width: '100%'
   },
   mediaInfosContainer: {

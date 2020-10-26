@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, TextInput, View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import colors from '../../styles/colors';
 
 export default (props) => {
   const {
     disabled,
     autoFocus,
-    color = '#9E00FF',
+    color = colors.primary,
     handleSubmit,
     icon,
     label,
@@ -34,7 +35,7 @@ export default (props) => {
     <TouchableOpacity 
       onPress={onPress ? () => onPress() : null}
       style={{...styles.iconContainer, backgroundColor: color}}>
-      <Icon color='#FDFDFD' name={icon} size={28}/>
+      <Icon color={colors.white} name={icon} size={28}/>
     </TouchableOpacity>
     )
   }
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   input: {
-    backgroundColor: '#FDFDFD',
+    backgroundColor: colors.white,
     flex: 1,
     padding: 10,
   },

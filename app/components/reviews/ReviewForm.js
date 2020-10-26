@@ -81,8 +81,8 @@ export default ({ media, user, setReview }) => {
           <Text style={styles.ratingText}>{rating}/10</Text>
         </View>
         <SwipeableRating
-          color='#FFB906'
-          emptyColor='#FFB906'
+          color={colors.secondary}
+          emptyColor={colors.secondary}
           style={styles.rating}
           rating={rating}
           minRating={1}
@@ -106,7 +106,7 @@ export default ({ media, user, setReview }) => {
       <CustomButton 
         text='Publier' 
         disabled={!user} 
-        color='#9E00FF' 
+        color={colors.primary} 
         onPress={() => handleSubmit()} />
     </View>
   )
@@ -129,13 +129,13 @@ const styles = StyleSheet.create({
     flex: 0
   },
   ratingDisplay: {
-    backgroundColor: '#FFB906',
+    backgroundColor: colors.secondary,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 20
   },
   ratingText: {
-    color: '#FDFDFD',
+    color: colors.white,
     fontFamily: 'baloo2-semibold',
   },
   contentInputWrapper: {

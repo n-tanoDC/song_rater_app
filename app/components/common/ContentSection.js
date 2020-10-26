@@ -4,6 +4,7 @@ import { Image, Linking, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { getArtists, getCover, getLink } from '../../functions';
+import colors from '../../styles/colors';
 import ButtonIcon from './ButtonIcon';
 
 export default ({ media }) => {
@@ -39,7 +40,7 @@ export default ({ media }) => {
 
 const styles = StyleSheet.create({
   container: { 
-    backgroundColor: '#3A3A3A',
+    backgroundColor: colors.darkgrey,
     borderColor: '#F4F4F4',
     borderTopWidth: 1, 
     flexDirection: 'row', 
@@ -63,11 +64,11 @@ const styles = StyleSheet.create({
   },
   mediaName: { 
     fontSize: 14, 
-    color: '#FDFDFD',
+    color: colors.white,
     fontFamily: 'baloo2-semibold',
   },
   artistName: { 
-    color: '#FDFDFD',
+    color: colors.white,
     fontSize: 12,
   },
   buttonWrapper: {
