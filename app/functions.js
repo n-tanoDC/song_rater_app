@@ -1,5 +1,6 @@
 import { ToastAndroid } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import moment from 'moment/min/moment-with-locales';
 
 
 // return formatted Array of artists, used to send post request to the API
@@ -33,6 +34,9 @@ export const getCover = media => {
   } 
   return media.type === 'track' ? media.album.images[0].url : media.images[0].url;
 }
+
+
+export const getDate = timestamp => moment.utc(timestamp).locale('fr').fromNow();
 
 
 export const getLink = media => {

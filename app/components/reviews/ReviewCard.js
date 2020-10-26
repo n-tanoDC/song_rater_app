@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import ContentSection from '../common/ContentSection';
 import UserAvatar from '../users/UserAvatar';
-import { accountDeleted, isVisiting } from '../../functions';
+import { accountDeleted, getDate, isVisiting } from '../../functions';
 
 import { UserContext } from '../../contexts/UserContext';
 import RatingIcon from '../common/RatingIcon';
@@ -50,7 +50,7 @@ const ReviewCard = ({ review, hideMedia }) => {
               onPress={onPress} />
             <View style={styles.headerText}>
               <Text numberOfLines={1} style={styles.username}>{author.username}</Text>
-              <Text numberOfLines={1} style={styles.date}>{created_at}</Text>
+              <Text numberOfLines={1} style={styles.date}>{getDate(created_at)}</Text>
             </View>
           </View>
           <RatingIcon rating={rating} />
