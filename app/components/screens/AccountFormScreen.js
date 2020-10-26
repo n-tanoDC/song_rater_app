@@ -6,7 +6,7 @@ import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config';
-import { getBody, pickImage, showToast } from '../../functions';
+import { getUpdatedInputs, pickImage, showToast } from '../../functions';
 import { postChanges } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';

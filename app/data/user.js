@@ -88,7 +88,6 @@ export const postChanges = (inputs, token, newAvatar) => {
   return (
     RNFetchBlob.fetch('PUT', API_URL + 'users/account', { Authorization: 'Bearer ' + token }, body)
       .then(async res => {
-        console.log(res, body);
         switch (res.respInfo.status) {
           case 200: 
             return res.json()
