@@ -7,7 +7,7 @@ import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config';
 import { getUpdatedInputs, pickImage, showToast } from '../../functions';
-import { postChanges } from '../../data/user';
+import { deleteAccount, postChanges } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
@@ -84,6 +84,9 @@ export default ({ route }) => {
         <CustomButton 
           text='Mettre à jour' 
           onPress={() => handleSubmit()} />
+        <CustomButton 
+          text='Supprimer mon compte'
+          onPress={() => deleteAccount(setConnectedUser, connectedUser.token)} />
       </ScrollView>
     </SafeAreaView>
   )

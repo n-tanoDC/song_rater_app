@@ -71,6 +71,25 @@ export const logout = (callback) => {
   callback(null);
 }
 
+export const deleteAccount = (callback, token) => {
+  fetch(API_URL + 'users/account', getOptions(null, token, 'DELETE'))
+    .then(res => {
+      switch (res.status) {
+        case 200 : 
+          logout(callback);
+          navigation.pop();
+          showToast('Votre compte a été supprimé avec succès.');
+          break;
+        default :
+          showToast();
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      showToast()
+    })
+}
+
 export const postChanges = (inputs, token, newAvatar) => {
   let body = [];
   for (const [key, value] of Object.entries(inputs)) {
