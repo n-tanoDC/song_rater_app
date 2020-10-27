@@ -10,8 +10,13 @@ export const getFormattedArtists = artists => {
 
 
 // display a toast at the bottom of the screen
-export const showToast = message => {
-  ToastAndroid.show(message, ToastAndroid.SHORT)
+export const showToast = (message = null) => {
+  const newMessage = message ? 
+    message 
+      : 
+    'Une erreur s\'est produite, veuillez réessayer ultérieurement';
+
+  ToastAndroid.show(newMessage, ToastAndroid.SHORT)
 }
 
 
@@ -84,7 +89,7 @@ export const pickImage = (callback) => {
     if (res.didCancel) {
       showToast('Modification annulée')
     } else if (res.error) {
-      showToast('Une erreur s\'est produite, veuillez réessayer ultériement')
+      showToast()
     } else {
       callback(res);
     }
