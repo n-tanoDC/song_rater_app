@@ -3,7 +3,7 @@ export default colors = {
   secondary: '#FFB906',
   darkgrey: '#3A3A3A',
   grey: '#E5E5E5',
-  lightgrey: '#B0B0B0',
+  lightgrey: '#C4C4C4',
   white: '#FDFDFD',
   green: '#1DB954'
 }

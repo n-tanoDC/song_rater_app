@@ -13,6 +13,7 @@ export default ({ data, index, callback }) => {
   return (
     <SegmentedControl
       values={data}
+      backgroundColor={colors.lightgrey}
       style={styles.container}
       fontStyle={styles.inactive}
       activeFontStyle={styles.active}
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     fontFamily: 'baloo2-regular',
   },
   container: {
-    backgroundColor: colors.lightgrey, 
     margin: 10,
   },
 })
