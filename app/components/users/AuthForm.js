@@ -12,10 +12,10 @@ import { UserContext } from '../../contexts/UserContext';
 import colors from '../../styles/colors';
 
 export default () => {
-  const [username, setUsername] = useState('admin');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('test');
+  const [email, setEmail] = useState('testtest@gmail.com');
   const [password, setPassword] = useState('Password22');
-  const [passwordConf, setPasswordConf] = useState('')
+  const [passwordConf, setPasswordConf] = useState('Password22')
 
   const [data, setData] = useState({})
   const [selected, setSelected] = useState(0);

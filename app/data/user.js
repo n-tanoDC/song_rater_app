@@ -1,6 +1,7 @@
 import RNFetchBlob from 'rn-fetch-blob';
 
 import { API_URL } from '../config';
+import { showToast } from '../functions';
 import { getOptions } from './helpers';
 
 
@@ -71,24 +72,20 @@ export const logout = (callback) => {
   callback(null);
 }
 
-export const deleteAccount = (callback, token) => {
+export const deleteAccount = (token) => 
   fetch(API_URL + 'users/account', getOptions(null, token, 'DELETE'))
     .then(res => {
       switch (res.status) {
         case 200 : 
-          logout(callback);
-          navigation.pop();
-          showToast('Votre compte a été supprimé avec succès.');
-          break;
+          return res;
         default :
-          showToast();
+          showToast()
       }
     })
     .catch(err => {
       console.log(err);
       showToast()
     })
-}
 
 export const postChanges = (inputs, token, newAvatar) => {
   let body = [];

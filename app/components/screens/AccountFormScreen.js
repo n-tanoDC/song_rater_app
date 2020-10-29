@@ -7,10 +7,11 @@ import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config';
 import { getUpdatedInputs, pickImage, showToast } from '../../functions';
-import { deleteAccount, postChanges } from '../../data/user';
+import { deleteAccount, logout, postChanges } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
+import colors from '../../styles/colors';
 
 export default ({ route }) => {
   const { user } = route.params;
@@ -43,6 +44,20 @@ export default ({ route }) => {
         navigation.pop()
       })
       .catch(err => showToast(err.message))
+  }
+
+
+  const handleDelete = () => {
+    deleteAccount(connectedUser.token)
+      .then(res => {
+        logout(setConnectedUser);
+        navigation.pop();
+        showToast('Votre compte a été bien été supprimé.');
+      })
+      .catch(err => {
+        console.log(err);
+        showToast();
+      })
   }
   
   if (newAvatar) {
@@ -86,7 +101,8 @@ export default ({ route }) => {
           onPress={() => handleSubmit()} />
         <CustomButton 
           text='Supprimer mon compte'
-          onPress={() => deleteAccount(setConnectedUser, connectedUser.token)} />
+          color={colors.red}
+          onPress={() => handleDelete()} />
       </ScrollView>
     </SafeAreaView>
   )
