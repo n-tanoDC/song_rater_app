@@ -1,4 +1,5 @@
 import { API_URL } from "../config";
+import { showToast } from "../functions";
 import { getOptions } from "./helpers";
 
 
@@ -32,4 +33,7 @@ export const postReview = (body, token) =>
           return new Error('Une erreur s\'est produite. Réessayer ultérieurment.')
       }
     })
-    .catch(err => console.log(err))
+    .catch(() => {
+      console.log(error); 
+      showToast()
+    })

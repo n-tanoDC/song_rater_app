@@ -11,7 +11,6 @@ import { accountDeleted } from '../../functions';
 export default ({ route }) => {
   const { reviewToShow = null, media = null } = route.params;
   const [review, setReview] = useState(reviewToShow);
-
   
   useEffect(() => setReview(reviewToShow), [reviewToShow, media])
   

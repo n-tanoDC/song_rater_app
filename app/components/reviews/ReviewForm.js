@@ -15,20 +15,24 @@ import { AppContext } from '../../contexts/AppContext';
 export default ({ media, user, setReview }) => {
   const { id, type, name } = media;
   
+  // State variables to control inputs
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [rating, setRating] = useState(5);
 
   const navigation = useNavigation();
   
+  // Allow to trigger a render of the app
   const { setUpdates } = useContext(AppContext);
 
-  // get image source depending on the type of media
+  // Get image source, link & artists
   const image = getCover(media)
   const link = getLink(media);
   const artists = getFormattedArtists(media.artists);
-    
+  
+
   const handleSubmit = () => {
+    //create the body of the request
     const body = { 
       title,
       content, 
@@ -43,33 +47,37 @@ export default ({ media, user, setReview }) => {
       }
     }
 
+    // If the user writes a title or a content, he has to write both
     if (!title && content) {
       return showToast('Veuillez saisir un titre.')
     } else if (title && !content) {
       return showToast('Veuillez saisir une critique.')
     }
 
+    // Check if the user is only rating the media
     let ratingOnly = (!title || !content)
 
+    // Call POST function, passing the body and the user token
     postReview(body, user.token)
       .then(res => {
         if (res instanceof Error) {
           throw res
         }
         setReview(res)
-        showToast('Critique publiée')
       })
       .then(() => {
         if (ratingOnly) {
           showToast('Note publiée')
           navigation.goBack();
         } else {
+          showToast('Critique publiée')
           setUpdates(true)
         }
       })
       .catch(err => showToast(err.message))
   }
 
+  // Show a message and hide the form if the user is not connected
   if (!user) {
     return (<MessageView message='Connectez-vous pour publier une critique.' />)
   }

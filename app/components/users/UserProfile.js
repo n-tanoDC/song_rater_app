@@ -7,7 +7,7 @@ import PopMenu from '../common/PopMenu';
 import CustomButton from '../common/CustomButton';
 
 import { API_URL } from '../../config';
-import { isFollowing } from '../../functions';
+import { isFollowing, showToast } from '../../functions';
 import { getOptions } from '../../data/helpers';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -17,27 +17,46 @@ import colors from '../../styles/colors';
 export default ({ user, visit }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
   
-  const follow = (action) => {
+  // Updating following status
+  const updateFollow = (action) => {
     fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
     .then(res => { 
       if (res.status === 200) {
-        if (action === 'follow') {
-          const updatedFollowing = connectedUser.following;
-          updatedFollowing.push(user._id)
-          setConnectedUser({...connectedUser, following: updatedFollowing})
-        } else {
-          const index = connectedUser.following.findIndex(userId => userId === user._id)
-          const updatedFollowing = connectedUser.following;
-          updatedFollowing.splice(index, 1);
-          setConnectedUser({...connectedUser, following: updatedFollowing})
-        }
+
+        // Store the whole array in a variable
+        const updatedFollowing = connectedUser.following;
+
+        switch (action) {
+          case 'follow':
+            // Push the followed user in the array
+            updatedFollowing.push(user._id);
+            break;
+          case 'unfollow':
+            // Find the index of the user to unfollow
+            const index = connectedUser.following.findIndex(userId => userId === user._id);
+            // Remove the user to unfollow from the array
+            updatedFollowing.splice(index, 1);
+            break;
+          default:
+            throw new Error('Action not supported')
+          }
+
+        // Update the user context with the new array
+        setConnectedUser({...connectedUser, following: updatedFollowing})
+      } else {
+        throw new Error(res.status)
       }
     })  
-    .catch(err => console.log('Error :', err))
+    .catch(err => {
+      showToast();
+      console.log(err);
+    })
   }
 
   let followButton;
   
+  // Show follow button only if a user is connected
+  // Change color, text and action depending on following status
   if (connectedUser) {
     const following = isFollowing(connectedUser, user);
     const action = following ? 'unfollow' : 'follow';
@@ -45,8 +64,8 @@ export default ({ user, visit }) => {
     followButton = (
       <CustomButton 
         text={following ? 'Suivi' : 'Suivre'} 
-        color={following ? 'green' : null} 
-        onPress={() => follow(action)} />
+        color={following ? colors.green : colors.secondary} 
+        onPress={() => updateFollow(action)} />
     )
   }
 
