@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 import UserProfile from '../users/UserProfile';
 import AuthForm from '../users/AuthForm';
@@ -8,12 +8,18 @@ import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
 
-  // accessing only the property "connectedUser" of the User Context
   const { connectedUser } = useContext(UserContext);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       {connectedUser ? <UserProfile user={connectedUser} /> : <AuthForm />}
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.grey,
+    flex: 1,
+  }
+})

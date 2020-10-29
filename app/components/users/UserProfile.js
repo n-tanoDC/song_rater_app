@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 
 import UserAvatar from './UserAvatar';
 import ReviewsList from '../reviews/ReviewsList';
@@ -12,6 +12,7 @@ import { getOptions } from '../../data/helpers';
 
 import { UserContext } from '../../contexts/UserContext';
 import { getAllReviewsForOneUser } from '../../data/reviews';
+import colors from '../../styles/colors';
 
 export default ({ user, visit }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
@@ -48,19 +49,20 @@ export default ({ user, visit }) => {
         onPress={() => follow(action)} />
     )
   }
-  
 
   return (
     <>
       <View style={styles.header}>
+        <ImageBackground
+          blurRadius={20}
+          style={styles.headerBackground}
+          source={{ uri: API_URL + 'uploads/' + user.avatar }}>
         <UserAvatar user={user} />
-        <View style={styles.textContainer}>
-          <Text style={styles.username}>{user.username}</Text>
-          <Text style={styles.description}>{user.description}</Text>
-        </View>
+        <Text style={styles.username}>{user.username}</Text>
         <View style={styles.buttonContainer}>
           {!visit ? <PopMenu /> : followButton}
         </View>
+        </ImageBackground>
       </View>
       <View style={styles.content}>
         <ReviewsList padder object={user} getReviews={getAllReviewsForOneUser}/>
@@ -71,33 +73,26 @@ export default ({ user, visit }) => {
 
 const styles = StyleSheet.create({
   header: {
-    padding: 20,
-    height: '15%',
-    flexDirection: 'row',
-    alignItems: 'center'
+    height: '30%',
   },
-  content: {
-    height: '85%'
-  },
-  imageContainer: {
+  headerBackground: {
+    height: '100%',
+    alignItems: 'center',
     justifyContent: 'center'
   },
-  image: {
-    height: 80,
-    width: 80,
-    borderRadius: 100,
-    aspectRatio: 1
-  }, 
-  textContainer: {
-    justifyContent: 'space-evenly',
-    flex: 5,
-    paddingHorizontal: 10
-  },
   username: {
-    fontSize: 18,
+    marginTop: 10,
     fontFamily: 'baloo2-semibold',
+    fontSize: 18,
+    color: colors.white,
+    textShadowColor: colors.darkgrey,
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
-  description: {
-    fontSize: 14,
+  buttonContainer: {
+    position: 'absolute',
+    top: 10,
+    right: 10
   },
+  content: {},
 })

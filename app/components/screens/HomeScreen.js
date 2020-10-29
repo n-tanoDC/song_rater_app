@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 
 import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
@@ -15,14 +15,15 @@ export default () => {
 
   if (connectedUser) {
     segmentedControl = (
-      <CustomSegment data={['Toutes', 'Abonnements']} index={selected} callback={setSelected} />
+      <CustomSegment data={['Toutes les critiques', 'Abonnements']} index={selected} callback={setSelected} />
     )
   }
   
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Critiques</Text>
+        <Text style={styles.headerTitle}>SongRater</Text>
+        <Image source={require('../../assets/images/logo1.png')} style={styles.headerLogo} />
       </View>
       <View style={styles.content}>
         {segmentedControl}
@@ -42,12 +43,16 @@ const styles = StyleSheet.create({
     borderColor: '#F0F0F0',
     flexDirection: "row",
     alignItems: 'center',
+    justifyContent: 'space-between',
     height: '10%'
   },
   headerTitle: {
     fontFamily: 'baloo2-semibold',
     fontSize: 28,
     color: colors.darkgrey,
+  },
+  headerLogo: {
+    height: 40, width: 40
   },
   content: {
     height: '90%'

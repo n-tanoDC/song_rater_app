@@ -16,7 +16,7 @@ export default () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Icon name='dots-horizontal' color={colors.darkgrey} size={28} />
+        <Icon name='dots-horizontal' color={colors.white} size={28} />
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
         <MenuOption style={styles.option} onSelect={() => logout(setConnectedUser)}>

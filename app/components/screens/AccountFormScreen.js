@@ -87,14 +87,6 @@ export default ({ route }) => {
             placeholder="Email" 
             value={email}
             onChangeText={setEmail} />
-          <CustomInput 
-            label="Description"
-            multiline
-            maxLength={50}
-            numberOfLines={3}
-            placeholder="Description" 
-            value={description}
-            onChangeText={setDescription} />
         </View>
         <CustomButton 
           text='Mettre à jour' 
