@@ -82,6 +82,9 @@ export const pickImage = (callback) => {
   ImagePicker.showImagePicker({
     noData: true,
     title: 'Sélectionner une image',
+    takePhotoButtonTitle: 'Prendre une photo',
+    chooseFromLibraryButtonTitle: 'Choisir une image dans la gallerie',
+    cancelButtonTitle: 'Annuler',
     storageOption: {
       skipBackup: true
     }
