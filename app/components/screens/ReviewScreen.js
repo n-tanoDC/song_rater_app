@@ -6,6 +6,7 @@ import ReviewDisplay from '../reviews/ReviewDisplay';
 import ReviewForm from '../reviews/ReviewForm';
 
 import { UserContext } from '../../contexts/UserContext';
+import { accountDeleted } from '../../functions';
 
 export default ({ route }) => {
   const { reviewToShow = null, media = null } = route.params;
@@ -16,15 +17,26 @@ export default ({ route }) => {
   
   const { connectedUser } = useContext(UserContext);
 
-  let content = (<ReviewDisplay review={review} />);
+  let content, userProp;
  
-  if (!review) {
-    content = (<ReviewForm setReview={setReview} media={media} user={connectedUser} />);
+  if (review) {
+    content = (<ReviewDisplay review={review} />);
+    userProp = accountDeleted(review.author) ? { username: 'Utilisateur supprimé' } : review.author;
+  } else {
+    userProp = connectedUser;
+    content = (
+      <ReviewForm 
+        setReview={setReview} 
+        media={media} 
+        user={connectedUser} />)
   }
-    
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ReviewHeader user={review ? review.author : connectedUser} rating={review ? review.rating : null} media={review ? review.media : media} />
+      <ReviewHeader 
+        user={userProp} 
+        rating={review ? review.rating : null} 
+        media={review ? review.media : media} />
       {content}
     </SafeAreaView>
   )

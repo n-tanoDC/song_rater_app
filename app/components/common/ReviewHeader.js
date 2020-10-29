@@ -28,10 +28,12 @@ export default ({ user, media }) => {
       onPress = () => navigation.navigate('Account')
     }
 
+    const avatar = user.username === 'Utilisateur supprimé' ? null : <UserAvatar user={user} small onPress={onPress} />
+
     userSection = (
       <View style={styles.user}>
         <Text style={styles.username}>{user.username}</Text>
-        <UserAvatar user={user} small onPress={onPress} />
+        {avatar}
       </View>)
   }
 
