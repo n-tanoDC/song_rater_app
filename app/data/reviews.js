@@ -9,6 +9,12 @@ export const getAllReviews = (page) =>
     .catch(err => console.log(err))
 
 
+export const getAllFollowingReviews = (page, user) =>
+    fetch(API_URL + 'users/account/following/reviews?page=' + page, getOptions(null, user.token, 'GET'))
+      .then(res => res.json())
+      .catch(err => console.log(err))
+
+
 export const getAllReviewsForOneUser = (page, user) => 
   fetch(API_URL + 'users/' + user.username + '/reviews?page=' + page)
     .then(res => res.json())

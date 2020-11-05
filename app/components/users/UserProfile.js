@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 
 import UserAvatar from './UserAvatar';
@@ -15,6 +15,7 @@ import { getAllReviewsForOneUser } from '../../data/reviews';
 import colors from '../../styles/colors';
 
 export default ({ user, visit }) => {
+  const [reviews, setReviews] = useState(null)
   const { connectedUser, setConnectedUser } = useContext(UserContext);
   
   // Updating following status
@@ -48,6 +49,7 @@ export default ({ user, visit }) => {
       }
     })  
     .catch(err => {
+      // show generic error message if there's an error
       showToast();
       console.log(err);
     })
@@ -84,7 +86,12 @@ export default ({ user, visit }) => {
         </ImageBackground>
       </View>
       <View style={styles.content}>
-        <ReviewsList padder object={user} getReviews={getAllReviewsForOneUser}/>
+        <ReviewsList 
+          getReviews={getAllReviewsForOneUser}
+          object={user} 
+          padder 
+          reviews={reviews}
+          setReviews={setReviews} />
       </View>
     </>
   )
@@ -113,5 +120,7 @@ const styles = StyleSheet.create({
     top: 10,
     right: 10
   },
-  content: {},
+  content: {
+    height: '70%'
+  },
 })

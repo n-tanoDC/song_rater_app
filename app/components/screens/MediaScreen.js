@@ -4,7 +4,7 @@ import { Image, ImageBackground, Linking, SafeAreaView, StyleSheet, Text, View }
 import ButtonIcon from '../common/ButtonIcon';
 import RatingIcon from '../common/RatingIcon';
 import ReviewsList from '../reviews/ReviewsList';
-import { getArtists, getCover, getLink } from '../../functions';
+import { getArtists, getAverageRating, getCover, getLink } from '../../functions';
 import { getAllReviewsForOneMedia } from '../../data/reviews';
 import colors from '../../styles/colors';
 
@@ -12,6 +12,7 @@ export default ({ route, navigation }) => {
   const { mediaToShow } = route.params;
 
   const [media, setMedia] = useState(mediaToShow);
+  const [reviews, setReviews] = useState(null)
   const [rating, setRating] = useState(null)
   
   useEffect(() => setMedia(mediaToShow), [mediaToShow])
@@ -63,7 +64,9 @@ export default ({ route, navigation }) => {
   return (
     <SafeAreaView>
       <ReviewsList 
-        getReviews={getAllReviewsForOneMedia} 
+        getReviews={getAllReviewsForOneMedia}
+        reviews={reviews}
+        setReviews={setReviews}
         hideMedia
         listHeader={banner} 
         object={media} 

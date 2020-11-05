@@ -109,7 +109,8 @@ export default ({ media, user, setReview }) => {
           placeholder='Rédiger une critique...'
           value={content}
           onChangeText={setContent}
-          multiline />
+          multiline
+          maxLength={5000} />
       </View>
       <CustomButton 
         text='Publier' 
