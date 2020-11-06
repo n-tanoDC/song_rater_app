@@ -15,7 +15,7 @@ export default ({ media }) => {
       <TouchableOpacity 
         style={styles.mediaContainer}
         containerStyle={styles.mediaContainerStyle} 
-        onPress={() => navigation.navigate('Media', { mediaToShow: media })}>
+        onPress={() => navigation.navigate('Media', { media: media })}>
             <Image 
               style={styles.mediaImg} 
               source={{ uri: getCover(media) }} />
