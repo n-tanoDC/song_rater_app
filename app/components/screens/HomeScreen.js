@@ -58,11 +58,11 @@ export default () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flex: 1,
   },
   header: {
+    padding: 10,
     borderBottomWidth: 1,
-    marginBottom: 10,
     borderColor: '#F0F0F0',
     flexDirection: "row",
     alignItems: 'center',
@@ -75,9 +75,10 @@ const styles = StyleSheet.create({
     color: colors.darkgrey,
   },
   headerLogo: {
-    height: 40, width: 40
+    height: 40,
+    width: 40
   },
   content: {
-    height: '90%'
+    flex: 1
   }
 })

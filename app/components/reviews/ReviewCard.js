@@ -70,11 +70,8 @@ export default memo(ReviewCard);
 
 const styles = StyleSheet.create({
   card: {
-    marginVertical: 10,
-    overflow:'hidden',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#F2F2F2',
+    marginBottom: 5,
+    borderColor: colors.grey,
     elevation: 5,
     backgroundColor: colors.white,
 
@@ -87,12 +84,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   userWrapper: {
-    flexDirection: 'row'
-  },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 100
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   headerText: {
     marginLeft: 10,
