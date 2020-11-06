@@ -133,3 +133,15 @@ export const postChanges = (inputs, token, newAvatar) => {
       .catch(err => console.log(err))
   )
 }
+
+
+export const updateFollow = (action, username, token) => 
+  fetch(API_URL + 'users/' + username + '/' + action, getOptions(null, token, 'GET'))
+    .then(res => { 
+      if (res.status === 200) {
+        return res.json();
+      } else {
+        return new Error('Une erreur s\'est produite.')
+      }
+    })  
+    .catch(err => console.log(err))

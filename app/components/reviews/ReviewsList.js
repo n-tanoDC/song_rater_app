@@ -29,8 +29,6 @@ export default (props) => {
   const { updates, setUpdates } = useContext(AppContext);
 
   const loadReviews = () => {
-    console.log('loading');
-
     // set page to 1 if we are not loading a new page or if there are any updates
     const page = !nextPage || updates ? 1 : nextPage;
 
@@ -59,8 +57,6 @@ export default (props) => {
         } else {
           setReviews([]);
         }
-      })
-      .then(() => {
         setRefresh(false)
         setUpdates(false)
       })

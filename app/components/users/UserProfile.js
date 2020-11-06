@@ -8,72 +8,59 @@ import PopUpMenu from '../common/PopUpMenu';
 import CustomButton from '../common/CustomButton';
 
 import { getAllReviewsForOneUser } from '../../data/reviews';
-import { logout } from '../../data/user';
+import { logout, updateFollow } from '../../data/user';
 import { isFollowing, isVisiting, showToast } from '../../functions';
-import { getOptions } from '../../data/helpers';
 
 import { API_URL } from '../../config';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
+import { AppContext } from '../../contexts/AppContext';
 
 export default ({ user }) => {
   const [reviews, setReviews] = useState(null)
+
   const { connectedUser, setConnectedUser } = useContext(UserContext);
+  const { setUpdates } = useContext(AppContext)
   
   const navigation = useNavigation();
 
-  // Updating following status
-  const updateFollow = (action) => {
-    fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
-    .then(res => { 
-      if (res.status === 200) {
-
-        // Store the whole array in a variable
-        const updatedFollowing = connectedUser.following;
-
-        switch (action) {
-          case 'follow':
-            // Push the followed user in the array
-            updatedFollowing.push(user._id);
-            break;
-          case 'unfollow':
-            // Find the index of the user to unfollow
-            const index = connectedUser.following.findIndex(userId => userId === user._id);
-            // Remove the user to unfollow from the array
-            updatedFollowing.splice(index, 1);
-            break;
-          default:
-            throw new Error('Action not supported')
-          }
-
-        // Update the user context with the new array
-        setConnectedUser({...connectedUser, following: updatedFollowing})
-      } else {
-        throw new Error(res.status)
-      }
-    })  
-    .catch(err => {
-      // show generic error message if there's an error
-      showToast();
-      console.log(err);
-    })
+  const handlePress = (action) => {
+    updateFollow(action, user.username, connectedUser.token)
+      .then(res => {
+        if (res instanceof Error) {
+          throw res
+        } 
+        setConnectedUser({ ...connectedUser, ...res.updatedUser })
+        setUpdates(true)
+      })
+      .catch(err => {
+        showToast(err.message)
+      })
   }
 
   let button, popUpMenuTrigger, popUpMenuOptions;
   
-  // Show follow button only if a user is connected
-  // Change color, text and action depending on following status
   if (connectedUser && isVisiting(connectedUser, user)) {
-    const following = isFollowing(connectedUser, user);
-    const action = following ? 'unfollow' : 'follow';
+    let action, text, color;
+
+    if (isFollowing(connectedUser, user)) {
+      action = 'unfollow';
+      text = 'Suivi';
+      color = colors.green;
+    } else {
+      action = 'follow';
+      text = 'Suivre';
+      color = colors.secondary;
+    }
 
     button = (
       <CustomButton 
-        text={following ? 'Suivi' : 'Suivre'} 
-        color={following ? colors.green : colors.secondary} 
-        onPress={() => updateFollow(action)} />
+        text={text} 
+        color={color} 
+        onPress={() => handlePress(action)} />
     )
+
   } else if (connectedUser) {
     popUpMenuTrigger = { icon: 'dots-horizontal' }
     popUpMenuOptions = [
