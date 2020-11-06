@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, RefreshControl, Text, View } from 'react-native';
 
 import ReviewCard from './ReviewCard';
-import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
 
 import { getAverageRating } from '../../functions';
 
 import { AppContext } from '../../contexts/AppContext';
+import Loader from '../common/Loader';
 
 export default (props) => {
   const {
@@ -23,14 +23,13 @@ export default (props) => {
   const [nextPage, setNextPage] = useState(null);
   const [isRefreshing, setRefresh] = useState(false);
 
-  // Load reviews on first render & when showFollowsOnly changes
-  useEffect(() => loadReviews(), [])
   // Load reviews when there has been updates
-  useEffect(() => { if (updates) loadReviews() })
+  useEffect(() => { if (updates || !reviews) loadReviews() })
 
-  const { updates, setUpdates } = useContext(AppContext)
+  const { updates, setUpdates } = useContext(AppContext);
 
   const loadReviews = () => {
+    console.log('loading');
 
     // set page to 1 if we are not loading a new page or if there are any updates
     const page = !nextPage || updates ? 1 : nextPage;
@@ -68,12 +67,9 @@ export default (props) => {
       .catch(err => console.log(err))
   }
 
-  
-  // Show a loader while we reviews are loading
-  if (updates || !reviews) {
-    return (<Loader />)
-  }
-  
+  // Return a loader while the app loads the data
+  if (!reviews) return <Loader />
+
   // Component to render for each list item
   const renderItem = ({ item }) => (
     <ReviewCard
