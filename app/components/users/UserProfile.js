@@ -1,23 +1,28 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, View, Text, ImageBackground } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import UserAvatar from './UserAvatar';
 import ReviewsList from '../reviews/ReviewsList';
-import PopMenu from '../common/PopMenu';
+import PopUpMenu from '../common/PopUpMenu';
 import CustomButton from '../common/CustomButton';
 
-import { API_URL } from '../../config';
-import { isFollowing, showToast } from '../../functions';
+import { getAllReviewsForOneUser } from '../../data/reviews';
+import { logout } from '../../data/user';
+import { isFollowing, isVisiting, showToast } from '../../functions';
 import { getOptions } from '../../data/helpers';
 
-import { UserContext } from '../../contexts/UserContext';
-import { getAllReviewsForOneUser } from '../../data/reviews';
+import { API_URL } from '../../config';
 import colors from '../../styles/colors';
 
-export default ({ user, visit }) => {
+import { UserContext } from '../../contexts/UserContext';
+
+export default ({ user }) => {
   const [reviews, setReviews] = useState(null)
   const { connectedUser, setConnectedUser } = useContext(UserContext);
   
+  const navigation = useNavigation();
+
   // Updating following status
   const updateFollow = (action) => {
     fetch(API_URL + 'users/' + user.username + '/' + action, getOptions(null, connectedUser.token, 'GET'))
@@ -55,19 +60,39 @@ export default ({ user, visit }) => {
     })
   }
 
-  let followButton;
+  let button, popUpMenuTrigger, popUpMenuOptions;
   
   // Show follow button only if a user is connected
   // Change color, text and action depending on following status
-  if (connectedUser) {
+  if (connectedUser && isVisiting(connectedUser, user)) {
     const following = isFollowing(connectedUser, user);
     const action = following ? 'unfollow' : 'follow';
 
-    followButton = (
+    button = (
       <CustomButton 
         text={following ? 'Suivi' : 'Suivre'} 
         color={following ? colors.green : colors.secondary} 
         onPress={() => updateFollow(action)} />
+    )
+  } else if (connectedUser) {
+    popUpMenuTrigger = { icon: 'dots-horizontal' }
+    popUpMenuOptions = [
+      { 
+        icon: 'account-remove', 
+        text: 'Déconnexion', 
+        onSelect: () => logout(setConnectedUser) 
+      },
+      { 
+        icon: 'account-edit', 
+        text: 'Modifier mes informations', 
+        onSelect: () => navigation.navigate('AccountForm', { user: connectedUser })
+      }
+    ]
+
+    button = (
+      <PopUpMenu 
+        trigger={popUpMenuTrigger}
+        options={popUpMenuOptions} />
     )
   }
 
@@ -81,7 +106,7 @@ export default ({ user, visit }) => {
         <UserAvatar user={user} />
         <Text style={styles.username}>{user.username}</Text>
         <View style={styles.buttonContainer}>
-          {!visit ? <PopMenu /> : followButton}
+          {button}
         </View>
         </ImageBackground>
       </View>
