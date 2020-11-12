@@ -1,17 +1,17 @@
 export const getOptions = (body, token, method = 'POST') => {
   const headers = new Headers();
-  let options = {};
+  let newBody = body;
   
   if (token) {
     headers.append('Authorization', 'Bearer ' + token);
   }
   
-  if (body) {
+  if (body && !(body instanceof FormData)) {
     headers.append('Content-Type', 'application/json');
-    options.body = JSON.stringify(body);
+    newBody = JSON.stringify(body);
   }
-
-  return { ...options, method, headers };
+  
+  return { body: newBody, method, headers };
 }
 
 export const getQuery = (query) => {

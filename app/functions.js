@@ -100,10 +100,11 @@ export const pickImage = (callback) => {
 }
 
 
-export const getUpdatedInputs = (inputs, user) => {
+export const getUpdatedFields = (fields, user) => {
   let newInputs = {};
-  for (const [key, value] of Object.entries(inputs)) {
-    if (inputs[key] !== user[key]) {
+  
+  for (const [key, value] of Object.entries(fields)) {
+    if (fields[key] !== user[key]) {
       newInputs[key] = value;
     }
   }

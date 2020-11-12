@@ -6,18 +6,18 @@ import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config';
-import { getUpdatedInputs, pickImage, showToast } from '../../functions';
-import { deleteAccount, logout, postChanges } from '../../data/user';
+import { getUpdatedFields, pickImage, showToast } from '../../functions';
+import { deleteAccount, editAccount, logout } from '../../data/user';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
 import colors from '../../styles/colors';
+import { catchErrors } from '../../data/errors';
 
 export default ({ route }) => {
   const { user } = route.params;
 
   const [username, setUsername] = useState(user.username);
-  const [description, setDescription] = useState(user.description);
   const [email, setEmail] = useState(user.email);
   const [avatar, setAvatar] = useState(user.avatar);
   const [newAvatar, setNewAvatar] = useState(null);
@@ -30,20 +30,17 @@ export default ({ route }) => {
   let source = API_URL + 'uploads/' + avatar;
 
   const handleSubmit = () => {
-    const inputs = getUpdatedInputs({ username, email, description }, connectedUser)
-    postChanges(inputs, user.token, newAvatar)
+    const fields = getUpdatedFields({ username, email, description }, connectedUser)
+    editAccount(fields, user.token, newAvatar)
       .then(res => {
-        if (res instanceof Error) {
-          throw res
+        if (res) {
+          setConnectedUser({ ...connectedUser, ...res });
+          showToast('Modifications enregistrées');
+          setUpdates(true);
+          navigation.pop();
         }
-        setConnectedUser({ ...connectedUser, ...res })
-        showToast('Modifications enregistrées')
       })
-      .then(() => {
-        setUpdates(true)
-        navigation.pop()
-      })
-      .catch(err => showToast(err.message))
+      .catch(catchErrors);
   }
 
 

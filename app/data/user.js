@@ -29,53 +29,29 @@ export const deleteAccount = (token) =>
     .then(res => res)
     .catch(catchErrors)
 
-export const postChanges = (inputs, token, newAvatar) => {
-  let body = [];
-  for (const [key, value] of Object.entries(inputs)) {
-    body.push({ name: key, data: value });
+
+export const editAccount = (fields, token, newAvatar) => {
+  const body = new FormData();
+
+  for (const [key, value] of Object.entries(fields)) {
+    body.append(key, value);
   }
 
   if (newAvatar) {
-    body.push({ 
-      name: 'avatar',
-      filename: newAvatar.fileName,
-      type: newAvatar.type,
-      data: RNFetchBlob.wrap(newAvatar.uri) })
+    body.append('avatar', { 
+      uri: newAvatar.uri, 
+      name: newAvatar.fileName, 
+      type: newAvatar.type 
+    })
   }
 
   return (
-    RNFetchBlob.fetch('PUT', API_URL + 'users/account', { Authorization: 'Bearer ' + token }, body)
-      .then(async res => {
-        switch (res.respInfo.status) {
-          case 200: 
-            return res.json()
-          case 400:
-            const error = await res.json()
-            let keys = {
-              email: 'Email',
-              password: 'Mot de passe',
-              username: 'Nom d\'utilisateur'
-            }
-            let message;
-            switch (error.type) {
-              case 'syntax':
-                message = keys[error.key] + ' incorrect.';
-                break;
-              case 'duplicate':
-                message = keys[error.key] + ' déjà existant';
-                break
-              default:
-                message = 'Une erreur s\'est produit, veuillez réessayer ultérieurement.';
-            }
-          return new Error(message);
-          default:
-            return new Error('Une erreur s\'est produite, veuillez réessayer ultérieurement.')
-        }
-      })
-      .catch(err => console.log(err))
+    fetch(API_URL + 'users/account', getOptions(body, token, 'PUT'))
+      .then(handleErrors)
+      .then(res => res.json())
+      .catch(catchErrors)
   )
 }
-
 
 export const updateFollow = (action, username, token) => 
   fetch(API_URL + 'users/' + username + '/' + action, getOptions(null, token, 'GET'))
