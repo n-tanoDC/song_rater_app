@@ -1,5 +1,5 @@
 import { API_URL } from "../config";
-import { showToast } from "../functions";
+import { catchErrors, handleErrors } from "./errors";
 import { getOptions } from "./helpers";
 
 
@@ -10,9 +10,9 @@ export const getAllReviews = (page) =>
 
 
 export const getAllFollowingReviews = (page, user) =>
-    fetch(API_URL + 'users/account/following/reviews?page=' + page, getOptions(null, user.token, 'GET'))
-      .then(res => res.json())
-      .catch(err => console.log(err))
+  fetch(API_URL + 'users/account/following/reviews?page=' + page, getOptions(null, user.token, 'GET'))
+    .then(res => res.json())
+    .catch(err => console.log(err))
 
 
 export const getAllReviewsForOneUser = (page, user) => 
@@ -29,17 +29,6 @@ export const getAllReviewsForOneMedia = (page, media) =>
 
 export const postReview = (body, token) =>
   fetch(API_URL + 'reviews', getOptions(body, token))
-    .then(res => {
-      switch(res.status) {
-        case 201:
-          return res.json();
-        case 409:
-          return new Error('Vous avez déjà publié une critique sur ce contenu.')
-        default:
-          return new Error('Une erreur s\'est produite. Réessayer ultérieurment.')
-      }
-    })
-    .catch(() => {
-      console.log(error); 
-      showToast()
-    })
+    .then(handleErrors)
+    .then(res => res.json())
+    .catch(catchErrors)

@@ -30,7 +30,7 @@ export default ({ route }) => {
   let source = API_URL + 'uploads/' + avatar;
 
   const handleSubmit = () => {
-    const fields = getUpdatedFields({ username, email, description }, connectedUser)
+    const fields = getUpdatedFields({ username, email }, connectedUser)
     editAccount(fields, user.token, newAvatar)
       .then(res => {
         if (res) {
@@ -48,13 +48,10 @@ export default ({ route }) => {
     deleteAccount(connectedUser.token)
       .then(res => {
         logout(setConnectedUser);
-        navigation.pop();
         showToast('Votre compte a été bien été supprimé.');
+        navigation.pop();
       })
-      .catch(err => {
-        console.log(err);
-        showToast();
-      })
+      .catch(catchErrors)
   }
   
   if (newAvatar) {

@@ -11,6 +11,7 @@ import { getCover, getFormattedArtists, getLink, showToast } from '../../functio
 import { postReview } from '../../data/reviews';
 
 import { AppContext } from '../../contexts/AppContext';
+import { catchErrors } from '../../data/errors';
 
 export default ({ media, user, setReview }) => {
   const { id, type, name } = media;
@@ -60,21 +61,18 @@ export default ({ media, user, setReview }) => {
     // Call POST function, passing the body and the user token
     postReview(body, user.token)
       .then(res => {
-        if (res instanceof Error) {
-          throw res
-        }
-        setReview(res)
-      })
-      .then(() => {
-        if (ratingOnly) {
-          showToast('Note publiée')
-          navigation.goBack();
-        } else {
-          showToast('Critique publiée')
-          setUpdates(true)
+        if (res) {
+          setReview(res)
+          if (ratingOnly) {
+            showToast('Note publiée')
+            navigation.goBack();
+          } else {
+            showToast('Critique publiée')
+            setUpdates(true)
+          }
         }
       })
-      .catch(err => showToast(err.message))
+      .catch(catchErrors)
   }
 
   // Show a message and hide the form if the user is not connected
@@ -103,13 +101,15 @@ export default ({ media, user, setReview }) => {
         placeholder='Titre'
         value={title}
         onChangeText={setTitle}
-        maxLength={50} />
+        minLength={5}
+        maxLength={70} />
       <View style={styles.contentInputWrapper}>
         <CustomInput 
           placeholder='Rédiger une critique...'
           value={content}
           onChangeText={setContent}
           multiline
+          minLength={10}
           maxLength={5000} />
       </View>
       <CustomButton 

@@ -12,6 +12,7 @@ export default (props) => {
     icon,
     label,
     maxLength,
+    minLength,
     multiline,
     numberOfLines,
     onChangeText,
@@ -48,17 +49,20 @@ export default (props) => {
       {labelContainer}
       <View style={containerStyle}>
         <TextInput
+          autoFocus={autoFocus}
           editable={!disabled}
           maxLength={maxLength}
-          onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
-          numberOfLines={numberOfLines}
-          autoFocus={autoFocus}
+          minLength={minLength}
           multiline={multiline}
+          numberOfLines={numberOfLines}
+          onChangeText={onChangeText}
+          onSubmitEditing={handleSubmit ? () => handleSubmit() : null}
+          placeholder={placeholder}
           secureTextEntry={secure}
           style={inputStyle}
           value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}/>
+            
+          />
         {iconContainer}
       </View>
     </View>

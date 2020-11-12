@@ -10,6 +10,8 @@ export const handleErrors = async response => {
   if (!response.ok) {
     const jsonResponse = await response.json()
     throw new ApiError(jsonResponse.error)
+  } else if (response.status === 500) {
+    throw new ApiError();
   }
 
   return response;
