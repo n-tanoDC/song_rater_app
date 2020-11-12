@@ -1,7 +1,4 @@
-import RNFetchBlob from 'rn-fetch-blob';
-
 import { API_URL } from '../config';
-import { showToast } from '../functions';
 import { catchErrors, handleErrors } from './errors';
 import { getOptions } from './helpers';
 
