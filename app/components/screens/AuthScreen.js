@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/CustomButton';
@@ -52,6 +52,7 @@ export default () => {
     }
 
     const authFunction = isLogin ? login : register;
+
     authFunction(data)
       .then(res => {
         if (res) {
@@ -83,7 +84,7 @@ export default () => {
   }
 
   return (    
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.segmentContainer}>
         <CustomSegment data={['Se connecter', 'Créer un compte']} index={selected} callback={setSelected} />
       </View>
@@ -111,7 +112,7 @@ export default () => {
         </View>
       </View>
       
-    </View>
+    </SafeAreaView>
   )
 };
 
