@@ -46,7 +46,7 @@ export default () => {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>SongRater</Text>
-        <Image source={require('../../assets/images/logo1.png')} style={styles.headerLogo} />
+        <Image source={require('../../assets/images/logo-black.png')} style={styles.headerLogo} />
       </View>
       <View style={styles.content}>
         {segmentedControl}
