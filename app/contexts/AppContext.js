@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import SplashScreen from 'react-native-splash-screen'
 
 import Loader from '../components/common/Loader';
 
@@ -14,7 +15,10 @@ export default ({ children }) => {
   // generateToken when the component is mounted
   useEffect(() => {
     generateToken()
-      .then(res => setToken(res.access_token))
+      .then(res => {
+        setToken(res.access_token);
+        SplashScreen.hide();
+      })
       .catch(err => console.log(err))
   }, [])
 
