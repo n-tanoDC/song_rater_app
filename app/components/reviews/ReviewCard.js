@@ -70,7 +70,10 @@ export default memo(ReviewCard);
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 5,
+    marginHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 15,
+    overflow: 'hidden',
     borderColor: colors.grey,
     elevation: 5,
     backgroundColor: colors.white,

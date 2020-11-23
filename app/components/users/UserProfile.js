@@ -112,6 +112,7 @@ export default ({ user }) => {
 const styles = StyleSheet.create({
   header: {
     height: '30%',
+    marginBottom: 10,
   },
   headerBackground: {
     height: '100%',

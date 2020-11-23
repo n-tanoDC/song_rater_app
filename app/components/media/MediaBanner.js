@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   banner: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 10
   },
   backButton: {
     aspectRatio: 1,
