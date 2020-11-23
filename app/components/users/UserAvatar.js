@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 
-import { API_URL } from '../../config';
+import { API_URL } from '../../config.local';
 
 export default ({ user, small, onPress }) => {
   const size = small ? 40 : 100;

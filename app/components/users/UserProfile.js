@@ -11,7 +11,7 @@ import { getAllReviewsForOneUser } from '../../data/reviews';
 import { logout, updateFollow } from '../../data/user';
 import { isFollowing, isVisiting, showToast } from '../../functions';
 
-import { API_URL } from '../../config';
+import { API_URL } from '../../config.local';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';

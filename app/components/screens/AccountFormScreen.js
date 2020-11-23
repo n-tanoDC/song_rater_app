@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 
-import { API_URL } from '../../config';
+import { API_URL } from '../../config.local';
 import { getUpdatedFields, pickImage, showToast } from '../../functions';
 import { deleteAccount, editAccount, logout } from '../../data/user';
 

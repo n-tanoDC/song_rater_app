@@ -1,4 +1,4 @@
-import { TOKENS, EXTERNAL_API } from '../config';
+import { TOKENS, EXTERNAL_API } from '../config.local';
 import { getAuthOptions, getQuery } from './helpers';
 
 export const generateToken = () => {

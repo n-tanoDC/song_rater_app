@@ -1,4 +1,4 @@
-import { API_URL } from "../config";
+import { API_URL } from "../config.local";
 import { catchErrors, handleErrors } from "./errors";
 import { getOptions } from "./helpers";
 
