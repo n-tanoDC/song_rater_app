@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
+import { UserContext } from '../../contexts/UserContext';
 
 import UserProfile from '../users/UserProfile';
 
-export default ({ route }) => {
-  const { connectedUser } = route.params;
+export default () => {
+  const { connectedUser } = useContext(UserContext);
 
   return (
     <SafeAreaView style={styles.container}>

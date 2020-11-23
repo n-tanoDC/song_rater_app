@@ -37,7 +37,7 @@ export const AccountNavigator = () => {
   if (connectedUser) {
     screens = (
       <>
-        <Screen name="Account" component={AccountScreen} initialParams={{ connectedUser }} />
+        <Screen name="Account" component={AccountScreen} />
         <Screen name="AccountForm" component={AccountFormScreen} />
       </>
     )
