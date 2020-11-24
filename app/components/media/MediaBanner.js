@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, ImageBackground, Linking, StyleSheet, Text, View } from 'react-native';
 
-import ButtonIcon from '../common/ButtonIcon';
 import RatingIcon from '../common/RatingIcon';
+import CustomButton from '../common/CustomButton';
 
 import { getArtists, getCover, getLink } from '../../functions';
 import colors from '../../styles/colors';
@@ -10,16 +10,18 @@ import { useNavigation } from '@react-navigation/native';
 
 export default ({ media, rating }) => {
   const navigation = useNavigation();
+  const [isLiked, setLike] = useState(false);
 
   return ( 
     <View style={styles.banner}>
       <ImageBackground blurRadius={20} source={{ uri: getCover(media) }} style={styles.imageBg}>
         <View style={styles.backButton}>
-          <ButtonIcon 
-            size={36}
-            name='chevron-left' 
-            color={colors.white} 
-            onPress={() => navigation.goBack()} />
+          <CustomButton
+            color={colors.white}
+            icon='chevron-left'
+            large
+            onPress={() => navigation.goBack()}
+            transparent />
         </View>
         <View style={styles.mediaWrapper}>
           <Image resizeMode='contain' source={{ uri: getCover(media) }} style={styles.image} />
@@ -29,26 +31,36 @@ export default ({ media, rating }) => {
           </View>
         </View>
         <View style={styles.bottomSection}>
-          <View style={styles.rating}>
+        <View style={styles.actionButtonsWrapper}>
+          <View style={[styles.actionButton, styles.rating]}>
             <RatingIcon rating={rating} />
           </View>
-          <View style={styles.actionButtonsWrapper}>
-            <View style={{ ...styles.actionButton, backgroundColor: colors.darkgrey }}>
-              <ButtonIcon 
-                size={28}
-                name='spotify'
+            <View style={[styles.actionButton, { backgroundColor: colors.darkgrey } ]}>
+              <CustomButton
+                large
+                icon='spotify'
                 color={colors.green}
-                background={colors.darkgrey}
+                backgroundColor={colors.darkgrey}
                 onPress={() => Linking.openURL(getLink(media))} />
             </View>
-            <View style={{ ...styles.actionButton, backgroundColor: colors.white }}>
-              <ButtonIcon 
-                size={28}
-                name='music-note-plus'
-                color={colors.primary}
-                background={colors.white}
+          </View>
+          <View style={styles.actionButtonsWrapper}>
+            <View style={[styles.actionButton, { backgroundColor: colors.secondary } ]}>
+              <CustomButton
+                large
+                icon='music-note-plus'
+                color={colors.white}
+                backgroundColor={colors.secondary}
                 onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
-            </View>  
+            </View>
+            <View style={[styles.actionButton, { backgroundColor: colors.white } ]}>
+              <CustomButton
+                large
+                icon={isLiked ? 'heart' : 'heart-outline'}
+                color={colors.red}
+                backgroundColor={colors.white}
+                onPress={() => setLike(!isLiked)} />
+            </View> 
           </View>
         </View>
       </ImageBackground>
@@ -107,42 +119,23 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'space-between'
   },
-  rating: {
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    backgroundColor: colors.white,
-    height: '100%',
-    paddingHorizontal: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   actionButtonsWrapper: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-end'
   },
   actionButton: {
-    height: '100%',
+    alignItems: 'center',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    aspectRatio: 1,
-    padding: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  editButton: {
     height: '100%',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    aspectRatio: 1,
-    padding: 5,
-    alignItems: 'center',
+    overflow: 'hidden',
     justifyContent: 'center',
-    backgroundColor: colors.primary,
   },
-  reviewsWrapper: {
-    flex: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 10
-  }
+  rating: {
+    backgroundColor: colors.white,
+    height: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
 })

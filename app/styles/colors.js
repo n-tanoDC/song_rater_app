@@ -6,5 +6,6 @@ export default colors = {
   lightgrey: '#C4C4C4',
   white: '#FDFDFD',
   green: '#1DB954',
-  red: '#EB6262'
+  red: '#EB6262',
+  transparent: '#00000000'
 }

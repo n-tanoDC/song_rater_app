@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, View, SafeAreaView } from 'react-native';
 
 import CustomInput from '../common/CustomInput';
-import CustomButton from '../common/CustomButton';
 import CustomSegment from '../common/CustomSegment';
 
 import { login, register } from '../../data/user'
@@ -11,6 +10,7 @@ import { showToast } from '../../functions';
 import { UserContext } from '../../contexts/UserContext';
 import colors from '../../styles/colors';
 import { catchErrors } from '../../data/errors';
+import CustomButton from '../common/CustomButton';
 
 export default () => {
   const [username, setUsername] = useState('');
@@ -105,10 +105,11 @@ export default () => {
           onChangeText={setPassword} />
         {passwordConfInput}
         <View style={styles.buttonWrapper}>
-          <CustomButton
-            color={colors.secondary}
+          <CustomButton 
+            backgroundColor={colors.secondary}
             onPress={handleSubmit}
-            text={isLogin ? 'Se connecter' : 'Créer un compte'} />
+            text={isLogin ? 'Se connecter' : 'Créer un compte'}
+          />
         </View>
       </View>
       
@@ -129,6 +130,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonWrapper: {
-    marginVertical: 20
+    marginVertical: 20,
+    padding: 10,
+    alignSelf: 'flex-end'
   }
 })

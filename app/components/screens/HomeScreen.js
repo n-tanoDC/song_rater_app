@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
 
 import CustomSegment from '../common/CustomSegment';
@@ -7,6 +7,7 @@ import ReviewsList from '../reviews/ReviewsList';
 import { UserContext } from '../../contexts/UserContext';
 import { getAllFollowingReviews, getAllReviews } from '../../data/reviews';
 import colors from '../../styles/colors';
+import CustomButton from '../common/CustomButton';
 
 export default () => {
   const [selectedIndex, setSelectedIndex] = useState(0);

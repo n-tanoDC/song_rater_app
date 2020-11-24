@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { getArtists, getCover, getLink } from '../../functions';
 import colors from '../../styles/colors';
-import ButtonIcon from './ButtonIcon';
+import CustomButton from './CustomButton';
 
 export default ({ media }) => {
   const navigation = useNavigation();
@@ -29,10 +29,13 @@ export default ({ media }) => {
             </View>
       </TouchableOpacity>
       <View style={styles.buttonWrapper}>
-        <ButtonIcon
-        name='spotify'
-        color='#1DB954'
-        onPress={() => Linking.openURL(getLink(media))} />
+        <CustomButton 
+          icon='spotify'
+          large
+          color={colors.green}
+          transparent
+          onPress={() => Linking.openURL(getLink(media))}
+        />
       </View>
     </View>
   )
@@ -72,10 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   buttonWrapper: {
-    width: '15%',
-    alignItems: "center", 
-    flexDirection: "row", 
-    justifyContent: 'flex-end',
-    padding: 10,
+    alignSelf: 'center',
   },
 })

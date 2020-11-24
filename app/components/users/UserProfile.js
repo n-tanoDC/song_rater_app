@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import UserAvatar from './UserAvatar';
 import ReviewsList from '../reviews/ReviewsList';
 import PopUpMenu from '../common/PopUpMenu';
-import CustomButton from '../common/CustomButton';
 
 import { getAllReviewsForOneUser } from '../../data/reviews';
 import { logout, updateFollow } from '../../data/user';
@@ -16,6 +15,7 @@ import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
+import CustomButton from '../common/CustomButton';
 
 export default ({ user }) => {
   const [reviews, setReviews] = useState(null)
@@ -57,8 +57,9 @@ export default ({ user }) => {
     button = (
       <CustomButton 
         text={text} 
-        color={color} 
+        backgroundColor={color} 
         onPress={() => handlePress(action)} />
+
     )
 
   } else if (connectedUser) {

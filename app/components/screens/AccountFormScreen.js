@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import CustomButton from '../common/CustomButton';
 import CustomInput from '../common/CustomInput';
 
 import { API_URL } from '../../config.local';
@@ -13,6 +12,7 @@ import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
 import colors from '../../styles/colors';
 import { catchErrors } from '../../data/errors';
+import CustomButton from '../common/CustomButton';
 
 export default ({ route }) => {
   const { user } = route.params;
@@ -82,13 +82,18 @@ export default ({ route }) => {
             value={email}
             onChangeText={setEmail} />
         </View>
-        <CustomButton 
-          text='Mettre à jour' 
-          onPress={() => handleSubmit()} />
-        <CustomButton 
-          text='Supprimer mon compte'
-          color={colors.red}
-          onPress={() => handleDelete()} />
+        <View style={styles.buttonWrapper}>
+          <CustomButton
+            text='Enregistrer'
+            backgroundColor={colors.secondary}
+            onPress={() => handleSubmit()} />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <CustomButton
+            text='Supprimer mon compte'
+            backgroundColor={colors.red}
+            onPress={() => handleDelete()} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
@@ -108,4 +113,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: '40%',
   },
+  buttonWrapper: {
+    alignSelf: 'flex-end',
+  }
 })

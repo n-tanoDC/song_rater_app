@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import CustomButton from './CustomButton';
-import ButtonIcon from './ButtonIcon';
 import ContentSection from './ContentSection';
 import UserAvatar from '../users/UserAvatar';
+import CustomButton from './CustomButton';
 
 import { isVisiting } from '../../functions';
+import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
-import colors from '../../styles/colors';
 
 export default ({ user, media }) => {
   const navigation = useNavigation();
@@ -19,8 +18,8 @@ export default ({ user, media }) => {
   let userSection = (
     <CustomButton 
       onPress={() => navigation.navigate('Account')}
-      text='Se connecter'
-      color={colors.primary} />)
+      text='Se connecter' 
+      icon='account' />)
   
   if (user) {
     let onPress = () => navigation.navigate('User', { user })
@@ -40,7 +39,13 @@ export default ({ user, media }) => {
   return (
     <View style={styles.header}>
       <View style={styles.headerTop}>
-        <ButtonIcon name='chevron-left' color={colors.darkgrey} onPress={() => navigation.goBack()}/>
+        <CustomButton 
+          icon='chevron-left'
+          color={colors.darkgrey}
+          onPress={() => navigation.goBack()}
+          transparent
+          large
+        />
         {userSection}
       </View>
       <ContentSection media={media} />
@@ -50,7 +55,7 @@ export default ({ user, media }) => {
 
 const styles = StyleSheet.create({
   headerTop: {
-    padding: 15,
+    padding: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

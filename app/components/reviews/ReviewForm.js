@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import SwipeableRating from 'react-native-swipeable-rating';
 
 import CustomInput from '../common/CustomInput';
-import CustomButton from '../common/CustomButton';
 import MessageView from '../common/MessageView';
 
 import { getCover, getFormattedArtists, getLink, showToast } from '../../functions';
@@ -12,6 +11,7 @@ import { postReview } from '../../data/reviews';
 
 import { AppContext } from '../../contexts/AppContext';
 import { catchErrors } from '../../data/errors';
+import CustomButton from '../common/CustomButton';
 
 export default ({ media, user, setReview }) => {
   const { id, type, name } = media;
@@ -112,11 +112,11 @@ export default ({ media, user, setReview }) => {
           minLength={10}
           maxLength={5000} />
       </View>
-      <CustomButton 
-        text='Publier' 
-        disabled={!user} 
-        color={colors.primary} 
-        onPress={() => handleSubmit()} />
+      <View style={styles.submitButtonWrapper}>
+        <CustomButton 
+          text='Publier'
+          onPress ={() => handleSubmit()} />
+      </View>
     </View>
   )
 };
@@ -150,5 +150,8 @@ const styles = StyleSheet.create({
   contentInputWrapper: {
     flex: 1,
     paddingBottom: 10
+  },
+  submitButtonWrapper: {
+    alignSelf: 'flex-end'
   }
 })
