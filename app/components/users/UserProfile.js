@@ -1,140 +1,43 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, View, Text, ImageBackground } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 
-import UserAvatar from './UserAvatar';
 import ReviewsList from '../reviews/ReviewsList';
-import PopUpMenu from '../common/PopUpMenu';
+import MessageView from '../common/MessageView';
+import CustomTabView from './CustomTabView';
+import UserHeader from './UserHeader';
 
 import { getAllReviewsForOneUser } from '../../data/reviews';
-import { logout, updateFollow } from '../../data/user';
-import { isFollowing, isVisiting, showToast } from '../../functions';
-
-import { API_URL } from '../../config.local';
-import colors from '../../styles/colors';
-
-import { UserContext } from '../../contexts/UserContext';
-import { AppContext } from '../../contexts/AppContext';
-import CustomButton from '../common/CustomButton';
 
 export default ({ user }) => {
-  const [reviews, setReviews] = useState(null)
+  const [reviews, setReviews] = useState(null);
 
-  const { connectedUser, setConnectedUser } = useContext(UserContext);
-  const { setUpdates } = useContext(AppContext)
-  
-  const navigation = useNavigation();
-
-  const handlePress = (action) => {
-    updateFollow(action, user.username, connectedUser.token)
-      .then(res => {
-        if (res instanceof Error) {
-          throw res
-        } 
-        setConnectedUser({ ...connectedUser, ...res.updatedUser })
-        setUpdates(true)
-      })
-      .catch(err => {
-        showToast(err.message)
-      })
-  }
-
-  let button, popUpMenuTrigger, popUpMenuOptions;
-  
-  if (connectedUser && isVisiting(connectedUser, user)) {
-    let action, text, color;
-
-    if (isFollowing(connectedUser, user)) {
-      action = 'unfollow';
-      text = 'Suivi';
-      color = colors.green;
-    } else {
-      action = 'follow';
-      text = 'Suivre';
-      color = colors.secondary;
-    }
-
-    button = (
-      <CustomButton 
-        text={text} 
-        backgroundColor={color} 
-        onPress={() => handlePress(action)} />
-
-    )
-
-  } else if (connectedUser) {
-    popUpMenuTrigger = { icon: 'dots-horizontal' }
-    popUpMenuOptions = [
-      { 
-        icon: 'account-remove', 
-        text: 'Déconnexion', 
-        onSelect: () => logout(setConnectedUser) 
-      },
-      { 
-        icon: 'account-edit', 
-        text: 'Modifier mes informations', 
-        onSelect: () => navigation.navigate('AccountForm', { user: connectedUser })
-      }
-    ]
-
-    button = (
-      <PopUpMenu 
-        trigger={popUpMenuTrigger}
-        options={popUpMenuOptions} />
-    )
-  }
-
-  return (
-    <>
-      <View style={styles.header}>
-        <ImageBackground
-          blurRadius={20}
-          style={styles.headerBackground}
-          source={{ uri: API_URL + 'uploads/' + user.avatar }}>
-        <UserAvatar user={user} />
-        <Text style={styles.username}>{user.username}</Text>
-        <View style={styles.buttonContainer}>
-          {button}
-        </View>
-        </ImageBackground>
-      </View>
-      <View style={styles.content}>
+  const sections = [
+    { 
+      title: 'Critiques',
+      icon: 'comment',
+      render: (
         <ReviewsList 
           getReviews={getAllReviewsForOneUser}
           object={user} 
           padder 
           reviews={reviews}
-          setReviews={setReviews} />
-      </View>
+          setReviews={setReviews} />)  
+    },
+    {
+      title: 'Favoris',
+      icon: 'heart',
+      render: (<MessageView message='Indisponible pour le moment.' />)
+    },
+    {
+      title: 'Listes',
+      icon: 'format-list-bulleted',
+      render: (<MessageView message='Indisponible pour le moment.' />)
+    },
+  ]
+
+  return (
+    <>
+      <UserHeader user={user}/>
+      <CustomTabView sections={sections}/>
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    height: '30%',
-    marginBottom: 10,
-  },
-  headerBackground: {
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  username: {
-    marginTop: 10,
-    fontFamily: 'baloo2-semibold',
-    fontSize: 18,
-    color: colors.white,
-    textShadowColor: colors.darkgrey,
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10
-  },
-  buttonContainer: {
-    position: 'absolute',
-    top: 10,
-    right: 10
-  },
-  content: {
-    height: '70%'
-  },
-})

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 
@@ -17,7 +17,9 @@ export default ({ trigger, options }) => {
   return (
     <Menu>
       <MenuTrigger>
-        <Icon name={trigger.icon} color={colors.white} size={28} />
+        <View style={styles.trigger}>
+          <Icon name={trigger.icon} size={28} color={colors.darkgrey} />
+        </View>
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
         {jsxOptions}
@@ -32,6 +34,9 @@ const styles = StyleSheet.create({
     marginTop: 28,
     width: 'auto',
     borderRadius: 20,
+  },
+  trigger: {
+    margin: 10,
   },
   option: {
     flexDirection: 'row',
