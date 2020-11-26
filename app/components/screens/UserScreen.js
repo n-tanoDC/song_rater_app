@@ -16,7 +16,6 @@ export default ({ route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.grey,
     flex: 1,
   }
 })
