@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Image, ImageBackground, Linking, StyleSheet, Text, View } from 'react-native';
 
 import RatingIcon from '../common/RatingIcon';
@@ -6,11 +7,39 @@ import CustomButton from '../common/CustomButton';
 
 import { getArtists, getCover, getLink } from '../../functions';
 import colors from '../../styles/colors';
-import { useNavigation } from '@react-navigation/native';
+
+import { UserContext } from '../../contexts/UserContext';
 
 export default ({ media, rating }) => {
   const navigation = useNavigation();
   const [isLiked, setLike] = useState(false);
+
+  const { connectedUser } = useContext(UserContext);
+
+  let actionButtons;
+
+  if (connectedUser) {
+    actionButtons = (
+      <View style={styles.actionButtonsWrapper}>
+        <View style={[styles.actionButton, { backgroundColor: colors.secondary } ]}>
+          <CustomButton
+            large
+            icon='music-note-plus'
+            color={colors.white}
+            backgroundColor={colors.secondary}
+            onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
+        </View>
+        <View style={[styles.actionButton, { backgroundColor: colors.white } ]}>
+          <CustomButton
+            large
+            icon={isLiked ? 'heart' : 'heart-outline'}
+            color={colors.red}
+            backgroundColor={colors.white}
+            onPress={() => setLike(!isLiked)} />
+        </View> 
+      </View>
+    )
+  }
 
   return ( 
     <View style={styles.banner}>
@@ -44,24 +73,7 @@ export default ({ media, rating }) => {
                 onPress={() => Linking.openURL(getLink(media))} />
             </View>
           </View>
-          <View style={styles.actionButtonsWrapper}>
-            <View style={[styles.actionButton, { backgroundColor: colors.secondary } ]}>
-              <CustomButton
-                large
-                icon='music-note-plus'
-                color={colors.white}
-                backgroundColor={colors.secondary}
-                onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
-            </View>
-            <View style={[styles.actionButton, { backgroundColor: colors.white } ]}>
-              <CustomButton
-                large
-                icon={isLiked ? 'heart' : 'heart-outline'}
-                color={colors.red}
-                backgroundColor={colors.white}
-                onPress={() => setLike(!isLiked)} />
-            </View> 
-          </View>
+          {actionButtons}
         </View>
       </ImageBackground>
     </View>
