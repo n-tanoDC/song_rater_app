@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { showToast } from '../../functions';
@@ -16,9 +16,9 @@ export default ({ sections }) => {
   let sceneMap = {};
 
   for (const section of sections) {
-    sceneMap[section.title] = () => section.render;
+    sceneMap[section.title] = section.render;
   }
-    
+  
   const renderScene = SceneMap(sceneMap)
 
   const getTabBarIcon = ({ route, color }) => {
