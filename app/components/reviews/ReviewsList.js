@@ -38,7 +38,7 @@ export default (props) => {
           let allReviews;
   
           // Add response to existing reviews, if we are loading a new page and if there's no updates
-          if (nextPage && !updates) {
+          if (reviews && nextPage && !updates) {
             allReviews = reviews.concat(res.reviews);
           } else {
             allReviews = res.reviews
