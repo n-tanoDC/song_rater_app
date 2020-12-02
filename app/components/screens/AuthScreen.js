@@ -1,125 +1,34 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import React from 'react';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
-import CustomInput from '../common/CustomInput';
-import CustomSegment from '../common/CustomSegment';
-
-import { login, register } from '../../data/user'
-import { showToast } from '../../functions';
-
-import { UserContext } from '../../contexts/UserContext';
-import colors from '../../styles/colors';
-import { catchErrors } from '../../data/errors';
-import CustomButton from '../common/CustomButton';
+import LoginForm from '../auth/LoginForm';
+import RegisterForm from '../auth/RegisterForm';
+import CustomTabView from '../users/CustomTabView';
 
 export default () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConf, setPasswordConf] = useState('')
-
-  const [data, setData] = useState({})
-  const [selected, setSelected] = useState(0);
-  const isLogin = !selected;
+  const sections = [
+    {
+      title: 'Se connecter',
+      render: () => (<LoginForm styles={styles} />)
+    },
+    {
+      title: 'Créer un compte',
+      render: () => (<RegisterForm styles={styles} />)
+    }
+  ]
   
-  const { setConnectedUser } = useContext(UserContext)
-
-  useEffect(() => { 
-    isLogin ? setData({ username, password }) : setData({ username, password, email })
-  }, [username, email, password, passwordConf])
-  
-
-  const formValidator = () => {
-    for (let item of Object.values(data)) {
-      if (item === '') {
-        return { error: 'Veuillez remplir tous les champs.'}
-      }
-    }
-     
-    if (passwordConf !== password && !isLogin) {
-      return { error: 'Les mots de passes ne sont pas identiques.'}
-    }
-
-    return { error: null };
-  }
-
-
-  const handleSubmit = () => {
-    const { error } = formValidator();
-
-    if (error) {
-      return showToast(error);
-    }
-
-    const authFunction = isLogin ? login : register;
-
-    authFunction(data)
-      .then(res => {
-        if (res) {
-          const { user, token } = res;
-          setConnectedUser({ ...user, token })
-        }
-      })
-      .catch(catchErrors)
-  }
-
-  let emailInput, passwordConfInput;
-
-  if (!isLogin) {
-    emailInput = (
-      <CustomInput 
-        label='Adresse email'
-        icon='email'
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail} />)
-    passwordConfInput = (
-      <CustomInput 
-        label='Confirmer le mot de passe'
-        icon='lock-check'
-        secure
-        placeholder="Confirmer le mot de passe"
-        value={passwordConf}
-        onChangeText={setPasswordConf} />)
-  }
-
   return (    
     <SafeAreaView style={styles.container}>
-      <View style={styles.segmentContainer}>
-        <CustomSegment data={['Se connecter', 'Créer un compte']} index={selected} callback={setSelected} />
-      </View>
-      <View style={styles.form}>
-        <CustomInput
-          label="Nom d'utilisateur"
-          icon='account'
-          placeholder="Nom d'utilisateur"
-          value={username}
-          onChangeText={setUsername} />
-        {emailInput}
-        <CustomInput
-          label='Mot de passe' 
-          icon='lock'
-          placeholder="Mot de passe"
-          secure
-          value={password}
-          onChangeText={setPassword} />
-        {passwordConfInput}
-        <View style={styles.buttonWrapper}>
-          <CustomButton 
-            backgroundColor={colors.secondary}
-            onPress={handleSubmit}
-            text={isLogin ? 'Se connecter' : 'Créer un compte'}
-          />
-        </View>
-      </View>
-      
+      <CustomTabView
+        sections={sections}
+        style='rounded' />
     </SafeAreaView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%'
+    flex: 1
   },
   segmentContainer: {
     paddingBottom: 20,

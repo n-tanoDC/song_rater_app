@@ -110,3 +110,17 @@ export const getUpdatedFields = (fields, user) => {
   }
   return newInputs;
 }
+
+export const formValidator = (data) => {
+  for (let item of Object.values(data)) {
+    if (item === '') {
+      return { error: 'Veuillez remplir tous les champs.'}
+    }
+  }
+   
+  if (data.passwordConf && data.passwordConf !== data.password) {
+    return { error: 'Les mots de passes ne sont pas identiques.'}
+  }
+
+  return { error: null };
+}
