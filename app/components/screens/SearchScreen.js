@@ -4,9 +4,10 @@ import { AppContext } from '../../contexts/AppContext';
 import { loadMore, search } from '../../data/spotify';
 import colors from '../../styles/colors';
 import CustomInput from '../common/CustomInput';
-import CustomSegment from '../common/CustomSegment';
 import Loader from '../common/Loader';
+import MessageView from '../common/MessageView';
 import SearchResults from '../search/SearchResults';
+import CustomTabView from '../users/CustomTabView';
 
 export default () => {
   const [results, setResults] = useState(null);
@@ -50,13 +51,29 @@ export default () => {
     }
   }
 
-  let content = loading ? (<Loader />) : (<Text>Veuillez effectuer une recherche.</Text>)
+  const getResults = (type) => (
+    <SearchResults 
+      results={results[type]}
+      onEndReached={onEndReached} />)
+
+  const sections = [
+    {
+      title: 'Morceaux',
+      render: () => getResults('tracks')
+    },
+    {
+      title: 'Albums',
+      render: () => getResults('albums')
+    },
+  ]
+
+  let content = loading ? (<Loader />) : (<MessageView message='Veuillez effectuer une recherche' />)
   
   if (results) {
     content = (
-      <SearchResults 
-        results={selected ? results.albums : results.tracks}
-        onEndReached={onEndReached} />
+      <CustomTabView 
+        sections={sections}
+        style='rounded' />
     )
   }
 
@@ -71,10 +88,7 @@ export default () => {
         placeholder='Rechercher du contenu...'
         value={value}
         onChangeText={setValue} />
-      <CustomSegment data={['Morceaux', 'Albums']} index={selected} callback={setSelected} />
-      <View style={styles.content}>
-        {content}
-      </View>
+      {content}
     </SafeAreaView>
   )
 };
@@ -86,10 +100,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingTop: 10,
     width: '100%', 
-  },
-  content: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
   }
 })

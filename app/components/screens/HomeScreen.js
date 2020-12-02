@@ -1,58 +1,48 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+import { StyleSheet, SafeAreaView} from 'react-native';
 
-import CustomSegment from '../common/CustomSegment';
 import ReviewsList from '../reviews/ReviewsList';
+import CustomTabView from '../users/CustomTabView';
 
 import { getAllFollowingReviews, getAllReviews } from '../../data/reviews';
-import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 
 export default () => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const [allReviews, setAllReviews] = useState(null);
-  const [followingReviews, setFollowingReviews] = useState(null);
+  const [subscriptionsReviews, setSubscriptionsReviews] = useState(null);
 
   const { connectedUser } = useContext(UserContext);
 
-  let segmentedControl, followingReviewsList;
-
-  let allReviewsList = (
+  const allReviewsList = (
     <ReviewsList 
       reviews={allReviews}
       setReviews={setAllReviews}
       getReviews={getAllReviews} />
   )
   
-  if (connectedUser) {
-    segmentedControl = (
-      <CustomSegment 
-        data={['Toutes les critiques', 'Abonnements']}
-        index={selectedIndex}
-        callback={setSelectedIndex} />
-    );
-    followingReviewsList = (
+  const subscriptionsReviewsList = (
       <ReviewsList
         object={connectedUser}
-        reviews={followingReviews}
-        setReviews={setFollowingReviews}
+        reviews={subscriptionsReviews}
+        setReviews={setSubscriptionsReviews}
         getReviews={getAllFollowingReviews} />
     )
-  }
-  
-  const reviewSection = selectedIndex ? followingReviewsList : allReviewsList;
+
+  const sections = [
+    { 
+      title: 'Toutes les critiques',
+      render: () => allReviewsList,
+    },
+    { 
+      title: 'Abonnements',
+      render: () => subscriptionsReviewsList,
+    }
+  ]
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>SongRater</Text>
-        <Image source={require('../../assets/images/logo-black.png')} style={styles.headerLogo} />
-      </View>
-      <View style={styles.content}>
-        {segmentedControl}
-        {reviewSection}
-      </View>
+      {connectedUser ? <CustomTabView style='rounded' sections={sections} /> : allReviewsList}
     </SafeAreaView>
   )
 };
@@ -60,26 +50,5 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#F0F0F0',
-    flexDirection: "row",
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: '10%'
-  },
-  headerTitle: {
-    fontFamily: 'baloo2-semibold',
-    fontSize: 28,
-    color: colors.darkgrey,
-  },
-  headerLogo: {
-    height: 40,
-    width: 40
-  },
-  content: {
-    flex: 1
   }
 })

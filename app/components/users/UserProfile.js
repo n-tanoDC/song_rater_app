@@ -37,7 +37,10 @@ export default ({ user }) => {
   return (
     <>
       <UserHeader user={user}/>
-      <CustomTabView sections={getSections(reviews, setReviews, user)}/>
+      <CustomTabView 
+        sections={getSections(reviews, setReviews, user)}
+        style='icon-only'
+        />
     </>
   )
 }
