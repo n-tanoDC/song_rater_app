@@ -37,7 +37,29 @@ export const getCover = media => {
   if (media.image) {
     return media.image;
   } 
-  return media.type === 'track' ? media.album.images[0].url : media.images[0].url;
+  switch (media.type) {
+    case 'track':
+      return media.album.images[0].url;
+    case 'album':
+    case 'artist':
+      if (media.images.length) {
+        return media.images[0].url;
+      }
+      return 'https://www.indigenousmusicawards.com/img/placeholder-music.png';
+    default:
+      return 'https://www.indigenousmusicawards.com/img/placeholder-music.png';
+  }
+}
+
+export const getGenres = media => {
+  let formattedGenres = media.genres.map(genre => {
+    return genre
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+  })
+  
+  return formattedGenres.join(', ')
 }
 
 
