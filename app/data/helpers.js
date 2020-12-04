@@ -16,7 +16,7 @@ export const getOptions = (body, token, method = 'POST') => {
 
 export const getQuery = (query) => {
   return (
-    'search?q=' + query + '&type=track,album&market=FR&limit=35&offset=0'
+    'search?q=' + query + '&type=track,album,artist&market=FR&limit=35&offset=0'
   )
 }
 

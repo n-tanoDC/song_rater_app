@@ -1,78 +1,69 @@
 import React, { useContext, useState } from 'react';
-import { SafeAreaView, View, StyleSheet, Text } from 'react-native';
-import { AppContext } from '../../contexts/AppContext';
-import { loadMore, search } from '../../data/spotify';
-import colors from '../../styles/colors';
+import { SafeAreaView,StyleSheet } from 'react-native';
+
 import CustomInput from '../common/CustomInput';
 import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
 import SearchResults from '../search/SearchResults';
 import CustomTabView from '../users/CustomTabView';
 
+import { catchErrors } from '../../data/errors';
+import { search } from '../../data/spotify';
+import colors from '../../styles/colors';
+
+import { AppContext } from '../../contexts/AppContext';
+
+const getSections = (results) => ([
+  {
+    title: 'Morceaux',
+    render: () => (<SearchResults results={results.tracks} />)
+  },
+  {
+    title: 'Albums',
+    render: () => (<SearchResults results={results.albums} />)
+  },
+  {
+    title: 'Artistes',
+    render: () => (<SearchResults results={results.artists} />)
+  }
+]);
+
+
 export default () => {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false)
-  const [next, setNext] = useState(null)
 
-  const [selected, setSelected] = useState(0);
   const [value, setValue] = useState('fugees');
 
   const { token } = useContext(AppContext)
 
   const handleSubmit = () => {
-    setResults(null)
+    setResults(null);
     setLoading(true);
     search(value, token)
       .then(res => {
-        const albums = res.albums.items.filter(album => album.album_type === 'album')
-        setResults({
-          albums: albums,
-          tracks: res.tracks.items,
-        })
-        setNext({
-          albums: res.albums.next,
-          tracks: res.tracks.next
-        })
+        if (res) {
+          let filteredAlbums = [];
+          if (res.albums) {
+            filteredAlbums = res.albums.items.filter(album => album.album_type === 'album')
+          }
+          setResults({
+            artists: res.artists,
+            albums: { items: filteredAlbums, next: res.albums.next },
+            tracks: res.tracks,
+          });
+          setLoading(false)
+        }
       })
-      .then(() => setLoading(false))
-      .catch(err => console.log(err))
+      .catch(catchErrors)
   }
-
-  const onEndReached = () => {
-    const url = selected ? next.albums : next.tracks;
-    const type = selected ? 'albums' : 'tracks';
-    if (url) {
-      loadMore(url, token)
-        .then(res => {
-          setResults({ ...results, [type]: [...results[type], ...res[type].items]})
-          setNext({ ...next, [type]: res[type].next })
-        })
-        .catch(err => console.log(err))
-    }
-  }
-
-  const getResults = (type) => (
-    <SearchResults 
-      results={results[type]}
-      onEndReached={onEndReached} />)
-
-  const sections = [
-    {
-      title: 'Morceaux',
-      render: () => getResults('tracks')
-    },
-    {
-      title: 'Albums',
-      render: () => getResults('albums')
-    },
-  ]
 
   let content = loading ? (<Loader />) : (<MessageView message='Veuillez effectuer une recherche' />)
   
   if (results) {
     content = (
       <CustomTabView 
-        sections={sections}
+        sections={getSections(results)}
         style='rounded' />
     )
   }
@@ -96,7 +87,6 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    overflow: 'scroll',
     paddingHorizontal: 10,
     paddingTop: 10,
     width: '100%', 
