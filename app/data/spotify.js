@@ -1,4 +1,5 @@
 import { TOKENS, EXTERNAL_API } from '../config.local';
+import { catchErrors, handleErrors } from './errors';
 import { getAuthOptions, getQuery } from './helpers';
 
 export const generateToken = () => {
@@ -13,17 +14,20 @@ export const generateToken = () => {
 
   return (
     fetch(TOKENS.spotify.url, options)
+      .then(handleErrors)
       .then(res => res.json())
-      .catch(error => console.log('error', error))
+      .catch(catchErrors)
   )
 }
 
 export const search = (query, token) => 
   fetch(EXTERNAL_API.spotify + getQuery(query), getAuthOptions(token))
-  .then(res => res.json())
-  .catch(err => console.log(err))
-
-export const loadMore = (url, token) => 
-  fetch(url, getAuthOptions(token))
+    .then(handleErrors)
     .then(res => res.json())
-    .catch(err => console.log(err))
+    .catch(catchErrors)
+
+export const loadNextResults = (url, token) => 
+  fetch(url, getAuthOptions(token))
+    .then(handleErrors)
+    .then(res => res.json())
+    .catch(catchErrors)
