@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Image, ImageBackground, Linking, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import RatingIcon from '../common/RatingIcon';
+import BlurBackground from './BlurBackground';
 import CustomButton from '../common/CustomButton';
+import { BackButton, LikeButton, SpotifyButton } from '../buttons/Buttons';
 
-import { getArtists, getCover, getLink } from '../../functions';
+import { getArtistsWithLink, getCover, getLink } from '../../functions';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -29,53 +31,37 @@ export default ({ media, rating }) => {
             backgroundColor={colors.secondary}
             onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
         </View>
-        <View style={[styles.actionButton, { backgroundColor: colors.white } ]}>
-          <CustomButton
-            large
-            icon={isLiked ? 'heart' : 'heart-outline'}
-            color={colors.red}
-            backgroundColor={colors.white}
-            onPress={() => setLike(!isLiked)} />
-        </View> 
+        <LikeButton 
+          isLiked={isLiked} 
+          onPress={() => setLike(!isLiked)}
+          large />
       </View>
     )
   }
 
   return ( 
     <View style={styles.banner}>
-      <ImageBackground blurRadius={20} source={{ uri: getCover(media) }} style={styles.imageBg}>
+      <BlurBackground uri={getCover(media)}>
         <View style={styles.backButton}>
-          <CustomButton
-            color={colors.white}
-            icon='chevron-left'
-            large
-            onPress={() => navigation.goBack()}
-            transparent />
+          <BackButton transparent large />
         </View>
         <View style={styles.mediaWrapper}>
           <Image resizeMode='contain' source={{ uri: getCover(media) }} style={styles.image} />
           <View style={styles.textWrapper}>
             <Text numberOfLines={1} style={styles.title}>{media.name}</Text>
-            <Text numberOfLine={1} style={styles.artists}>{getArtists(media)}</Text>
+            {getArtistsWithLink(media.artists)}
           </View>
         </View>
         <View style={styles.bottomSection}>
-        <View style={styles.actionButtonsWrapper}>
-          <View style={[styles.actionButton, styles.rating]}>
-            <RatingIcon rating={rating} />
-          </View>
-            <View style={[styles.actionButton, { backgroundColor: colors.darkgrey } ]}>
-              <CustomButton
-                large
-                icon='spotify'
-                color={colors.green}
-                backgroundColor={colors.darkgrey}
-                onPress={() => Linking.openURL(getLink(media))} />
+          <View style={styles.actionButtonsWrapper}>
+            <View style={[styles.actionButton, styles.rating]}>
+              <RatingIcon rating={rating} />
             </View>
+            <SpotifyButton large link={getLink(media)} />
           </View>
           {actionButtons}
         </View>
-      </ImageBackground>
+      </BlurBackground>
     </View>
   )
 };
@@ -119,12 +105,6 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10
   },
-  artists: {
-    color: colors.white,
-    textShadowColor: colors.darkgrey,
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10
-  },
   bottomSection: {
     height: '12%',
     flexDirection: 'row',
@@ -140,13 +120,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    height: '100%',
     overflow: 'hidden',
     justifyContent: 'center',
   },
   rating: {
     backgroundColor: colors.white,
-    height: '100%',
     paddingVertical: 10,
     paddingHorizontal: 15,
   },
