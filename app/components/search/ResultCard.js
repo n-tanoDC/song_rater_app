@@ -17,7 +17,7 @@ const MediaCard = ({ media }) => {
       </View>
       <View style={styles.textContainer}>
         <Text numberOfLines={1} style={styles.title}>{media.name}</Text>
-        <Text numberOfLines={1} style={styles.artist}>{getArtists(media)}</Text>
+        <Text numberOfLines={1} style={styles.artist}>{getArtists(media.artists)}</Text>
       </View>
     </TouchableOpacity> 
   )
@@ -28,7 +28,7 @@ const ArtistCard = ({ artist }) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Media', { media: artist } )}
+      onPress={() => navigation.navigate('Artist', { artist } )}
       style={[styles.card, styles.artistCard]}>
       <View style={styles.artistImageContainer}>
         <ImageBackground source={{ uri: getCover(artist) }} style={[styles.image, styles.artistImage]} />

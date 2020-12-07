@@ -25,7 +25,7 @@ export default ({ media }) => {
                 style={styles.mediaName}>{media.name}</Text>
               <Text 
                 numberOfLines={1} 
-                style={styles.artistName}>{getArtists(media)}</Text>
+                style={styles.artistName}>{getArtists(media.artists)}</Text>
             </View>
       </TouchableOpacity>
       <View style={styles.buttonWrapper}>

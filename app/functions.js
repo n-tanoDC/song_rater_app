@@ -1,6 +1,8 @@
-import { ToastAndroid } from 'react-native';
+import React from 'react';
+import { Text, ToastAndroid, View } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment/min/moment-with-locales';
+import ArtistName from './components/media/ArtistName';
 
 
 // return formatted Array of artists, used to send post request to the API
@@ -21,8 +23,19 @@ export const showToast = (message = null) => {
 
 
 // return formatted string of artists from an Array (provided in the Spotify API response object)
-export const getArtists = media => {
-  const { artists } = media;
+export const getArtistsWithLink = (artists) => {
+  let artistsNames = [];
+  for (const [index, artist] of artists.entries()) {
+    artistsNames.push(<ArtistName last={index === artists.length - 1} key={index} artist={artist} />)
+  }
+  
+  return (
+    <View style={{ flexDirection: 'row' }}>
+      {artistsNames}
+    </View> )
+}
+
+export const getArtists = (artists) => {
   let artistsNames = '';
   for (const [index, artist] of artists.entries()) {
     const suffix = index < artists.length - 1 ? ', ' : '';
