@@ -7,7 +7,7 @@ import { getCover } from '../../../functions/helpers';
 const ArtistCard = ({ artist }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={styles.artistCard} onPress={() => navigation.navigate('Artist', { artist })}>
+    <TouchableOpacity style={styles.artistCard} onPress={() => navigation.push('Artist', { artist })}>
       <Image source={{ uri: getCover(artist) }} style={styles.artistCardImg} />
       <Text style={styles.artistName}>{artist.name}</Text>
     </TouchableOpacity>

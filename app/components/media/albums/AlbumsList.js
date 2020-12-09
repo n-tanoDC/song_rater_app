@@ -7,7 +7,7 @@ import { getCover } from '../../../functions/helpers';
 const AlbumCard = ({ album }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Media', { media: album })} style={styles.albumCard}>
+    <TouchableOpacity onPress={() => navigation.push('Media', { media: album })} style={styles.albumCard}>
       <Image source={{ uri: getCover(album) }} style={styles.albumCover} />
       <Text numberOfLines={2} style={styles.albumName}>{album.name}</Text>
     </TouchableOpacity>

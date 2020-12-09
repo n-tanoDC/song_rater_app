@@ -41,6 +41,8 @@ export const AccountNavigator = () => {
       <>
         <Screen name="Account" component={AccountScreen} initialParams={{ connectedUser }} />
         <Screen name="AccountForm" component={AccountFormScreen} />
+        <Screen name="Media" component={MediaScreen} />
+        <Screen name="Artist" component={ArtistScreen} />
       </>
     )
   } else {

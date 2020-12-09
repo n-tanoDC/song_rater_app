@@ -8,7 +8,7 @@ import colors from '../../../styles/colors';
 const TrackListItem = ({ track }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Media', { media: track })} style={styles.trackListItem}>
+    <TouchableOpacity onPress={() => navigation.push('Media', { media: track })} style={styles.trackListItem}>
       <Image source={{ uri: getCover(track) }} style={styles.trackImage} />
       <Text style={styles.trackName}>{track.name}</Text>
     </TouchableOpacity>
