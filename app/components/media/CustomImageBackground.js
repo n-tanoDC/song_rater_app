@@ -1,12 +1,11 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
-export default ({ children, uri }) => {
+export default ({ children, uri, squared }) => {
   return (
     <ImageBackground 
-      blurRadius={15}
       source={{ uri }}
-      style={styles.imageBg}>
+      style={[styles.imageBg, { aspectRatio: squared ? 1 : 2 }]}>
       <View style={styles.overlay} />
       {children}
     </ImageBackground>
@@ -16,7 +15,9 @@ export default ({ children, uri }) => {
 const styles = StyleSheet.create({
   imageBg: {
     width: '100%',
-    aspectRatio: 1
+    aspectRatio: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

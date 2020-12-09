@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import RatingIcon from '../common/RatingIcon';
-import BlurBackground from './BlurBackground';
+import CustomImageBackground from './CustomImageBackground.js';
 import CustomButton from '../common/CustomButton';
 import { BackButton, LikeButton, SpotifyButton } from '../buttons/Buttons';
 
@@ -41,7 +41,7 @@ export default ({ media, rating }) => {
 
   return ( 
     <View style={styles.banner}>
-      <BlurBackground uri={getCover(media)}>
+      <CustomImageBackground squared uri={getCover(media)}>
         <View style={styles.backButton}>
           <BackButton transparent large />
         </View>
@@ -61,7 +61,7 @@ export default ({ media, rating }) => {
           </View>
           {actionButtons}
         </View>
-      </BlurBackground>
+      </CustomImageBackground>
     </View>
   )
 };
