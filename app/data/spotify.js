@@ -31,3 +31,25 @@ export const loadNextResults = (url, token) =>
     .then(handleErrors)
     .then(res => res.json())
     .catch(catchErrors)
+
+export const getArtistData = (id, token) => {
+  const baseUrl = EXTERNAL_API.spotify + 'artists/' + id;
+  const auth = getAuthOptions(token);
+  return (
+    Promise.all([
+      fetch(baseUrl, auth),
+      fetch(baseUrl + '/albums', auth),
+      fetch(baseUrl + '/top-tracks?country=FR', auth),
+      fetch(baseUrl + '/related-artists', auth)
+    ])
+      .then(async ([data, albums, topTracks, relatedArtists]) => {
+        const artist = {};
+        artist.info = await data.json();
+        artist.albums = await albums.json();
+        artist.topTracks = await topTracks.json().then(res => res.tracks);
+        artist.relatedArtists = await relatedArtists.json().then(res => res.artists);
+        return artist
+      })
+      .catch(catchErrors)
+  )
+}
