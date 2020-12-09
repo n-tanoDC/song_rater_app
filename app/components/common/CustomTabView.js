@@ -8,7 +8,7 @@ import colors from '../../styles/colors';
 const initialLayout = { width: Dimensions.get('window').width };
 
 export default ({ sections, style }) => {
-  const newRoutes = sections.map(section => ({ key: section.title, title: section.title }))
+  const newRoutes = sections.map(section => ({ key: section.key, title: section.title }))
   let styles,
       activeColor = colors.darkgrey,
       inactiveColor = colors.lightgrey;
@@ -31,17 +31,17 @@ export default ({ sections, style }) => {
   const [index, setIndex] = useState(0); 
   const [routes] = useState(newRoutes);
   
-  let sceneMap = {};
-
-  for (const section of sections) {
-    sceneMap[section.title] = section.render;
+  const renderScene = ({ route }) => {
+    for (const section of sections) {
+      if (route.key === section.key) {
+        return section.render;
+      }
+    }
   }
-  
-  const renderScene = SceneMap(sceneMap)
 
   const getTabBarIcon = ({ route, color }) => {
     if (style !== 'rounded') {
-      const index = sections.findIndex(section => section.title === route.key)
+      const index = sections.findIndex(section => section.key === route.key)
       const icon = sections[index].icon;
       return (<Icon name={icon} size={24} color={color} />)
     }

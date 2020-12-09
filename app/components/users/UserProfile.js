@@ -9,9 +9,10 @@ import { getAllReviewsForOneUser } from '../../functions/reviews';
 
 const getSections = (reviews, setReviews, user) => ([
   { 
+    key: 'reviews',
     title: 'Critiques',
     icon: 'comment',
-    render: () => (
+    render: (
       <ReviewsList 
         getReviews={getAllReviewsForOneUser}
         object={user} 
@@ -20,14 +21,16 @@ const getSections = (reviews, setReviews, user) => ([
         setReviews={setReviews} />)  
   },
   {
+    key: 'favorites',
     title: 'Favoris',
     icon: 'heart',
-    render: () => (<MessageView message='Indisponible pour le moment.' />)
+    render: (<MessageView message='Indisponible pour le moment.' />)
   },
   {
+    key: 'lists',
     title: 'Listes',
     icon: 'format-list-bulleted',
-    render: () => (<MessageView message='Indisponible pour le moment.' />)
+    render: (<MessageView message='Indisponible pour le moment.' />)
   },
 ])
 

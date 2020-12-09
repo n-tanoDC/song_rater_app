@@ -8,12 +8,14 @@ import CustomTabView from '../common/CustomTabView';
 export default () => {
   const sections = [
     {
+      key: 'login',
       title: 'Se connecter',
-      render: () => (<LoginForm styles={styles} />)
+      render: <LoginForm styles={styles} />
     },
     {
+      key: 'register',
       title: 'Créer un compte',
-      render: () => (<RegisterForm styles={styles} />)
+      render: <RegisterForm styles={styles} />
     }
   ]
   

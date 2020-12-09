@@ -16,16 +16,19 @@ import { AppContext } from '../../contexts/AppContext';
 
 const getSections = (results) => ([
   {
+    key: 'tracks',
     title: 'Morceaux',
-    render: () => (<SearchResults results={results.tracks} />)
+    render: (<SearchResults results={results.tracks} />)
   },
   {
+    key: 'albums',
     title: 'Albums',
-    render: () => (<SearchResults results={results.albums} />)
+    render: (<SearchResults results={results.albums} />)
   },
   {
+    key: 'artists',
     title: 'Artistes',
-    render: () => (<SearchResults results={results.artists} />)
+    render: (<SearchResults results={results.artists} />)
   }
 ]);
 

@@ -8,31 +8,27 @@ import { getAllFollowingReviews, getAllReviews } from '../functions/reviews';
 
 import { UserContext } from '../contexts/UserContext';
 
-const getReviewsList = (params) => (
-  <ReviewsList 
-    object={params.object}
-    reviews={params.reviews}
-    setReviews={params.setReviews}
-    getReviews={params.getReviews} />
-)
-
 const getSections = (params) => ([
   { 
+    key: 'all',
     title: 'Toutes les critiques',
-    render: () => getReviewsList({
-      reviews: params.allReviews,
-      setReviews: params.setAllReviews,
-      getReviews: params.getAllReviews
-    }),
+    render: (
+      <ReviewsList 
+        reviews={params.allReviews}
+        setReviews={params.setAllReviews}
+        getReviews={params.getAllReviews} />
+    )
   },
   { 
+    key: 'subscriptions',
     title: 'Abonnements',
-    render: () => getReviewsList({
-      reviews: params.subscriptionsReviews,
-      setReviews: params.setSubscriptionsReviews,
-      getReviews: params.getAllFollowingReviews,
-      object: params.connectedUser
-    }),
+    render: (
+      <ReviewsList 
+        object={params.connectedUser}
+        reviews={params.subscriptionsReviews}
+        setReviews={params.setSubscriptionsReviews}
+        getReviews={params.getAllFollowingReviews} />
+    )
   }
 ])
 
@@ -48,11 +44,12 @@ export default () => {
     connectedUser
   }
 
-  const allReviewsList = getReviewsList({
-    reviews: allReviews,
-    setReviews: setAllReviews,
-    getReviews: getAllReviews
-  })
+  const allReviewsList = (
+    <ReviewsList 
+      reviews={allReviews}
+      setReviews={setAllReviews}
+      getReviews={getAllReviews} />
+  )
 
   return (
     <SafeAreaView style={styles.container}>
