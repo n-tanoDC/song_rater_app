@@ -12,6 +12,7 @@ import SearchScreen from '../components/screens/SearchScreen';
 import MediaScreen from '../components/screens/MediaScreen';
 import { UserContext } from '../contexts/UserContext';
 import AuthScreen from '../components/screens/AuthScreen';
+import ArtistScreen from '../components/screens/ArtistScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,12 +22,14 @@ export const HomeNavigator = () =>
     <Screen name="Review" component={ReviewScreen} />
     <Screen name="User" component={UserScreen} />
     <Screen name="Media" component={MediaScreen} />
+    <Screen name="Artist" component={ArtistScreen} />
   </Navigator>
 
 export const SearchNavigator = () =>
   <Navigator headerMode='none' initialRouteName='Search'>
     <Screen name="Search" component={SearchScreen} />
     <Screen name="Media" component={MediaScreen} />
+    <Screen name="Artist" component={ArtistScreen} />
   </Navigator>
 
 
