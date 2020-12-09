@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, Linking, StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Image, Linking, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import { getArtists, getCover, getLink } from '../../functions';
+import CustomButton from '../common/buttons/CustomButton';
+
+import { getArtists, getCover, getLink } from '../../functions/helpers';
 import colors from '../../styles/colors';
-import CustomButton from './CustomButton';
 
 export default ({ media }) => {
   const navigation = useNavigation();

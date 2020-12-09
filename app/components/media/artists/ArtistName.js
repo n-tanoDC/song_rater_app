@@ -1,7 +1,8 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, Text } from 'react-native';
-import colors from '../../styles/colors';
+import { useNavigation } from '@react-navigation/native';
+
+import colors from '../../../styles/colors';
 
 export default ({ artist, last }) => {
   const navigation = useNavigation();

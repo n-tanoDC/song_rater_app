@@ -1,8 +1,9 @@
 import React, { memo } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-import { getArtists, getCover, getGenres } from '../../functions';
+import { getArtists, getCover, getGenres } from '../../functions/helpers';
+
 import colors from '../../styles/colors';
 
 const MediaCard = ({ media }) => {

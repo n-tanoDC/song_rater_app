@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, SafeAreaView} from 'react-native';
 
-import ReviewsList from '../reviews/ReviewsList';
-import CustomTabView from '../users/CustomTabView';
+import ReviewsList from './reviews/ReviewsList';
+import CustomTabView from './common/CustomTabView';
 
-import { getAllFollowingReviews, getAllReviews } from '../../data/reviews';
+import { getAllFollowingReviews, getAllReviews } from '../functions/reviews';
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
 
 const getReviewsList = (params) => (
   <ReviewsList 

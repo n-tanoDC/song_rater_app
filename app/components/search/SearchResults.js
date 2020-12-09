@@ -3,11 +3,10 @@ import { FlatList } from 'react-native';
 
 import ResultCard from './ResultCard';
 
-import { catchErrors } from '../../data/errors';
-import { loadNextResults } from '../../data/spotify';
+import { catchErrors } from '../../functions/errors';
+import { loadNextResults } from '../../functions/spotify';
 
 import { AppContext } from '../../contexts/AppContext';
-
 
 export default (props) => {  
 

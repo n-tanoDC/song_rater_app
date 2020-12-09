@@ -2,8 +2,8 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCover } from '../../functions';
-import colors from '../../styles/colors';
+import { getCover } from '../../../functions/helpers';
+import colors from '../../../styles/colors';
 
 const TrackListItem = ({ track }) => {
   const navigation = useNavigation();

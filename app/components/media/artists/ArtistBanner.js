@@ -1,10 +1,10 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
-import CustomImageBackground from '../CustomImageBackground.js';
-import { BackButton } from '../../buttons/Buttons';
+import CustomImageBackground from '../../common/CustomImageBackground.js';
+import { BackButton } from '../../common/buttons/Buttons';
 
-import { getCover } from '../../../functions';
+import { getCover } from '../../../functions/helpers';
 
 export default ({ artist }) => {
   return (

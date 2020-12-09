@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCover } from '../../../functions';
+import { getCover } from '../../../functions/helpers';
 
 const AlbumCard = ({ album }) => {
   const navigation = useNavigation();

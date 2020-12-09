@@ -1,16 +1,16 @@
 import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import CustomButton from '../common/CustomButton';
+import CustomButton from './CustomButton';
 
-import { updateFollow } from '../../data/user';
-import { isFollowing } from '../../functions';
-import { catchErrors } from '../../data/errors';
+import { updateFollow } from '../../../functions/user';
+import { isFollowing } from '../../../functions/helpers';
+import { catchErrors } from '../../../functions/errors';
 
-import colors from '../../styles/colors';
+import colors from '../../../styles/colors';
 
-import { UserContext } from '../../contexts/UserContext';
-import { AppContext } from '../../contexts/AppContext';
+import { UserContext } from '../../../contexts/UserContext';
+import { AppContext } from '../../../contexts/AppContext';
 
 export default ({ user }) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);

@@ -4,11 +4,12 @@ import { SafeAreaView,StyleSheet } from 'react-native';
 import CustomInput from '../common/CustomInput';
 import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
-import SearchResults from '../search/SearchResults';
-import CustomTabView from '../users/CustomTabView';
+import CustomTabView from '../common/CustomTabView';
+import SearchResults from './SearchResults';
 
-import { catchErrors } from '../../data/errors';
-import { search } from '../../data/spotify';
+import { catchErrors } from '../../functions/errors';
+import { search } from '../../functions/spotify';
+
 import colors from '../../styles/colors';
 
 import { AppContext } from '../../contexts/AppContext';

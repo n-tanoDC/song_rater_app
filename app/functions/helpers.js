@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, ToastAndroid, View } from 'react-native';
+import { ToastAndroid, View } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment/min/moment-with-locales';
-import ArtistName from './components/media/ArtistName';
+import ArtistName from '../components/media/artists/ArtistName';
 
 
 // return formatted Array of artists, used to send post request to the API
@@ -158,4 +158,30 @@ export const formValidator = (data) => {
   }
 
   return { error: null };
+}
+
+export const getOptions = (body, token, method = 'POST') => {
+  const headers = new Headers();
+  let newBody = body;
+  
+  if (token) {
+    headers.append('Authorization', 'Bearer ' + token);
+  }
+  
+  if (body && !(body instanceof FormData)) {
+    headers.append('Content-Type', 'application/json');
+    newBody = JSON.stringify(body);
+  }
+  
+  return { body: newBody, method, headers };
+}
+
+export const getQuery = (query) => {
+  return (
+    'search?q=' + query + '&type=track,album,artist&market=FR&limit=35&offset=0'
+  )
+}
+
+export const getAuthOptions = token => { 
+  return { headers: { Authorization: 'Bearer ' + token } }
 }

@@ -3,11 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import RatingIcon from '../common/RatingIcon';
-import CustomImageBackground from './CustomImageBackground.js';
-import CustomButton from '../common/CustomButton';
-import { BackButton, LikeButton, SpotifyButton } from '../buttons/Buttons';
+import CustomImageBackground from '../common/CustomImageBackground.js';
+import CustomButton from '../common/buttons/CustomButton';
+import { BackButton, LikeButton, SpotifyButton } from '../common/buttons/Buttons';
 
-import { getArtistsWithLink, getCover, getLink } from '../../functions';
+import { getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';

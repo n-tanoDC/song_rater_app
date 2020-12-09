@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../components/screens/HomeScreen';
-import ReviewScreen from '../components/screens/ReviewScreen';
-import UserScreen from '../components/screens/UserScreen';
+import HomeScreen from '../components/HomeScreen';
+import ReviewScreen from '../components/reviews/ReviewScreen';
+import UserScreen from '../components/users/UserScreen';
+import MediaScreen from '../components/media/MediaScreen';
+import ArtistScreen from '../components/media/artists/ArtistScreen';
+import SearchScreen from '../components/search/SearchScreen';
+import AccountScreen from '../components/users/AccountScreen';
+import AccountFormScreen from '../components/users/AccountFormScreen';
+import AuthScreen from '../components/auth/AuthScreen';
 
-import AccountScreen from '../components/screens/AccountScreen';
-import AccountFormScreen from '../components/screens/AccountFormScreen';
-
-import SearchScreen from '../components/screens/SearchScreen';
-import MediaScreen from '../components/screens/MediaScreen';
 import { UserContext } from '../contexts/UserContext';
-import AuthScreen from '../components/screens/AuthScreen';
-import ArtistScreen from '../components/screens/ArtistScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 

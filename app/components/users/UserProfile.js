@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import ReviewsList from '../reviews/ReviewsList';
 import MessageView from '../common/MessageView';
-import CustomTabView from './CustomTabView';
+import CustomTabView from '../common/CustomTabView';
 import UserHeader from './UserHeader';
 
-import { getAllReviewsForOneUser } from '../../data/reviews';
+import { getAllReviewsForOneUser } from '../../functions/reviews';
 
 const getSections = (reviews, setReviews, user) => ([
   { 

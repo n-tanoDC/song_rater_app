@@ -1,9 +1,9 @@
 import React from 'react';
+import { Linking, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import CustomButton from '../common/CustomButton';
-import { Linking, StyleSheet, View } from 'react-native';
-import colors from '../../styles/colors';
+import CustomButton from './CustomButton';
+import colors from '../../../styles/colors';
 
 export const BackButton = ({ transparent, large }) => {
   const navigation = useNavigation();

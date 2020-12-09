@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { UserContext } from '../../contexts/UserContext';
 
-import UserProfile from '../users/UserProfile';
+import UserProfile from './UserProfile';
+
+import { UserContext } from '../../contexts/UserContext';
 
 export default ({ route }) => {
   const [user, setUser] = useState(route.params.connectedUser)

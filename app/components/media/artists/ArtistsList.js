@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCover } from '../../../functions';
+import { getCover } from '../../../functions/helpers';
 
 const ArtistCard = ({ artist }) => {
   const navigation = useNavigation();

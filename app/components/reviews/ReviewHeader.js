@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import ContentSection from './ContentSection';
+import MediaSection from '../media/MediaSection';
 import UserAvatar from '../users/UserAvatar';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/buttons/CustomButton';
 
-import { isVisiting } from '../../functions';
+import { isVisiting } from '../../functions/helpers';
+
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -48,7 +49,7 @@ export default ({ user, media }) => {
         />
         {userSection}
       </View>
-      <ContentSection media={media} />
+      <MediaSection media={media} />
     </View>
   ) 
 };

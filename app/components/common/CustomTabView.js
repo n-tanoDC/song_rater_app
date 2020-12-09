@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import colors from '../../styles/colors';
 
 const initialLayout = { width: Dimensions.get('window').width };

@@ -3,16 +3,17 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import CustomInput from '../common/CustomInput';
+import CustomButton from '../common/buttons/CustomButton';
 
 import { API_URL } from '../../config.local';
-import { getUpdatedFields, pickImage, showToast } from '../../functions';
-import { deleteAccount, editAccount, logout } from '../../data/user';
+import { getUpdatedFields, pickImage, showToast } from '../../functions/helpers';
+import { deleteAccount, editAccount, logout } from '../../functions/user';
+import { catchErrors } from '../../functions/errors';
+
+import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
-import colors from '../../styles/colors';
-import { catchErrors } from '../../data/errors';
-import CustomButton from '../common/CustomButton';
 
 export default ({ route }) => {
   const { user } = route.params;

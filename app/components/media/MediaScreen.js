@@ -3,8 +3,8 @@ import { SafeAreaView } from 'react-native';
 
 import ReviewsList from '../reviews/ReviewsList';
 
-import { getAllReviewsForOneMedia } from '../../data/reviews';
-import MediaBanner from '../media/MediaBanner';
+import { getAllReviewsForOneMedia } from '../../functions/reviews';
+import MediaBanner from './MediaBanner';
 
 export default ({ route }) => {
   const { media } = route.params;

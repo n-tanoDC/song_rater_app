@@ -1,15 +1,14 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import colors from '../../styles/colors';
 
-import UserProfile from '../users/UserProfile';
+import UserProfile from './UserProfile';
 
 export default ({ route }) => {
   const { user } = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
-      <UserProfile user={user} visit />
+      <UserProfile user={user} />
     </SafeAreaView>
   )
 }

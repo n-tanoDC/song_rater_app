@@ -3,7 +3,7 @@ import SplashScreen from 'react-native-splash-screen'
 
 import Loader from '../components/common/Loader';
 
-import { generateToken } from '../data/spotify';
+import { generateToken } from '../functions/spotify';
 
 export const AppContext = createContext();
 

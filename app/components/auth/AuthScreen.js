@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView } from 'react-native';
 
-import LoginForm from '../auth/LoginForm';
-import RegisterForm from '../auth/RegisterForm';
-import CustomTabView from '../users/CustomTabView';
+import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
+import CustomTabView from '../common/CustomTabView';
 
 export default () => {
   const sections = [

@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import CustomInput from '../common/CustomInput';
-import CustomButton from '../common/CustomButton';
+import CustomButton from '../common/buttons/CustomButton';
 
-import { register } from '../../data/user'
-import { formValidator, showToast } from '../../functions';
-import { catchErrors } from '../../data/errors';
+import { register } from '../../functions/user'
+import { formValidator, showToast } from '../../functions/helpers';
+import { catchErrors } from '../../functions/errors';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';

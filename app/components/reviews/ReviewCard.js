@@ -2,13 +2,15 @@ import React, { memo, useContext } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import ContentSection from '../common/ContentSection';
+import MediaSection from '../media/MediaSection';
 import UserAvatar from '../users/UserAvatar';
-import { accountDeleted, getDate, isVisiting } from '../../functions';
+import RatingIcon from '../common/RatingIcon';
+
+import { accountDeleted, getDate, isVisiting } from '../../functions/helpers';
+
+import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
-import RatingIcon from '../common/RatingIcon';
-import colors from '../../styles/colors';
 
 const ReviewCard = ({ review, hideMedia }) => {
   let { title, content, media, rating, created_at, author } = review;
@@ -36,7 +38,7 @@ const ReviewCard = ({ review, hideMedia }) => {
 
   if (!hideMedia) {
     mediaSection = (
-      <ContentSection media={media} />
+      <MediaSection media={media} />
     )
   }
 

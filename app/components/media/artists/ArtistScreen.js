@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
-import Loader from '../common/Loader';
-import ArtistBanner from '../media/artists/ArtistBanner';
-import SectionTitle from '../common/SectionTitle';
-import TrackList from '../media/TrackList';
-import AlbumsList from '../media/albums/AlbumsList';
-import ArtistsList from '../media/artists/ArtistsList';
+import Loader from '../../common/Loader';
+import ArtistBanner from './ArtistBanner';
+import SectionTitle from '../../common/SectionTitle';
+import TrackList from '../tracks/TrackList';
+import AlbumsList from '../albums/AlbumsList';
+import ArtistsList from './ArtistsList';
 
-import { catchErrors } from '../../data/errors';
-import { getArtistData } from '../../data/spotify';
+import { catchErrors } from '../../../functions/errors';
+import { getArtistData } from '../../../functions/spotify';
 
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../../contexts/AppContext';
 
 export default ({ route }) => {
   const { id } = route.params.artist;

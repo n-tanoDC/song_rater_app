@@ -3,15 +3,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SwipeableRating from 'react-native-swipeable-rating';
 
+import CustomButton from '../common/buttons/CustomButton';
 import CustomInput from '../common/CustomInput';
 import MessageView from '../common/MessageView';
 
-import { getCover, getFormattedArtists, getLink, showToast } from '../../functions';
-import { postReview } from '../../data/reviews';
+import { getCover, getFormattedArtists, getLink, showToast } from '../../functions/helpers';
+import { catchErrors } from '../../functions/errors';
+import { postReview } from '../../functions/reviews';
 
 import { AppContext } from '../../contexts/AppContext';
-import { catchErrors } from '../../data/errors';
-import CustomButton from '../common/CustomButton';
 
 export default ({ media, user, setReview }) => {
   const { id, type, name } = media;

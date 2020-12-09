@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
 
-import ReviewHeader from '../common/ReviewHeader';
-import ReviewDisplay from '../reviews/ReviewDisplay';
-import ReviewForm from '../reviews/ReviewForm';
+import ReviewHeader from './ReviewHeader';
+import ReviewDisplay from './ReviewDisplay';
+import ReviewForm from './ReviewForm';
 
 import { UserContext } from '../../contexts/UserContext';
-import { accountDeleted } from '../../functions';
+import { accountDeleted } from '../../functions/helpers';
 
 export default ({ route }) => {
   const { reviewToShow = null, media = null } = route.params;

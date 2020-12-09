@@ -4,16 +4,15 @@ import { useNavigation } from '@react-navigation/native';
 
 import UserAvatar from './UserAvatar';
 import PopUpMenu from '../common/PopUpMenu';
-import FollowButton from './FollowButton';
+import FollowButton from '../common/buttons/FollowButton';
 
-import { logout } from '../../data/user';
-import { isVisiting } from '../../functions';
+import { logout } from '../../functions/user';
+import { isVisiting } from '../../functions/helpers';
 
 import { API_URL } from '../../config.local';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
-import { AppContext } from '../../contexts/AppContext';
 
 export default ({ user }) => {
   const [optionsButton, setOptionsButton] = useState(<View></View>)

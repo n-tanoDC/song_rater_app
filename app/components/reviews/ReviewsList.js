@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
 import ReviewCard from './ReviewCard';
+import Loader from '../common/Loader';
 import MessageView from '../common/MessageView';
 
-import { getAverageRating } from '../../functions';
+import { getAverageRating } from '../../functions/helpers';
 
 import { AppContext } from '../../contexts/AppContext';
-import Loader from '../common/Loader';
 
 export default (props) => {
   const {

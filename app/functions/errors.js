@@ -1,8 +1,12 @@
-import { showToast } from "../functions";
+import { showToast } from './helpers';
 
 export class ApiError {
   constructor(message = 'Une erreur s\'est produite. Veuillez réessayer ultérieurement.') {
     this.message = message;
+  }
+
+  show() {
+    showToast(this.message)
   }
 }
 
@@ -22,7 +26,7 @@ export const catchErrors = error => {
   console.log('Error :', error.message);
 
   if (error instanceof ApiError) {
-    showToast(error.message);
+    error.show()
   } else { 
     showToast();
   }
