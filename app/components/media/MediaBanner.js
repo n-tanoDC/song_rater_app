@@ -68,26 +68,20 @@ export default ({ media, rating }) => {
 
 const styles = StyleSheet.create({
   banner: {
-    justifyContent: 'space-between',
-    alignItems: 'center',
     marginBottom: 10
   },
   backButton: {
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '15%'
-  },
-  imageBg: {
-    width: '100%',
-    aspectRatio: 1
+    position: 'absolute',
+    top: 5,
+    left: 5,
   },
   mediaWrapper: {
-    height: '73%',
-    justifyContent: 'space-between'
+    height: '90%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   image: {
-    height: '70%',
+    height: '50%',
     aspectRatio: 1,
     borderRadius: 10,
     alignSelf: 'center',
@@ -106,7 +100,8 @@ const styles = StyleSheet.create({
     textShadowRadius: 10
   },
   bottomSection: {
-    height: '12%',
+    flex: 1,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between'
