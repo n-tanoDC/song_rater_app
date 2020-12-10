@@ -5,6 +5,17 @@ import moment from 'moment/min/moment-with-locales';
 import ArtistName from '../components/media/artists/ArtistName';
 
 
+// return formatted Media object to submit to db
+export const getMediaData = (media) => ({
+  id: media.id,
+  link: getLink(media),
+  media_type: media.type,
+  name: media.name,
+  image: getCover(media),
+  artists: getFormattedArtists(media.artists)
+});
+
+
 // return formatted Array of artists, used to send post request to the API
 export const getFormattedArtists = artists => {
   return artists.map(artist => ({ id: artist.id, name: artist.name }))

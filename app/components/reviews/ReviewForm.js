@@ -7,14 +7,13 @@ import CustomButton from '../common/buttons/CustomButton';
 import CustomInput from '../common/CustomInput';
 import MessageView from '../common/MessageView';
 
-import { getCover, getFormattedArtists, getLink, showToast } from '../../functions/helpers';
+import { getCover, getFormattedArtists, getLink, showToast, getMediaData } from '../../functions/helpers';
 import { catchErrors } from '../../functions/errors';
 import { postReview } from '../../functions/reviews';
 
 import { AppContext } from '../../contexts/AppContext';
 
 export default ({ media, user, setReview }) => {
-  const { id, type, name } = media;
   
   // State variables to control inputs
   const [title, setTitle] = useState('');
@@ -26,26 +25,13 @@ export default ({ media, user, setReview }) => {
   // Allow to trigger a render of the app
   const { setUpdates } = useContext(AppContext);
 
-  // Get image source, link & artists
-  const image = getCover(media)
-  const link = getLink(media);
-  const artists = getFormattedArtists(media.artists);
-  
-
   const handleSubmit = () => {
     //create the body of the request
     const body = { 
       title,
       content, 
       rating, 
-      media: { 
-        id, 
-        name, 
-        artists, 
-        media_type: type, 
-        image,
-        link 
-      }
+      media: getMediaData(media),
     }
 
     // If the user writes a title or a content, he has to write both
