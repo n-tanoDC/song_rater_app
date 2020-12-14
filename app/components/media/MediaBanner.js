@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
@@ -7,7 +7,8 @@ import CustomImageBackground from '../common/CustomImageBackground.js';
 import CustomButton from '../common/buttons/CustomButton';
 import { BackButton, LikeButton, SpotifyButton } from '../common/buttons/Buttons';
 
-import { getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
+import { isFavorite, getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
+import { updateFavStatus } from '../../functions/user';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
@@ -16,7 +17,21 @@ export default ({ media, rating }) => {
   const navigation = useNavigation();
   const [isLiked, setLike] = useState(false);
 
-  const { connectedUser } = useContext(UserContext);
+  const { connectedUser, setConnectedUser } = useContext(UserContext);
+
+  useEffect(() => {
+    if (connectedUser) {
+      const favStatus = isFavorite(connectedUser, media)
+      setLike(favStatus);
+    }
+  }, [connectedUser])
+
+  const handlePress = async () => {
+    const method = isLiked ? 'DELETE' : 'POST';
+    const newFavorites = await updateFavStatus(media, method, connectedUser.token);
+    setConnectedUser({ ...connectedUser, favorites: newFavorites });
+    setLike(!isLiked)
+  };
 
   let actionButtons;
 
@@ -32,8 +47,9 @@ export default ({ media, rating }) => {
             onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />
         </View>
         <LikeButton 
-          isLiked={isLiked} 
-          onPress={() => setLike(!isLiked)}
+          isLiked={isLiked}
+          media={media}
+          onPress={() => handlePress()}
           large />
       </View>
     )

@@ -1,6 +1,6 @@
 import { API_URL } from '../config.local';
 import { catchErrors, handleErrors } from './errors';
-import { getOptions } from './helpers';
+import { getMediaData, getOptions } from './helpers';
 
 export const login = data => 
   fetch(API_URL + 'auth/login', getOptions(data))
@@ -60,3 +60,9 @@ export const updateFollow = (action, username, token) =>
       }
     })  
     .catch(err => console.log(err))
+
+export const updateFavStatus = (media, method, token) => 
+  fetch(API_URL + 'users/account/favorites/' + media.id, getOptions(getMediaData(media), token, method))
+    .then(handleErrors)
+    .then(res => res.json())
+    .catch(catchErrors);
