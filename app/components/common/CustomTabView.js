@@ -71,10 +71,6 @@ export default ({ sections, style }) => {
 };
 
 const iconOnlyStyles = StyleSheet.create({
-  tabBarContainer: {
-    backgroundColor: colors.white,
-    marginBottom: 10
-  },
   tabBar: {
     backgroundColor: colors.white,
   },

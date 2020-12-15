@@ -28,7 +28,7 @@ export default (props) => {
   if (icon) {
     iconComponent = (
       <Icon
-        size={large ? 28 : 18}
+        size={large ? 26 : 18}
         color={color}
         name={icon} />
     )

@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import CustomImageBackground from '../../common/CustomImageBackground.js';
-import { BackButton } from '../../common/buttons/Buttons';
+import { BackButton, LikeButton } from '../../common/buttons/Buttons';
 
-import { getCover } from '../../../functions/helpers';
+import { checkFavorite, getCover } from '../../../functions/helpers';
+import { UserContext } from '../../../contexts/UserContext.js';
 
 export default ({ artist }) => {
+
+  const [isLiked, setLike] = useState(false);
+
+  const { connectedUser } = useContext(UserContext);
+
+  useEffect(() => checkFavorite(connectedUser, artist, setLike), [connectedUser])
+
   return (
     <View style={styles.banner}>
       <CustomImageBackground uri={getCover(artist)}>
@@ -15,6 +23,13 @@ export default ({ artist }) => {
         </View>
         <Image source={{ uri: getCover(artist) }} style={styles.artistImage} />
         <Text style={styles.artistName}>{artist.name}</Text>
+        <View style={styles.likeButton}>
+          {connectedUser ? (
+            <LikeButton 
+              isLiked={isLiked}
+              setLike={setLike}
+              media={artist} />) : null}
+        </View>
       </CustomImageBackground>
     </View>
   )
@@ -26,9 +41,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backButton: {
-    left: 5,
-    position: "absolute",
-    top: 5,
+    position: 'absolute',
+    top: 10,
+    left: 10,
+  },
+  likeButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   artistImage: {
     borderColor: colors.white,
