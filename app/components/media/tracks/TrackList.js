@@ -2,26 +2,26 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCover } from '../../../functions/helpers';
+import { getArtists, getCover } from '../../../functions/helpers';
 import colors from '../../../styles/colors';
 
-const TrackListItem = ({ track }) => {
+const TrackListItem = ({ track, showArtist }) => {
   const navigation = useNavigation();
+  const artist = showArtist ? <Text style={styles.artists}>{getArtists(track.artists)}</Text> : null;
   return (
     <TouchableOpacity onPress={() => navigation.push('Media', { media: track })} style={styles.trackListItem}>
       <Image source={{ uri: getCover(track) }} style={styles.trackImage} />
-      <Text style={styles.trackName}>{track.name}</Text>
+      <View>
+        <Text style={styles.trackName}>{track.name}</Text>
+        {artist}
+      </View>
     </TouchableOpacity>
   )
 }
 
-export default ({ tracks }) => {
-  const jsxTracks = tracks.map((track) => <TrackListItem key={track.id} track={track}/>)
-  return (
-    <View>
-      {jsxTracks}
-    </View>
-  )
+export default ({ tracks, showArtist }) => {
+  const jsxTracks = tracks.map((track) => <TrackListItem key={track.id} showArtist={showArtist} track={track}/>)
+  return jsxTracks
 }
 
 const styles = StyleSheet.create({
@@ -34,10 +34,16 @@ const styles = StyleSheet.create({
   },
   trackImage: {
     aspectRatio: 1,
-    width: 50,
+    width: 60,
+    marginRight: 10,
   },
   trackName: {
+    fontFamily: 'baloo2-semibold',
     color: colors.darkgrey,
-    marginLeft: 10,
+    fontSize: 16
   },
+  artists: {
+    color: colors.darkgrey,
+    fontSize: 14,
+  }
 })
