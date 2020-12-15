@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Container } from '../common/Layout';
 
 import UserProfile from './UserProfile';
 
@@ -7,14 +7,8 @@ export default ({ route }) => {
   const { user } = route.params;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <UserProfile user={user} />
-    </SafeAreaView>
+    </Container>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
-})

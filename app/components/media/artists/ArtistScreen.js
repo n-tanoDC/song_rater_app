@@ -12,6 +12,7 @@ import { catchErrors } from '../../../functions/errors';
 import { getArtistData } from '../../../functions/spotify';
 
 import { AppContext } from '../../../contexts/AppContext';
+import { Container, ScrollingContent } from '../../common/Layout';
 
 export default ({ route }) => {
   const { id } = route.params.artist;
@@ -29,25 +30,16 @@ export default ({ route }) => {
   if (!artist) return (<Loader />)
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
       <ArtistBanner artist={artist.info}/>
-      <ScrollView style={styles.content}>
+      <ScrollingContent>
         <SectionTitle text='Morceaux populaires' />
         <TrackList tracks={artist.topTracks} />
         <SectionTitle text='Albums' />
         <AlbumsList albums={artist.albums.items} />
         <SectionTitle text='Artistes similaires' />
         <ArtistsList artists={artist.relatedArtists} />
-      </ScrollView>
-    </SafeAreaView>
+      </ScrollingContent>
+    </Container>
   )
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    padding: 10,
-  }
-})

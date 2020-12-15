@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 
 import ReviewsList from '../reviews/ReviewsList';
 
 import { getAllReviewsForOneMedia } from '../../functions/reviews';
 import MediaBanner from './MediaBanner';
+import { Container } from '../common/Layout';
 
 export default ({ route }) => {
   const { media } = route.params;
@@ -12,8 +12,10 @@ export default ({ route }) => {
   const [reviews, setReviews] = useState(null)
   const [rating, setRating] = useState(null)
 
+  useEffect(() => console.log(reviews), [reviews])
+  
   return (
-    <SafeAreaView>
+    <Container>
       <ReviewsList 
         getReviews={getAllReviewsForOneMedia}
         reviews={reviews}
@@ -23,6 +25,6 @@ export default ({ route }) => {
         object={media} 
         padder
         setRating={setRating} />
-    </SafeAreaView>
+    </Container>
   )
 };
