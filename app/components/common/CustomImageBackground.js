@@ -1,10 +1,11 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 
-export default ({ children, uri, squared }) => {
+export default ({ children, uri, squared, blur }) => {
   return (
     <ImageBackground 
       source={{ uri }}
+      blurRadius={blur ? 3 : 0}
       style={[styles.imageBg, { aspectRatio: squared ? 1 : 2 }]}>
       <View style={styles.overlay} />
       {children}
