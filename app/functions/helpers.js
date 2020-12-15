@@ -7,22 +7,53 @@ import ArtistName from '../components/media/artists/ArtistName';
 // check if a user has a media in his favorites and return true or false
 export const isFavorite = (user, media) => user.favorites.find(fav => fav.id === media.id)
 
-// return formatted Media object to submit to db
-export const getMediaData = (media) => ({
-  id: media.id,
-  link: getLink(media),
-  media_type: media.type,
-  name: media.name,
-  image: getCover(media),
-  artists: getFormattedArtists(media.artists)
-});
+// set a state according to favorite status of a media
+export const checkFavorite = (user, media, setLike) => {
+  if (user) {
+    const favStatus = isFavorite(user, media)
+    setLike(favStatus)
+  }
+}
 
+// return formatted Media object to submit to db
+export const getMediaData = (media) => {
+  const mediaData = {
+    id: media.id,
+    link: getLink(media),
+    media_type: media.type,
+    name: media.name,
+    image: getCover(media),
+  }
+
+  if (media.type !== 'artist') {
+    mediaData.artists = getFormattedArtists(media.artists)
+  }
+
+  return mediaData
+};
+
+// return a string for the type of the media given as a parameter
+export const getMediaType = (media, formatted) => {
+  const type = media.type ? media.type : media.media_type;
+  if (formatted) {
+    switch(type) {
+      case 'track':
+        return 'Morceau';
+      case 'album': 
+        return 'Album';
+      case 'artist':
+        return 'Artiste';
+      default: 
+        return 'Type inconnu';
+    }
+  }
+  return type;
+}
 
 // return formatted Array of artists, used to send post request to the API
 export const getFormattedArtists = artists => {
   return artists.map(artist => ({ id: artist.id, name: artist.name }))
 }
-
 
 // display a toast at the bottom of the screen
 export const showToast = (message = null) => {
@@ -33,7 +64,6 @@ export const showToast = (message = null) => {
 
   ToastAndroid.show(newMessage, ToastAndroid.SHORT)
 }
-
 
 // return formatted string of artists from an Array (provided in the Spotify API response object)
 export const getArtistsWithLink = (artists) => {
@@ -56,7 +86,6 @@ export const getArtists = (artists) => {
   }
   return artistsNames;
 }
-
 
 // return a string corresponding to the right url to use to display a media cover
 export const getCover = media => {
@@ -88,9 +117,7 @@ export const getGenres = media => {
   return formattedGenres.join(', ')
 }
 
-
 export const getDate = timestamp => moment.utc(timestamp).locale('fr').fromNow();
-
 
 export const getLink = media => {
   if (media.link) {
@@ -98,7 +125,6 @@ export const getLink = media => {
   }
   return media.external_urls.spotify;
 }
-
 
 export const getAverageRating = reviews => {
   if (!reviews || reviews.length === 0) {
@@ -109,11 +135,9 @@ export const getAverageRating = reviews => {
   return Math.round((sum / reviews.length) * 100) / 100;
 }
 
-
 export const isFollowing = (connectedUser, userToTest) => {
   return connectedUser.following.some(userFollowed => userFollowed === userToTest._id)
 }
-
 
 export const isVisiting = (connectedUser, author) => {
   if (connectedUser) {
@@ -122,9 +146,7 @@ export const isVisiting = (connectedUser, author) => {
   return true;
 }
 
-
 export const accountDeleted = (author) => !(author instanceof Object) 
-
 
 export const pickImage = (callback) => {
   ImagePicker.showImagePicker({
@@ -146,7 +168,6 @@ export const pickImage = (callback) => {
     }
   })
 }
-
 
 export const getUpdatedFields = (fields, user) => {
   let newInputs = {};
