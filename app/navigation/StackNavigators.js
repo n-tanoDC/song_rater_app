@@ -12,6 +12,7 @@ import AccountFormScreen from '../components/users/AccountFormScreen';
 import AuthScreen from '../components/auth/AuthScreen';
 
 import { UserContext } from '../contexts/UserContext';
+import ReviewFormScreen from '../components/reviews/ReviewFormScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -19,6 +20,7 @@ export const HomeNavigator = () =>
   <Navigator headerMode='none' initialRouteName='Home'>
     <Screen name="Home" component={HomeScreen} />
     <Screen name="Review" component={ReviewScreen} />
+    <Screen name="ReviewForm" component={ReviewFormScreen} initialParams={{ tabBarVisible: false }} />
     <Screen name="User" component={UserScreen} />
     <Screen name="Media" component={MediaScreen} />
     <Screen name="Artist" component={ArtistScreen} />
@@ -29,6 +31,8 @@ export const SearchNavigator = () =>
     <Screen name="Search" component={SearchScreen} />
     <Screen name="Media" component={MediaScreen} />
     <Screen name="Artist" component={ArtistScreen} />
+    <Screen name="Review" component={ReviewScreen} />
+    <Screen name="ReviewForm" component={ReviewFormScreen} initialParams={{ tabBarVisible: false }} />
   </Navigator>
 
 
@@ -43,6 +47,8 @@ export const AccountNavigator = () => {
         <Screen name="AccountForm" component={AccountFormScreen} />
         <Screen name="Media" component={MediaScreen} />
         <Screen name="Artist" component={ArtistScreen} />
+        <Screen name="Review" component={ReviewScreen} />
+        <Screen name="ReviewForm" component={ReviewFormScreen} initialParams={{ tabBarVisible: false }} />
       </>
     )
   } else {

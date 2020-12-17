@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-
 import { HomeNavigator, AccountNavigator, SearchNavigator } from './StackNavigators';
 import TabIcon from './TabIcon';
 import colors from '../styles/colors';
@@ -16,6 +15,15 @@ export default () => {
     inactiveTintColor: colors.darkgrey,
     style: {
       backgroundColor: colors.white,
+    }
+  }
+
+  const getTabBarVisibility = (route) => {
+    try {
+      const { tabBarVisible = true } = route.state.routes[route.state.index].params
+      return tabBarVisible;
+    } catch {
+      return true
     }
   }
 
@@ -45,7 +53,8 @@ export default () => {
         initialRouteName="Home"
         tabBarOptions={tabBarOptions}
         screenOptions={({ route }) => ({ 
-          tabBarIcon: ({ color }) => getIcons(route, color)
+          tabBarIcon: ({ color }) => getIcons(route, color),
+          tabBarVisible: getTabBarVisibility(route),
         })}
       >
         <Screen

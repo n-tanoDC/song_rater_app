@@ -29,7 +29,7 @@ export const ReviewButton = ({ media }) => {
       icon='music-note-plus'
       color={colors.white}
       backgroundColor={colors.transparent}
-      onPress={() => navigation.navigate('Review', { media, reviewToShow: null })} />)
+      onPress={() => navigation.navigate('ReviewForm', { media })} />)
 }
 
 export const SpotifyButton = ({ link, color = colors.green }) => {

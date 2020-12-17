@@ -44,7 +44,7 @@ const ReviewCard = ({ review, hideMedia }) => {
 
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate('Review', { reviewToShow: review })}>
+      <TouchableOpacity onPress={() => navigation.navigate('Review', { review })}>
         <View style={styles.header}>
           <View style={styles.userWrapper}>
             <UserAvatar 
