@@ -34,7 +34,7 @@ export const ReviewButton = ({ media }) => {
 
 export const SpotifyButton = ({ link, color = colors.green }) => {
   return (
-    <View style={[styles.button, styles.spotify]}>
+    <View style={styles.button}>
       <CustomButton
         large
         icon='spotify'
@@ -75,7 +75,6 @@ export const LikeButton = ({ isLiked, setLike, media }) => {
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
-    height: '100%',
     overflow: 'hidden',
   }
 })

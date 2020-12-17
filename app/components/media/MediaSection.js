@@ -12,7 +12,6 @@ export default ({ media }) => {
     <View style={styles.container}>
       <TouchableOpacity 
         style={styles.mediaContainer}
-        containerStyle={styles.mediaContainerStyle} 
         onPress={() => navigation.push('Media', { media: media })}>
         <Image 
           style={styles.mediaImg} 
@@ -42,26 +41,23 @@ const styles = StyleSheet.create({
     borderColor: '#F4F4F4',
     borderTopWidth: 1, 
     flexDirection: 'row', 
-    justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
   },
   mediaContainer: {
     flexDirection: 'row',
-  },
-  mediaContainerStyle: {
     width: '85%',
   },
   mediaImg: { 
-    minWidth: '20%',
+    width: '20%',
     aspectRatio: 1,
   },
   mediaInfos: {
     width: '80%',
-    justifyContent: 'space-evenly',
-    paddingHorizontal: 10, 
+    justifyContent: 'space-around',
+    paddingLeft: 12, 
   },
   mediaName: { 
-    fontSize: 16, 
+    fontSize: 14, 
     color: colors.white,
     fontFamily: 'baloo2-semibold',
   },
@@ -69,10 +65,8 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 12,
   },
-  buttonWrapper: { 
-    alignSelf: 'center',
-    flex: 1, 
-    position: 'absolute', 
-    right: 5, 
+  buttonWrapper: {
+    width: '15%',
+    alignSelf: 'center'
   }
 })
