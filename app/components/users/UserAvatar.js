@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { API_URL } from '../../config.local';
 
 export default ({ user, small, onPress }) => {
-  const size = small ? 40 : 80;
+  const size = small ? 40 : 75;
   let source;
 
   if (user && user.avatar) {

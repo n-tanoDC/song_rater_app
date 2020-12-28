@@ -18,7 +18,7 @@ export default ({ trigger, options }) => {
     <Menu>
       <MenuTrigger>
         <View style={styles.trigger}>
-          <Icon name={trigger.icon} size={28} color={colors.darkgrey} />
+          <Icon name={trigger.icon} size={28} color={colors.white} />
         </View>
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   trigger: {
-    margin: 10,
+    padding: 5
   },
   option: {
     flexDirection: 'row',

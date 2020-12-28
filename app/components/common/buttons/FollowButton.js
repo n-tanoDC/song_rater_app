@@ -12,10 +12,10 @@ import colors from '../../../styles/colors';
 import { UserContext } from '../../../contexts/UserContext';
 import { AppContext } from '../../../contexts/AppContext';
 
-export default ({ user }) => {
+export default ({ user, setFollowers}) => {
   const { connectedUser, setConnectedUser } = useContext(UserContext);
   const { setUpdates } = useContext(AppContext)
-
+  
   const handlePress = (action) => {
     updateFollow(action, user.username, connectedUser.token)
       .then(res => {
@@ -23,26 +23,29 @@ export default ({ user }) => {
           throw res
         } 
         setConnectedUser({ ...connectedUser, ...res.updatedUser })
+        setFollowers(res.followedUser.followers.length)
         setUpdates(true)
       })
       .catch(catchErrors)
   }
 
-  let action, text, color;
+  let action, text, backgroundColor, color;
   
       if (isFollowing(connectedUser, user)) {
         action = 'unfollow';
         text = 'Suivi';
-        color = colors.green;
+        backgroundColor = colors.green;
       } else {
+        color = colors.darkgrey;
         action = 'follow';
         text = 'Suivre';
-        color = colors.secondary;
+        backgroundColor = colors.white;
       }
    
   return (
-    <View style={[styles.buttonWrapper, { backgroundColor: color }]}>
-      <CustomButton 
+    <View style={[styles.buttonWrapper, { backgroundColor }]}>
+      <CustomButton
+        color={color}
         text={text} 
         transparent
         onPress={() => handlePress(action)} />
@@ -52,7 +55,6 @@ export default ({ user }) => {
 
 const styles = StyleSheet.create({
   buttonWrapper: {
-    borderBottomLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderRadius: 20,
   }
 });

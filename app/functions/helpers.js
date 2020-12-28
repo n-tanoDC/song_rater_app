@@ -4,6 +4,16 @@ import ImagePicker from 'react-native-image-picker';
 import moment from 'moment/min/moment-with-locales';
 import ArtistName from '../components/media/artists/ArtistName';
 
+// return a formatted string to display a number of followers
+export const getFollowers = (followers) => {
+  if (!followers) {
+    return 'Aucun abonné'
+  }
+
+  const suffix = followers > 1 ? 's' : '';
+  return followers + ' abonné' + suffix;
+}
+
 // check if a user has a media in his favorites and return true or false
 export const isFavorite = (user, media) => user.favorites.find(fav => fav.id === media.id)
 
