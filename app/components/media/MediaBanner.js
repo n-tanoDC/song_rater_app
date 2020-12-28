@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import RatingIcon from '../common/RatingIcon';
 import CustomImageBackground from '../common/CustomImageBackground.js';
 import { BackButton, LikeButton, ReviewButton, SpotifyButton } from '../common/buttons/Buttons';
 
-import { getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
+import { checkFavorite, getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';

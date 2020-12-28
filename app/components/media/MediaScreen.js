@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import ReviewsList from '../reviews/ReviewsList';
 
@@ -11,8 +11,6 @@ export default ({ route }) => {
 
   const [reviews, setReviews] = useState(null)
   const [rating, setRating] = useState(null)
-
-  useEffect(() => console.log(reviews), [reviews])
   
   return (
     <Container>
