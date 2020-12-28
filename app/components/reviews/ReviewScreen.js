@@ -1,23 +1,26 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import ReviewHeader from './ReviewHeader';
+import VotingSection from './VotingSection';
+import { Container, ScrollingContent } from '../common/Layout';
 
 import { accountDeleted } from '../../functions/helpers';
-import { Container } from '../common/Layout';
+import colors from '../../styles/colors';
 
 export default ({ route }) => {
   const { review } = route.params;
     
   const userProp = accountDeleted(review.author) ? { username: 'Utilisateur supprimé' } : review.author;
-  
+
   return (
     <Container>
       <ReviewHeader 
         user={userProp} 
         rating={review ? review.rating : null} 
         media={review ? review.media : media} />
-      <ScrollView style={styles.container}>
+      <ScrollingContent>
+        <VotingSection review={review} />
         <View style={styles.titleContainer}>
           <Text numberOfLines={2} style={styles.title}>{review.title}</Text>
           <View style={styles.ratingContainer}>
@@ -27,16 +30,12 @@ export default ({ route }) => {
         <View style={styles.contentContainer}>
           <Text style={styles.content}>{review.content}</Text>
         </View>
-      </ScrollView>
+      </ScrollingContent>
     </Container>
   )
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors.white,
-    flex: 1
-  },
   titleContainer: {
     alignItems: 'center',
     borderBottomWidth: 1,

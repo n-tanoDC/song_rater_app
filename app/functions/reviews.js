@@ -32,3 +32,9 @@ export const postReview = (body, token) =>
     .then(handleErrors)
     .then(res => res.json())
     .catch(catchErrors)
+
+export const updateReviewVote = (type, review, token) => 
+  fetch(API_URL + 'reviews/' + type + '/' + review._id, getOptions(null, token, 'GET'))
+    .then(handleErrors)
+    .then(res => res.json())
+    .catch(catchErrors)
