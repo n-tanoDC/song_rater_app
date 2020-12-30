@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import CustomButton from '../common/buttons/CustomButton';
 
@@ -50,16 +50,13 @@ export default ({ review }) => {
         <CustomButton
           color={userVote === 'upvote' ? colors.green : colors.grey} 
           icon='thumb-up'
-          large 
           onPress={() => handleVote('upvote')} 
-          text={upvotes.length ? upvotes.length : '0'} 
           transparent />
+        <Text style={styles.totalVotes}>{upvotes.length + (-downvotes.length)}</Text>
         <CustomButton 
           color={userVote === 'downvote' ? colors.red : colors.grey} 
           icon='thumb-down'
-          large 
           onPress={() => handleVote('downvote')} 
-          text={downvotes.length ? downvotes.length : '0'} 
           transparent />
       </View>
     )
@@ -71,6 +68,9 @@ export default ({ review }) => {
 const styles = StyleSheet.create({
   votingSection: {
     flexDirection: 'row',
-    paddingVertical: 10
+    alignItems: 'center',
+  },
+  totalVotes: {
+    fontFamily: 'baloo2-semibold'
   }
 })

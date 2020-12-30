@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import MediaSection from '../media/MediaSection';
 import UserAvatar from '../users/UserAvatar';
 import RatingIcon from '../common/RatingIcon';
+import VotingSection from './VotingSection';
 
 import { accountDeleted, getDate, isVisiting } from '../../functions/helpers';
 
@@ -46,20 +47,25 @@ const ReviewCard = ({ review, hideMedia }) => {
     <View style={styles.card}>
       <TouchableOpacity onPress={() => navigation.navigate('Review', { review })}>
         <View style={styles.header}>
+          <VotingSection review={review} />
           <View style={styles.userWrapper}>
+            <View>
+              <Text numberOfLines={1} style={styles.username}>{author.username}</Text>
+            </View>
             <UserAvatar 
               small 
               user={userProp}
               onPress={onPress} />
-            <View style={styles.headerText}>
-              <Text numberOfLines={1} style={styles.username}>{author.username}</Text>
-              <Text numberOfLines={1} style={styles.date}>{getDate(created_at)}</Text>
-            </View>
           </View>
-          <RatingIcon rating={rating} />
         </View>
         <View style={styles.body}>
-          <Text numberOfLines={1} style={styles.title}>{title}</Text>
+          <View style={styles.bodyHeader}>
+            <View>
+              <Text numberOfLines={1} style={styles.title}>{title}</Text>
+              <Text numberOfLines={1} style={styles.date}>{getDate(created_at)}</Text>
+            </View>
+            <RatingIcon rating={rating} />
+          </View>
           <Text numberOfLines={3} style={styles.content}>{content}</Text>
         </View>
       </TouchableOpacity>
@@ -72,17 +78,15 @@ export default memo(ReviewCard);
 
 const styles = StyleSheet.create({
   card: {
-    marginHorizontal: 10,
-    marginBottom: 10,
-    borderRadius: 15,
     overflow: 'hidden',
     borderColor: colors.grey,
     elevation: 5,
     backgroundColor: colors.white,
-
+    borderBottomWidth: 5,
+    borderColor: colors.grey
   },
   header: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: colors.lightgrey2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -92,27 +96,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  headerText: {
-    marginLeft: 10,
+  username: {
+    marginRight: 10,
+    fontSize: 16,
+    fontFamily: 'baloo2-semibold',
     justifyContent: 'center',
     textAlign: "left",
   },
-  username: {
-    fontSize: 16,
-    fontFamily: 'baloo2-semibold',
-  },
-  date: {
-    fontSize: 12,
-    color: 'grey'
-  },
   body: {
-    padding: 15,
+    padding: 10,
+  },
+  bodyHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   title: {
     fontFamily: 'baloo2-semibold',
     fontSize: 14,
     color: colors.darkgrey,
-    marginBottom: 10
+  },
+  date: {
+    fontSize: 12,
+    color: 'grey',
   },
   content: {
     fontSize: 12
