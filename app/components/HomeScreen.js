@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, SafeAreaView} from 'react-native';
+import { StyleSheet, SafeAreaView, View} from 'react-native';
 
 import ReviewsList from './reviews/ReviewsList';
 import CustomTabView from './common/CustomTabView';
@@ -7,6 +7,8 @@ import CustomTabView from './common/CustomTabView';
 import { getAllFollowingReviews, getAllReviews } from '../functions/reviews';
 
 import { UserContext } from '../contexts/UserContext';
+import { Container, ScrollingContent } from './common/Layout';
+import LastReleasesSection from './home/LastReleasesSection';
 
 const getSections = (params) => ([
   { 
@@ -52,14 +54,11 @@ export default () => {
   )
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Container>
+      <View style={{ height: '30%' }}>
+        <LastReleasesSection />
+      </View>
       {connectedUser ? <CustomTabView style='rounded' sections={getSections(tabViewParams)} /> : allReviewsList}
-    </SafeAreaView>
+    </Container>
   )
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
-})

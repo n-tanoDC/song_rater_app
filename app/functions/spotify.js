@@ -53,3 +53,9 @@ export const getArtistData = (id, token) => {
       .catch(catchErrors)
   )
 }
+
+export const getLastReleases = (token) =>
+    fetch(EXTERNAL_API.spotify + 'browse/new-releases?country=FR', getAuthOptions(token))
+      .then(handleErrors)
+      .then(res => res.json())
+      .catch(catchErrors)
