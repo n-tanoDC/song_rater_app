@@ -16,13 +16,17 @@ export default () => {
 
   useEffect(() => { 
     if (connectedUser) {
-      getRecommendations(token, connectedUser)
-      .then(res => {
-        if (res) {
-          setMedias(res.tracks)
-        }
-      })
-      .catch(catchErrors)
+      if (connectedUser.favorites.length) {
+        getRecommendations(token, connectedUser)
+          .then(res => {
+            if (res) {
+              setMedias(res.tracks)
+            }
+          })
+          .catch(catchErrors)
+      } else {
+        setMedias([])
+      }
     }
   }, [])
 
@@ -41,5 +45,8 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+  },
+  listContainer: {
+    minHeight: 100,
   }
 })

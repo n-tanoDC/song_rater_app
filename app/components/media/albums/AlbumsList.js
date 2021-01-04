@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { getArtists, getCover } from '../../../functions/helpers';
 import colors from '../../../styles/colors';
+import MessageView from '../../common/MessageView';
 
 const AlbumCard = ({ album, showArtists }) => {
   const navigation = useNavigation();
@@ -18,6 +19,12 @@ const AlbumCard = ({ album, showArtists }) => {
 
 export default ({ albums, showArtists }) => {
   const renderItem = ({ item }) => (<AlbumCard showArtists={showArtists} album={item} />);
+
+  if (!albums.length) {
+    return (
+      <MessageView message='Ajoutez du contenu à vos favoris pour recevoir des recommandations' />
+    )
+  }
 
   return (
     <FlatList
