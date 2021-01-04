@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, SafeAreaView, View} from 'react-native';
 
-import ReviewsList from './reviews/ReviewsList';
-import CustomTabView from './common/CustomTabView';
+import ReviewsList from '../reviews/ReviewsList';
+import CustomTabView from '../common/CustomTabView';
 
-import { getAllFollowingReviews, getAllReviews } from '../functions/reviews';
+import { getAllFollowingReviews, getAllReviews } from '../../functions/reviews';
 
-import { UserContext } from '../contexts/UserContext';
-import { Container, ScrollingContent } from './common/Layout';
-import LastReleasesSection from './home/LastReleasesSection';
+import { UserContext } from '../../contexts/UserContext';
+import { Container, ScrollingContent } from '../common/Layout';
+import LastReleasesSection from './LastReleasesSection';
+import RecommendationsSection from './RecommendationsSection';
 
 const getSections = (params) => ([
   { 
@@ -58,6 +59,11 @@ export default () => {
       <View style={{ height: '30%' }}>
         <LastReleasesSection />
       </View>
+      {connectedUser ? 
+        <View style={{ height: 'auto' }}>
+          <RecommendationsSection />
+        </View> : null
+      }
       {connectedUser ? <CustomTabView style='rounded' sections={getSections(tabViewParams)} /> : allReviewsList}
     </Container>
   )

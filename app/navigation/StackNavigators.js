@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import HomeScreen from '../components/HomeScreen';
+import HomeScreen from '../components/home/HomeScreen';
 import ReviewScreen from '../components/reviews/ReviewScreen';
 import UserScreen from '../components/users/UserScreen';
 import MediaScreen from '../components/media/MediaScreen';
