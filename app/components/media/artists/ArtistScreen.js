@@ -29,6 +29,11 @@ export default ({ route }) => {
   
   if (!artist) return (<Loader />)
 
+  // remove duplicated albums
+  const filteredAlbums = artist.albums.items.filter((album, index, self) => 
+    index === self.findIndex(album2 => 
+      (album2.name === album.name )))
+
   return (
     <Container>
       <ArtistBanner artist={artist.info}/>
@@ -36,7 +41,7 @@ export default ({ route }) => {
         <SectionTitle text='Morceaux populaires' />
         <TrackList tracks={artist.topTracks} />
         <SectionTitle text='Albums' />
-        <AlbumsList albums={artist.albums.items} />
+        <AlbumsList albums={filteredAlbums} />
         <SectionTitle text='Artistes similaires' />
         <ArtistsList artists={artist.relatedArtists} />
       </ScrollingContent>

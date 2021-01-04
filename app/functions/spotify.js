@@ -1,6 +1,6 @@
 import { TOKENS, EXTERNAL_API } from '../config.local';
 import { catchErrors, handleErrors } from './errors';
-import { getAuthOptions, getQuery } from './helpers';
+import { getAuthOptions, getQuery, getRecommendationsSeeds } from './helpers';
 
 export const generateToken = () => {
   const options = {
@@ -38,7 +38,7 @@ export const getArtistData = (id, token) => {
   return (
     Promise.all([
       fetch(baseUrl, auth),
-      fetch(baseUrl + '/albums', auth),
+      fetch(baseUrl + '/albums?include_groups=album&market=FR', auth),
       fetch(baseUrl + '/top-tracks?country=FR', auth),
       fetch(baseUrl + '/related-artists', auth)
     ])
@@ -59,3 +59,15 @@ export const getLastReleases = (token) =>
       .then(handleErrors)
       .then(res => res.json())
       .catch(catchErrors)
+
+
+
+export const getRecommendations = (token, user) => { 
+  const seeds = getRecommendationsSeeds(user)
+  return (
+    fetch(EXTERNAL_API.spotify + 'recommendations?seed_genres=&seed_tracks=&seed_artists=' + seeds, getAuthOptions(token))
+      .then(handleErrors)
+      .then(res => res.json())
+      .catch(catchErrors)
+  )
+}

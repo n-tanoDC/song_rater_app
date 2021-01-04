@@ -88,13 +88,13 @@ export const getArtistsWithLink = (artists) => {
     </View> )
 }
 
-export const getArtists = (artists) => {
-  let artistsNames = '';
+export const getArtists = (artists, getID = false) => {
+  let artistsData = '';
   for (const [index, artist] of artists.entries()) {
     const suffix = index < artists.length - 1 ? ', ' : '';
-    artistsNames += (artist.name + suffix)
+    artistsData += (artist[getID ? 'id' : 'name'] + suffix)
   }
-  return artistsNames;
+  return artistsData;
 }
 
 // return a string corresponding to the right url to use to display a media cover
@@ -228,4 +228,40 @@ export const getQuery = (query) => {
 
 export const getAuthOptions = token => { 
   return { headers: { Authorization: 'Bearer ' + token } }
+}
+
+const pickSeeds = (seeds) => {
+  let newSeeds = ''
+  for (let i = 0 ; i < 5 ; i++) {
+    newSeeds += seeds[Math.floor(Math.random() * seeds.length)]
+    if (i !== 4) newSeeds += ','
+  }
+  return newSeeds
+}
+
+export const getSeeds = (ids) => {
+  // remove empty strings
+  const newArray = ids.filter(item => { if (item !== '') return item })
+  const formattedArray = []
+
+  // remove spaces
+  newArray.map((item, index) => {
+    const trimmedItem = item.replace(/ /g, '')
+    const newItem = trimmedItem.includes(',') ? trimmedItem.split(',') : trimmedItem
+    if (newItem instanceof Array) {
+      formattedArray.push(...newItem)
+    } else { 
+      formattedArray.push(newItem)
+    }
+  })
+
+  // remove duplicates
+  const finalArray = formattedArray.filter((value, index, self) => self.indexOf(value) === index)
+
+  return pickSeeds(finalArray)
+}
+
+export const getRecommendationsSeeds = (user) => {
+  const artists = user.favorites.map(fav => getArtists(fav.artists, true))
+  return getSeeds(artists)
 }

@@ -2,23 +2,25 @@ import React from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCover } from '../../../functions/helpers';
+import { getArtists, getCover } from '../../../functions/helpers';
+import colors from '../../../styles/colors';
 
-const AlbumCard = ({ album }) => {
+const AlbumCard = ({ album, showArtists }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={() => navigation.push('Media', { media: album })} style={styles.albumCard}>
       <Image source={{ uri: getCover(album) }} style={styles.albumCover} />
-      <Text numberOfLines={2} style={styles.albumName}>{album.name}</Text>
+      <Text numberOfLines={showArtists ? 1 : 2} style={styles.albumName}>{album.name}</Text>
+      {showArtists ? <Text numberOfLines={1} style={styles.artists}>{getArtists(album.artists)}</Text> : null}
     </TouchableOpacity>
   )
 }
 
-export default ({ albums }) => {
-  const renderItem = ({ item }) => (<AlbumCard album={item} />);
+export default ({ albums, showArtists }) => {
+  const renderItem = ({ item }) => (<AlbumCard showArtists={showArtists} album={item} />);
 
   return (
-    <FlatList 
+    <FlatList
       data={albums}
       keyExtractor={album => album.id}
       renderItem={renderItem}
@@ -42,5 +44,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
     textAlign: 'center',
     width: 100, 
-  }, 
+  },
+  artists: {
+    width: 100,
+    fontSize: 12,
+    color: colors.grey,
+    textAlign: 'center',
+  }
 })
