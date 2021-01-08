@@ -18,6 +18,7 @@ export default (props) => {
     object, 
     setRating, 
     listHeader,
+    regular
   } = props;
 
   const [nextPage, setNextPage] = useState(null);
@@ -65,6 +66,18 @@ export default (props) => {
 
   // Return a loader while the app loads the data
   if (!reviews) return <Loader />
+
+  if (regular) {
+    if (!reviews.length) return (<MessageView message='Aucune critique' />)
+    const jsxReviews = reviews.map(review => (
+      <ReviewCard
+        key={review._id}
+        hideMedia={hideMedia}
+        showUser
+        review={review} />
+    ))
+    return jsxReviews
+  }
 
   // Component to render for each list item
   const renderItem = ({ item }) => (

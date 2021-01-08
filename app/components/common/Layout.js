@@ -7,6 +7,11 @@ export const Container = ({ children, style }) =>
     {children}
   </SafeAreaView>
 
+export const ScrollingContainer = ({ children, style }) => 
+  <ScrollView style={[styles.container, style]}>
+    {children}
+  </ScrollView>
+
 export const Content = ({ children, style }) => 
   <View style={[styles.content, style]}>
     {children}

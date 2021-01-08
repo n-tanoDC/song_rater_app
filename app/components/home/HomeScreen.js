@@ -1,15 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { StyleSheet, SafeAreaView, View} from 'react-native';
+import { View, StatusBar} from 'react-native';
 
 import ReviewsList from '../reviews/ReviewsList';
 import CustomTabView from '../common/CustomTabView';
+import { ScrollingContainer } from '../common/Layout';
+import LastReleasesSection from './LastReleasesSection';
+import RecommendationsSection from './RecommendationsSection';
 
 import { getAllFollowingReviews, getAllReviews } from '../../functions/reviews';
 
 import { UserContext } from '../../contexts/UserContext';
-import { Container, ScrollingContent } from '../common/Layout';
-import LastReleasesSection from './LastReleasesSection';
-import RecommendationsSection from './RecommendationsSection';
 
 const getSections = (params) => ([
   { 
@@ -17,6 +17,7 @@ const getSections = (params) => ([
     title: 'Toutes les critiques',
     render: (
       <ReviewsList 
+        regular
         reviews={params.allReviews}
         setReviews={params.setAllReviews}
         getReviews={params.getAllReviews} />
@@ -27,6 +28,7 @@ const getSections = (params) => ([
     title: 'Abonnements',
     render: (
       <ReviewsList 
+        regular
         object={params.connectedUser}
         reviews={params.subscriptionsReviews}
         setReviews={params.setSubscriptionsReviews}
@@ -49,22 +51,25 @@ export default () => {
 
   const allReviewsList = (
     <ReviewsList 
+      regular
       reviews={allReviews}
       setReviews={setAllReviews}
       getReviews={getAllReviews} />
   )
 
   return (
-    <Container>
-      <View style={{ height: '30%' }}>
+    <ScrollingContainer>
+      <StatusBar barStyle='light-content' />
+      <View style={{ height: 200, overflow: 'hidden' }}>
         <LastReleasesSection />
       </View>
       {connectedUser ? 
         <View style={{ height: 'auto' }}>
           <RecommendationsSection />
-        </View> : null
-      }
-      {connectedUser ? <CustomTabView style='rounded' sections={getSections(tabViewParams)} /> : allReviewsList}
-    </Container>
+        </View> : null}
+      <View style={{ height: 'auto' }}>
+        {connectedUser ? <CustomTabView style='rounded' sections={getSections(tabViewParams)} /> : allReviewsList}
+      </View>
+    </ScrollingContainer>
   )
 };
