@@ -6,41 +6,44 @@ import CustomButton from '../common/buttons/CustomButton';
 import colors from '../../styles/colors';
 import { catchErrors } from '../../functions/errors';
 import { updateReviewVote } from '../../functions/reviews';
-
-import { UserContext } from '../../contexts/UserContext';
-import { AppContext } from '../../contexts/AppContext';
 import { showToast } from '../../functions/helpers';
 
-export default ({ review }) => {
-  const [upvotes, setUpvotes] = useState(review.upvotes)
-  const [downvotes, setDownvotes] = useState(review.downvotes)
+import { UserContext } from '../../contexts/UserContext';
+
+export default ({ review, setReview }) => {
+  const { upvotes, downvotes } = review;
+
   const [userVote, setUserVote] = useState(null)
+  const [voteDiff, setVoteDiff] = useState(null)
 
   const { connectedUser } = useContext(UserContext)
-  const { setUpdates } = useContext(AppContext)
   
   useEffect(() => {
     if (connectedUser) {
-      const userUpvote = upvotes.includes(connectedUser._id);
-      const userDownvote = downvotes.includes(connectedUser._id);
-      if (userUpvote) {
+      if (upvotes.includes(connectedUser._id)) {
         setUserVote('upvote')
-      } else if (userDownvote) {
+      } else if (downvotes.includes(connectedUser._id)) {
         setUserVote('downvote')
       } else {
         setUserVote(null)
       }
     }
-  }, [upvotes, downvotes])
+    setVoteDiff(upvotes.length + (-downvotes.length))
+  }, [review])
 
   const handleVote = (type) => {
     if (connectedUser) {
       updateReviewVote(type, review, connectedUser.token)
         .then(res => {
           if (res) {
-            setUpvotes(res.upvotes)
-            setDownvotes(res.downvotes)
-            setUpdates(true)
+            const newReview = { 
+              ...review, 
+              upvotes: res.upvotes,
+              downvotes: res.downvotes 
+            };
+            setReview(newReview);
+            setUserVote(userVote === type ? null : type)
+            setVoteDiff(res.upvotes.length + (-res.downvotes.length))
           }
         })
         .catch(catchErrors)
@@ -56,7 +59,7 @@ export default ({ review }) => {
         icon='thumb-up'
         onPress={() => handleVote('upvote')} 
         transparent />
-      <Text style={styles.totalVotes}>{upvotes.length + (-downvotes.length)}</Text>
+      <Text style={styles.totalVotes}>{voteDiff}</Text>
       <CustomButton 
         color={userVote === 'downvote' ? colors.red : colors.grey} 
         icon='thumb-down'

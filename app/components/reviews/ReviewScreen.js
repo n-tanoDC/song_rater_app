@@ -9,7 +9,7 @@ import { accountDeleted } from '../../functions/helpers';
 import colors from '../../styles/colors';
 
 export default ({ route }) => {
-  const { review } = route.params;
+  const { review, setReview } = route.params
     
   const userProp = accountDeleted(review.author) ? { username: 'Utilisateur supprimé' } : review.author;
 
@@ -20,7 +20,7 @@ export default ({ route }) => {
         rating={review ? review.rating : null} 
         media={review ? review.media : media} />
       <ScrollingContent>
-        <VotingSection review={review} />
+        <VotingSection review={review} setReview={setReview} />
         <View style={styles.titleContainer}>
           <Text numberOfLines={2} style={styles.title}>{review.title}</Text>
           <View style={styles.ratingContainer}>

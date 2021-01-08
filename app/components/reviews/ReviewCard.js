@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,7 +13,9 @@ import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 
-const ReviewCard = ({ review, hideMedia }) => {
+const ReviewCard = (props) => {
+  const [review, setReview] = useState(props.review)
+  
   let { title, content, media, rating, created_at, author } = review;
 
   const navigation = useNavigation()
@@ -21,7 +23,6 @@ const ReviewCard = ({ review, hideMedia }) => {
   const { connectedUser } = useContext(UserContext);
 
   let userProp, onPress, mediaSection;
-  
   
   if (accountDeleted(author)) {
     author = { username: 'Utilisateur supprimé'};
@@ -37,7 +38,7 @@ const ReviewCard = ({ review, hideMedia }) => {
     }
   }
 
-  if (!hideMedia) {
+  if (!props.hideMedia) {
     mediaSection = (
       <MediaSection media={media} />
     )
@@ -45,9 +46,9 @@ const ReviewCard = ({ review, hideMedia }) => {
 
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate('Review', { review })}>
+      <TouchableOpacity onPress={() => navigation.push('Review', { review, setReview })}>
         <View style={styles.header}>
-          <VotingSection review={review} />
+          <VotingSection review={review} setReview={setReview} />
           <View style={styles.userWrapper}>
             <View>
               <Text numberOfLines={1} style={styles.username}>{author.username}</Text>
