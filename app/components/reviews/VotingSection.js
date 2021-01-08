@@ -9,6 +9,7 @@ import { updateReviewVote } from '../../functions/reviews';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
+import { showToast } from '../../functions/helpers';
 
 export default ({ review }) => {
   const [upvotes, setUpvotes] = useState(review.upvotes)
@@ -33,36 +34,36 @@ export default ({ review }) => {
   }, [upvotes, downvotes])
 
   const handleVote = (type) => {
-    updateReviewVote(type, review, connectedUser.token)
-      .then(res => {
-        if (res) {
-          setUpvotes(res.upvotes)
-          setDownvotes(res.downvotes)
-          setUpdates(true)
-        }
-      })
-      .catch(catchErrors)
+    if (connectedUser) {
+      updateReviewVote(type, review, connectedUser.token)
+        .then(res => {
+          if (res) {
+            setUpvotes(res.upvotes)
+            setDownvotes(res.downvotes)
+            setUpdates(true)
+          }
+        })
+        .catch(catchErrors)
+    } else {
+      showToast('Veuillez vous connecter pour noter une critique.')
+    }
   }
 
-  if (connectedUser) {
-    return (
-      <View style={styles.votingSection}>
-        <CustomButton
-          color={userVote === 'upvote' ? colors.green : colors.grey} 
-          icon='thumb-up'
-          onPress={() => handleVote('upvote')} 
-          transparent />
-        <Text style={styles.totalVotes}>{upvotes.length + (-downvotes.length)}</Text>
-        <CustomButton 
-          color={userVote === 'downvote' ? colors.red : colors.grey} 
-          icon='thumb-down'
-          onPress={() => handleVote('downvote')} 
-          transparent />
-      </View>
-    )
-  }
-
-  return null;
+  return (
+    <View style={styles.votingSection}>
+      <CustomButton
+        color={userVote === 'upvote' ? colors.green : colors.grey} 
+        icon='thumb-up'
+        onPress={() => handleVote('upvote')} 
+        transparent />
+      <Text style={styles.totalVotes}>{upvotes.length + (-downvotes.length)}</Text>
+      <CustomButton 
+        color={userVote === 'downvote' ? colors.red : colors.grey} 
+        icon='thumb-down'
+        onPress={() => handleVote('downvote')} 
+        transparent />
+    </View>
+  )
 };
 
 const styles = StyleSheet.create({

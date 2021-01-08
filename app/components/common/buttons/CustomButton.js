@@ -13,6 +13,7 @@ export default (props) => {
     text,
     large,
     transparent,
+    disabled
   } = props;
 
   let iconComponent, textComponent;
@@ -40,7 +41,8 @@ export default (props) => {
     paddingVertical: text ? 2 : 10,
   }
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
+      disabled={disabled}
       style={[styles.button, buttonStyle]}
       onPress={onPress}>
       {iconComponent}
