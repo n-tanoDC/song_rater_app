@@ -1,4 +1,5 @@
-import { API_URL } from '../config.local';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL, STORAGE_KEY } from '../config.local';
 import { catchErrors, handleErrors } from './errors';
 import { getMediaData, getOptions } from './helpers';
 
@@ -16,7 +17,8 @@ export const register = data =>
     .catch(catchErrors)
 
 
-export const logout = (callback) => {
+export const logout = async (callback) => {
+  await AsyncStorage.removeItem(STORAGE_KEY)
   callback(null);
 }
 

@@ -44,5 +44,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     padding: 10,
     alignSelf: 'flex-end'
+  },
+  checkboxWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginTop: 15,
+    marginRight: 10,
+    
+  },
+  checkboxLabel: {
+    marginLeft: 5
   }
 })

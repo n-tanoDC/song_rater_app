@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import CheckBox from '@react-native-community/checkbox';
 
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/buttons/CustomButton';
@@ -11,16 +13,26 @@ import { catchErrors } from '../../functions/errors';
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
+import { STORAGE_KEY } from '../../config.local';
 
 export default ({ styles }) => {
   const [username, setUsername] = useState('Nicolas');
   const [password, setPassword] = useState('Password22');
+  const [rememberUser, setRememberUser] = useState(false);
 
   const [data, setData] = useState({})
   
   const { setConnectedUser } = useContext(UserContext)
 
   useEffect(() => setData({ username, password }), [username, password])
+
+  const saveUserData = async (data) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleSubmit = () => {
     const { error } = formValidator(data);
@@ -33,6 +45,9 @@ export default ({ styles }) => {
       .then(res => {
         if (res) {
           const { user, token } = res;
+          if (rememberUser) {
+            saveUserData(data)
+          }
           setConnectedUser({ ...user, token })
         }
       })
@@ -54,6 +69,17 @@ export default ({ styles }) => {
           secure
           value={password}
           onChangeText={setPassword} />
+        <TouchableWithoutFeedback
+          onPress={() => setRememberUser(!rememberUser)}>
+          <View  style={styles.checkboxWrapper}>
+            <CheckBox
+              value={rememberUser}
+              onValueChange={newValue => setRememberUser(newValue)}
+              tintColors={{ true: colors.green, false: colors.grey }}
+            />
+            <Text style={styles.checkboxLabel}>Rester connecté</Text>
+          </View>
+        </TouchableWithoutFeedback>
         <View style={styles.buttonWrapper}>
           <CustomButton 
             backgroundColor={colors.secondary}
