@@ -9,6 +9,7 @@ import { checkFavorite, getArtistsWithLink, getCover, getLink } from '../../func
 import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
+import TextTicker from 'react-native-text-ticker';
 
 export default ({ media, rating }) => {
   const [isLiked, setLike] = useState(false);
@@ -29,10 +30,10 @@ export default ({ media, rating }) => {
         <View style={styles.mediaWrapper}>
           <Image source={{ uri: getCover(media) }} style={styles.image} />
           <View style={styles.textWrapper}>
-            <Text numberOfLines={1} style={styles.title}>{media.name}</Text>
-            {getArtistsWithLink(media.artists)}
+            <TextTicker bounce scrollSpeed={250} scroll={false} style={styles.title}>{media.name}</TextTicker>
+            {getArtistsWithLink(media.artists, true)}
           </View>
-        </View>
+        </View> 
         <View style={styles.bottomSection}>
           <View style={styles.actionButtons}>
             <View style={styles.spotifyButton}>

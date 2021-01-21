@@ -76,10 +76,10 @@ export const showToast = (message = null) => {
 }
 
 // return formatted string of artists from an Array (provided in the Spotify API response object)
-export const getArtistsWithLink = (artists) => {
+export const getArtistsWithLink = (artists, scroll = false) => {
   let artistsNames = [];
   for (const [index, artist] of artists.entries()) {
-    artistsNames.push(<ArtistName last={index === artists.length - 1} key={index} artist={artist} />)
+    artistsNames.push(<ArtistName scroll={scroll} last={index === artists.length - 1} key={index} artist={artist} />)
   }
   
   return (
