@@ -2,8 +2,12 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { getArtists, getCover } from '../../../functions/helpers';
+import { getArtists, getCover, getLink } from '../../../functions/helpers';
 import colors from '../../../styles/colors';
+import { SpotifyButton } from '../../common/buttons/Buttons';
+import CollapsibleList from 'react-native-collapsible-list';
+import { useState } from 'react/cjs/react.development';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TrackListItem = ({ track, showArtist }) => {
   const navigation = useNavigation();
@@ -11,20 +15,39 @@ const TrackListItem = ({ track, showArtist }) => {
   return (
     <TouchableOpacity onPress={() => navigation.push('Media', { media: track })} style={styles.trackListItem}>
       <Image source={{ uri: getCover(track) }} style={styles.trackImage} />
-      <View>
-        <Text style={styles.trackName}>{track.name}</Text>
+      <View style={styles.trackNameContainer}>
+        <Text numberOfLines={1} style={styles.trackName}>{track.name}</Text>
         {artist}
       </View>
+      <SpotifyButton link={getLink(track)} />
     </TouchableOpacity>
   )
 }
 
 export default ({ tracks, showArtist }) => {
   const jsxTracks = tracks.map((track) => <TrackListItem key={track.id} showArtist={showArtist} track={track}/>)
-  return jsxTracks
+  const [buttonIcon, setButtonIcon] = useState('chevron-down')
+
+  const button = (
+    <View style={styles.buttonContainer}>
+      <Icon color={colors.darkgrey} name={buttonIcon} size={24} />
+    </View>
+  )
+  return (
+    <CollapsibleList
+      numberOfVisibleItems={3}
+      buttonContent={button}
+      onToggle={(collapsed) => setButtonIcon(collapsed ? 'chevron-up' : 'chevron-down')}>
+      {jsxTracks}
+    </CollapsibleList>
+  )     
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    marginVertical: 5
+  },
   trackListItem: {
     alignItems: 'center',
     borderBottomWidth: 1,
@@ -36,6 +59,9 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     width: 60,
     marginRight: 10,
+  },
+  trackNameContainer: {
+    flex: 1
   },
   trackName: {
     fontFamily: 'baloo2-semibold',
