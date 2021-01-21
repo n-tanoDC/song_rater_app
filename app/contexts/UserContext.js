@@ -17,16 +17,16 @@ export default ({ children }) => {
 
   useEffect(() => {
     getUserData()
-      .then(res => {
+      .then(async res => {
         if (res) {
-          login(res)
-            .then(res => {
-              if (res) {
-                const { user, token } = res
-                setConnectedUser({ ...user, token })
-              }
-            })
-            .catch(catchErrors)
+          const userData = await login(res);
+          try {
+            const { user, token } = userData;
+            setConnectedUser({ ...user, token })
+          } catch (error) {
+            catchErrors(error)
+            setConnectedUser(null)
+          }
         } else {
           setConnectedUser(null)
         }
