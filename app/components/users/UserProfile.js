@@ -26,13 +26,7 @@ const getSections = (reviews, setReviews, user) => ([
     title: 'Favoris',
     icon: 'heart',
     render: (<FavSection favorites={user.favorites} />)
-  },
-  {
-    key: 'lists',
-    title: 'Listes',
-    icon: 'format-list-bulleted',
-    render: (<MessageView message='Indisponible pour le moment.' />)
-  },
+  }
 ])
 
 export default ({ user }) => {

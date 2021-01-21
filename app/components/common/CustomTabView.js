@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -39,11 +39,16 @@ export default ({ sections, style }) => {
     }
   }
 
-  const getTabBarIcon = ({ route, color }) => {
+  const getIcon = ({ route, color, focused }) => {
     if (style !== 'rounded') {
       const index = sections.findIndex(section => section.key === route.key)
       const icon = sections[index].icon;
-      return (<Icon name={icon} size={24} color={color} />)
+      return (
+        <View style={styles.iconContainer}>
+          <Icon name={icon} size={24} color={color} />
+          {focused ? <Text style={styles.iconText}>{route.title}</Text> : null}
+        </View>
+      )
     }
   }
 
@@ -52,7 +57,7 @@ export default ({ sections, style }) => {
       {...props}
       indicatorStyle={styles.indicator}
       indicatorContainerStyle={styles.indicatorContainer}
-      renderIcon={props => getTabBarIcon(props)}
+      renderIcon={props => getIcon(props)}
       tabStyle={styles.tabBar}
       activeColor={activeColor}
       inactiveColor={inactiveColor} 
@@ -74,8 +79,19 @@ const iconOnlyStyles = StyleSheet.create({
   tabBar: {
     backgroundColor: colors.white,
   },
+  iconContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  iconText: {
+    fontFamily: 'baloo2-semibold',
+    marginLeft: 10,
+    fontSize: 16,
+    color: colors.darkgrey,
+  },
   label: {
-    display: 'none'
+    display: 'none',
   }
 })
 
