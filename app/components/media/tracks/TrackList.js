@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import CollapsibleList from 'react-native-collapsible-list';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import { SpotifyButton } from '../../common/buttons/Buttons';
 
 import { getArtists, getCover, getLink } from '../../../functions/helpers';
+
 import colors from '../../../styles/colors';
-import { SpotifyButton } from '../../common/buttons/Buttons';
-import CollapsibleList from 'react-native-collapsible-list';
-import { useState } from 'react/cjs/react.development';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const TrackListItem = ({ track, showArtist }) => {
   const navigation = useNavigation();

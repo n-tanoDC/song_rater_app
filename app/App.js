@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import React from 'react';
 import { MenuProvider } from 'react-native-popup-menu';
 

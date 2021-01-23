@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import ReviewsList from '../reviews/ReviewsList';
-import MessageView from '../common/MessageView';
 import CustomTabView from '../common/CustomTabView';
 import UserHeader from './UserHeader';
 import FavSection from './FavSection';

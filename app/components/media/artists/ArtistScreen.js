@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 
 import Loader from '../../common/Loader';
 import ArtistBanner from './ArtistBanner';
