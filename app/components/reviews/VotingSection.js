@@ -14,7 +14,7 @@ export default ({ review, setReview }) => {
   const { upvotes, downvotes } = review;
 
   const [userVote, setUserVote] = useState(null)
-  const [voteDiff, setVoteDiff] = useState(null)
+  const [averageVote, setAverageVote] = useState(review.averageVote)
 
   const { connectedUser } = useContext(UserContext)
   
@@ -28,7 +28,6 @@ export default ({ review, setReview }) => {
         setUserVote(null)
       }
     }
-    setVoteDiff(upvotes.length + (-downvotes.length))
   }, [review])
 
   const handleVote = (type) => {
@@ -39,11 +38,12 @@ export default ({ review, setReview }) => {
             const newReview = { 
               ...review, 
               upvotes: res.upvotes,
-              downvotes: res.downvotes 
+              downvotes: res.downvotes,
+              averageVote: res.averageVote
             };
             setReview(newReview);
             setUserVote(userVote === type ? null : type)
-            setVoteDiff(res.upvotes.length + (-res.downvotes.length))
+            setAverageVote(newReview.averageVote)
           }
         })
         .catch(catchErrors)
@@ -59,7 +59,7 @@ export default ({ review, setReview }) => {
         icon='thumb-up'
         onPress={() => handleVote('upvote')} 
         transparent />
-      <Text style={styles.totalVotes}>{voteDiff}</Text>
+      <Text style={styles.totalVotes}>{averageVote}</Text>
       <CustomButton 
         color={userVote === 'downvote' ? colors.red : colors.grey} 
         icon='thumb-down'
