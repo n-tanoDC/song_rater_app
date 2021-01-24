@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import { Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
-import { catchErrors } from '../../functions/errors';
-import { getRandomReviews } from '../../functions/reviews';
+
 import Loader from '../common/Loader';
 import SectionTitle from '../common/SectionTitle';
 import ReviewCard from '../reviews/ReviewCard';
 
+import { catchErrors } from '../../functions/errors';
+import { getRandomReviews } from '../../functions/reviews';
+
 export default () => {
   const [reviews, setReviews] = useState(null)
-
-  useEffect(() => {
+  
+  const loadRandomReviews = () => {
     getRandomReviews()
-      .then(res => {
-        if (res) {
-          setReviews(res)
+      .then(reviews => {
+        if (reviews) {
+          const filteredReviews = reviews.filter(review => review.title !== '' && review.content !== '')
+          setReviews(filteredReviews)
         }
       })
       .catch(catchErrors)
-  }, [])
+  }
+
+  useEffect(() => { loadRandomReviews() }, [])
 
   if (!reviews) return <Loader />
 
@@ -27,14 +33,17 @@ export default () => {
   const width = Dimensions.get('window').width
 
   return (
-    <Carousel
-      initialNumToRender={5}
-      data={reviews}
-      renderItem={renderItem} 
-      windowSize={1}
-      sliderWidth={width}
-      itemWidth={width}
-      inactiveSlideOpacity={1}
-      inactiveSlideScale={1} />
+    <>
+      <SectionTitle text='Critiques aléatoires' icon='reload' onPress={() => loadRandomReviews()} />
+      <Carousel
+        initialNumToRender={5}
+        data={reviews}
+        renderItem={renderItem} 
+        windowSize={1}
+        sliderWidth={width}
+        itemWidth={width}
+        inactiveSlideOpacity={1}
+        inactiveSlideScale={1} />
+    </>
   )
-};
+}
