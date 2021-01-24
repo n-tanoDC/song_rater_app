@@ -52,16 +52,16 @@ export default (props) => {
               onSelect: () => setSortValue('upvotes')
             }
         ]} />
-      <TouchableWithoutFeedback onPress={() => setSubscriptionsOnly(!subsciptionsOnly)}>
-        <View style={styles.checkboxWrapper}>
-          <CheckBox
-            disabled={!connectedUser}
-            value={subsciptionsOnly}
-            onValueChange={newValue => setSubscriptionsOnly(newValue)}
-            tintColors={{ true: colors.green, false: colors.grey }} />
-          <Text style={styles.checkboxLabel}>Abonnements</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      {connectedUser ? (
+        <TouchableWithoutFeedback onPress={() => setSubscriptionsOnly(!subsciptionsOnly)}>
+          <View style={styles.checkboxWrapper}>
+            <CheckBox
+              value={subsciptionsOnly}
+              onValueChange={newValue => setSubscriptionsOnly(newValue)}
+              tintColors={{ true: colors.green, false: colors.grey }} />
+            <Text style={styles.checkboxLabel}>Abonnements</Text>
+          </View>
+        </TouchableWithoutFeedback>) : null}
     </View>
   )
 }

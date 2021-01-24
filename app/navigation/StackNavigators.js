@@ -37,7 +37,7 @@ export const SearchNavigator = () =>
   </Navigator>
 
 export const FeedNavigator = () => 
-  <Navigator headerMode='none' initialRouteName='Search'>
+  <Navigator headerMode='none' initialRouteName='Feed'>
     <Screen name="Feed" component={FeedScreen} />
     <Screen name="Media" component={MediaScreen} />
     <Screen name="User" component={UserScreen} />
