@@ -9,8 +9,8 @@ export default ({ text }) => {
 
 const styles = StyleSheet.create({
   sectionTitle: {
-    fontSize: 24,
-    marginVertical: 15,
+    fontSize: 22,
+    marginVertical: 20,
     fontFamily: 'baloo2-semibold',
     color: colors.darkgrey,
   }
