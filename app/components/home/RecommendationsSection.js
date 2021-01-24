@@ -12,6 +12,7 @@ import { catchErrors } from '../../functions/errors';
 
 import { AppContext } from '../../contexts/AppContext';
 import { UserContext } from '../../contexts/UserContext';
+import MessageView from '../common/MessageView';
 
 export default () => {
   const [medias, setMedias] = useState(null)
@@ -38,13 +39,11 @@ export default () => {
   }
   
   useEffect(() => { getRecommendationsData() }, [])
-
-  let listComponent = (
-    <View style={styles.listContainer}>
-      <AlbumsList showArtists albums={medias}/>
-    </View>
-  )
-
+  
+  let listComponent;
+  
+  if (!medias) return <Loader />
+  
   if (!connectedUser) {
     listComponent = (
       <View style={styles.emptyListContainer}>
@@ -57,33 +56,35 @@ export default () => {
   } else {
     listComponent = (
       <View style={styles.listContainer}>
-        <AlbumsList showArtists albums={medias}/>
+        {medias.length ? 
+          <AlbumsList showArtists albums={medias}/> :
+          <MessageView message='Veuillez ajouter du contenu à vos favoris pour recevoir des recommandations.' />}
+        
       </View>
     )
   }
 
-  if (!medias) return <Loader />
 
   return (
     <View style={styles.container}>
-      <SectionTitle icon='reload' onPress={() => getRecommendationsData()} text='Titres recommandés' />
+      <SectionTitle icon='reload' onPress={() => getRecommendationsData()} text='Recommandations' />
       {listComponent}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-  },
   listContainer: {
     minHeight: 100,
   },
   emptyListContainer: {
+    paddingHorizontal: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 10
   },
   emptyListLabel: {
+    textAlign: 'center',
     marginBottom: 10
   }
 })

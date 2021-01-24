@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     borderColor: colors.grey,
   },
   card_random : {
-    margin: 25,
+    marginHorizontal: 25,
+    marginVertical: 10,
     borderRadius: 20,
   },
   header: {

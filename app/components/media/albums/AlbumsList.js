@@ -22,7 +22,7 @@ export default ({ albums, showArtists }) => {
 
   if (!albums.length) {
     return (
-      <MessageView message='Ajoutez du contenu à vos favoris pour recevoir des recommandations' />
+      <MessageView message='Aucun album.' />
     )
   }
 

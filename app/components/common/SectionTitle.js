@@ -17,13 +17,13 @@ export default ({ text, icon, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 20,
+    margin: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   sectionTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'baloo2-semibold',
     color: colors.darkgrey,
   }
