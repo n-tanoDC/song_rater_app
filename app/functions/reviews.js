@@ -3,26 +3,26 @@ import { catchErrors, handleErrors } from "./errors";
 import { getOptions } from "./helpers";
 
 
-export const getAllReviews = (page) => 
-  fetch(API_URL + 'reviews?page=' + page)
+export const getAllReviews = (page, sortValue = 'created_at') => 
+  fetch(API_URL + 'reviews?sortValue=' + sortValue + '&page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllFollowingReviews = (page, user) =>
-  fetch(API_URL + 'reviews/subscriptions?page=' + page, getOptions(null, user.token, 'GET'))
+export const getAllFollowingReviews = (page, sortValue = 'created_at', user) =>
+  fetch(API_URL + 'reviews/subscriptions?sortValue=' + sortValue + 'page=' + page, getOptions(null, user.token, 'GET'))
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneUser = (page, user) => 
-  fetch(API_URL + 'reviews/' + user.username + '?page=' + page)
+export const getAllReviewsForOneUser = (page, sortValue = 'created_at', user) => 
+  fetch(API_URL + 'reviews/' + user.username + '?sortValue=' + sortValue + '&page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 
 
-export const getAllReviewsForOneMedia = (page, media) =>
-  fetch(API_URL + 'reviews/media/' + media.id + '?page=' + page)
+export const getAllReviewsForOneMedia = (page, sortValue = 'created_at', media) =>
+  fetch(API_URL + 'reviews/media/' + media.id + '?sortValue=' + sortValue + '&page=' + page)
     .then(res => res.json())
     .catch(err => console.log(err))
 

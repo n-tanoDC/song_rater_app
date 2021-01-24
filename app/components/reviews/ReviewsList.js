@@ -11,6 +11,7 @@ import { AppContext } from '../../contexts/AppContext';
 
 export default (props) => {
   const {
+    sortValue,
     reviews,
     setReviews,
     getReviews,
@@ -26,6 +27,7 @@ export default (props) => {
 
   // Load reviews when there has been updates
   useEffect(() => { if (updates || !reviews) loadReviews() })
+  useEffect(() => { loadReviews() }, [sortValue, getReviews])
 
   const { updates, setUpdates } = useContext(AppContext);
 
@@ -33,7 +35,7 @@ export default (props) => {
     // set page to 1 if we are not loading a new page or if there are any updates
     const page = !nextPage || updates ? 1 : nextPage;
 
-    getReviews(page, object)
+    getReviews(page, sortValue, object)
       .then(res => {
         if (res.reviews) {
           let allReviews;
