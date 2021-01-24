@@ -14,6 +14,7 @@ import colors from '../../styles/colors';
 import { UserContext } from '../../contexts/UserContext';
 
 const ReviewCard = (props) => {
+  const { hideMedia, isRandom } = props;
   const [review, setReview] = useState(props.review)
   
   let { title, content, media, rating, created_at, author } = review;
@@ -38,14 +39,14 @@ const ReviewCard = (props) => {
     }
   }
 
-  if (!props.hideMedia) {
+  if (!hideMedia) {
     mediaSection = (
       <MediaSection media={media} />
     )
   }
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, isRandom ? styles.card_random : {}]}>
       <TouchableOpacity onPress={() => navigation.push('Review', { review, setReview })}>
         <View style={styles.header}>
           <VotingSection review={review} setReview={setReview} />
@@ -84,7 +85,11 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: colors.white,
     borderBottomWidth: 5,
-    borderColor: colors.grey
+    borderColor: colors.grey,
+  },
+  card_random : {
+    margin: 25,
+    borderRadius: 20,
   },
   header: {
     backgroundColor: colors.lightgrey2,

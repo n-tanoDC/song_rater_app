@@ -8,6 +8,12 @@ export const getAllReviews = (page, sortValue = 'created_at') =>
     .then(res => res.json())
     .catch(err => console.log(err))
 
+    
+export const getRandomReviews = () => 
+  fetch(API_URL + 'reviews/random')
+    .then(res => res.json())
+    .catch(err => console.log(err))
+
 
 export const getAllFollowingReviews = (page, sortValue = 'created_at', user) =>
   fetch(API_URL + 'reviews/subscriptions?sortValue=' + sortValue + 'page=' + page, getOptions(null, user.token, 'GET'))
