@@ -17,8 +17,9 @@ export default ({ trigger, options }) => {
   return (
     <Menu>
       <MenuTrigger>
-        <View style={styles.trigger}>
-          <Icon name={trigger.icon} size={28} color={colors.white} />
+        <View style={[styles.trigger, { backgroundColor: trigger.background}]}>
+          <Icon name={trigger.icon} size={trigger.iconSize || 28} color={colors.white} />
+          {trigger.text ? <Text style={styles.triggerText}>{trigger.text}</Text> : null}
         </View>
       </MenuTrigger>
       <MenuOptions optionsContainerStyle={styles.container}>
@@ -36,7 +37,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   trigger: {
-    padding: 5
+    height: 40,
+    alignSelf: 'flex-start',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 20,
+  },
+  triggerText: {
+    marginLeft: 5,
+    color: colors.white,
+    fontFamily: 'baloo2-semibold'
   },
   option: {
     flexDirection: 'row',
