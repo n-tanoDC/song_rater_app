@@ -10,9 +10,10 @@ import SearchScreen from '../components/search/SearchScreen';
 import AccountScreen from '../components/users/AccountScreen';
 import AccountFormScreen from '../components/users/AccountFormScreen';
 import AuthScreen from '../components/auth/AuthScreen';
+import FeedScreen from '../components/feed/FeedScreen';
+import ReviewFormScreen from '../components/reviews/ReviewFormScreen';
 
 import { UserContext } from '../contexts/UserContext';
-import ReviewFormScreen from '../components/reviews/ReviewFormScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -35,6 +36,15 @@ export const SearchNavigator = () =>
     <Screen name="ReviewForm" component={ReviewFormScreen} initialParams={{ tabBarVisible: false }} />
   </Navigator>
 
+export const FeedNavigator = () => 
+  <Navigator headerMode='none' initialRouteName='Search'>
+    <Screen name="Feed" component={FeedScreen} />
+    <Screen name="Media" component={MediaScreen} />
+    <Screen name="User" component={UserScreen} />
+    <Screen name="Artist" component={ArtistScreen} />
+    <Screen name="Review" component={ReviewScreen} />
+    <Screen name="ReviewForm" component={ReviewFormScreen} initialParams={{ tabBarVisible: false }} />
+  </Navigator>
 
 export const AccountNavigator = () => {
   const { connectedUser } = useContext(UserContext)

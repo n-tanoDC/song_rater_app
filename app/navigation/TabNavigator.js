@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { HomeNavigator, AccountNavigator, SearchNavigator } from './StackNavigators';
+import { HomeNavigator, AccountNavigator, SearchNavigator, FeedNavigator } from './StackNavigators';
 import TabIcon from './TabIcon';
 import colors from '../styles/colors';
 
@@ -40,6 +40,11 @@ export default () => {
         case 'Account':
           iconName = 'account';
           break;
+        case 'Feed':
+          iconName = 'playlist-star'
+          break;
+        default:
+          iconName = 'help'
       }
 
       return <TabIcon name={iconName} color={color} />;
@@ -63,6 +68,9 @@ export default () => {
         <Screen 
           name="Home"
           component={HomeNavigator} />
+        <Screen
+          name="Feed"
+          component={FeedNavigator} />
         <Screen 
           name="Account" 
           component={AccountNavigator} />
