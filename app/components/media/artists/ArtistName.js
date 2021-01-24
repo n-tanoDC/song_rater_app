@@ -3,17 +3,16 @@ import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import colors from '../../../styles/colors';
-import TextTicker from 'react-native-text-ticker';
 
-export default ({ artist, last, scroll }) => {
+export default ({ artist, last }) => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Artist', { artist })}>
-      {scroll ? 
-        <TextTicker bounce scrollSpeed={250} scroll={false} style={styles.artists}>{artist.name}{last ? '' : ', '}</TextTicker> : 
-        <Text numberOfLines={1} style={styles.artists}>{artist.name}{last ? '' : ', '}</Text>}
-    </TouchableOpacity>
+      <Text 
+        onPress={() => navigation.push('Artist', { artist })}
+        style={styles.artists}>
+        {artist.name}{last ? '' : ', '}
+      </Text>
   )
 };
 

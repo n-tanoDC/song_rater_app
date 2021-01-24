@@ -30,8 +30,10 @@ export default ({ media, rating }) => {
         <View style={styles.mediaWrapper}>
           <Image source={{ uri: getCover(media) }} style={styles.image} />
           <View style={styles.textWrapper}>
-            <TextTicker animationType='scroll' scrollSpeed={250} scroll={false} style={styles.title}>{media.name}</TextTicker>
-            {getArtistsWithLink(media.artists, true)}
+            <TextTicker animationType='scroll' scrollSpeed={250} scroll={false} style={styles.title}>
+              {media.name}
+            </TextTicker>
+            {getArtistsWithLink(media.artists)}              
           </View>
         </View> 
         <View style={styles.bottomSection}>

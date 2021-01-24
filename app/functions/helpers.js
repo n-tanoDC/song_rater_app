@@ -1,8 +1,9 @@
 import React from 'react';
-import { ToastAndroid, View } from 'react-native';
+import { Text, ToastAndroid, View } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment/min/moment-with-locales';
 import ArtistName from '../components/media/artists/ArtistName';
+import TextTicker from 'react-native-text-ticker';
 
 // return a formatted string to display a number of followers
 export const getFollowers = (followers) => {
@@ -76,16 +77,16 @@ export const showToast = (message = null) => {
 }
 
 // return formatted string of artists from an Array (provided in the Spotify API response object)
-export const getArtistsWithLink = (artists, scroll = false) => {
+export const getArtistsWithLink = (artists) => {
   let artistsNames = [];
   for (const [index, artist] of artists.entries()) {
-    artistsNames.push(<ArtistName scroll={scroll} last={index === artists.length - 1} key={index} artist={artist} />)
+    artistsNames.push(<ArtistName last={index === artists.length - 1} key={index} artist={artist} />)
   }
-  
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <TextTicker animationType='scroll' scrollSpeed={0} scroll>
       {artistsNames}
-    </View> )
+    </TextTicker>
+  )
 }
 
 export const getArtists = (artists, getID = false) => {
