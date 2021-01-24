@@ -16,8 +16,8 @@ import { UserContext } from '../../contexts/UserContext';
 import { STORAGE_KEY } from '../../config.local';
 
 export default ({ styles }) => {
-  const [username, setUsername] = useState('Nicolas');
-  const [password, setPassword] = useState('Password22');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [rememberUser, setRememberUser] = useState(false);
 
   const [data, setData] = useState({})

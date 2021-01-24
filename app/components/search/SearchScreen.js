@@ -13,6 +13,7 @@ import { search } from '../../functions/spotify';
 import colors from '../../styles/colors';
 
 import { AppContext } from '../../contexts/AppContext';
+import { showToast } from '../../functions/helpers';
 
 const getSections = (results) => ([
   {
@@ -37,29 +38,33 @@ export default () => {
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(false)
 
-  const [value, setValue] = useState('fugees');
+  const [value, setValue] = useState('');
 
   const { token } = useContext(AppContext)
 
   const handleSubmit = () => {
-    setResults(null);
-    setLoading(true);
-    search(value, token)
-      .then(res => {
-        if (res) {
-          let filteredAlbums = [];
-          if (res.albums) {
-            filteredAlbums = res.albums.items.filter(album => album.album_type === 'album')
+    if (value) {
+      setResults(null);
+      setLoading(true);
+      search(value, token)
+        .then(res => {
+          if (res) {
+            let filteredAlbums = [];
+            if (res.albums) {
+              filteredAlbums = res.albums.items.filter(album => album.album_type === 'album')
+            }
+            setResults({
+              artists: res.artists,
+              albums: { items: filteredAlbums, next: res.albums.next },
+              tracks: res.tracks,
+            });
+            setLoading(false)
           }
-          setResults({
-            artists: res.artists,
-            albums: { items: filteredAlbums, next: res.albums.next },
-            tracks: res.tracks,
-          });
-          setLoading(false)
-        }
-      })
-      .catch(catchErrors)
+        })
+        .catch(catchErrors)
+    } else {
+      showToast('Veuillez saisir un texte à rechercher')
+    }
   }
 
   let content = loading ? (<Loader />) : (<MessageView message='Veuillez effectuer une recherche' />)

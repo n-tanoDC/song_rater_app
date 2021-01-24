@@ -13,9 +13,9 @@ import colors from '../../styles/colors';
 import { UserContext } from '../../contexts/UserContext';
 
 export default ({ styles }) => {
-  const [username, setUsername] = useState('Nicolas');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('Password22');
+  const [password, setPassword] = useState('');
   const [passwordConf, setPasswordConf] = useState('')
   const [data, setData] = useState({})
   const [visibleTooltip, setVisibleTooltip] = useState(null);
