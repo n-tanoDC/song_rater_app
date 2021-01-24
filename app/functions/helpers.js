@@ -90,9 +90,11 @@ export const getArtistsWithLink = (artists, scroll = false) => {
 
 export const getArtists = (artists, getID = false) => {
   let artistsData = '';
-  for (const [index, artist] of artists.entries()) {
-    const suffix = index < artists.length - 1 ? ', ' : '';
-    artistsData += (artist[getID ? 'id' : 'name'] + suffix)
+  if (artists && artists.length) {
+    for (const [index, artist] of artists.entries()) {
+      const suffix = index < artists.length - 1 ? ', ' : '';
+      artistsData += (artist[getID ? 'id' : 'name'] + suffix)
+    }
   }
   return artistsData;
 }
