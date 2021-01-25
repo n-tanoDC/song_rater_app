@@ -18,7 +18,6 @@ import { STORAGE_KEY } from '../../config.local';
 export default ({ styles }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberUser, setRememberUser] = useState(false);
 
   const [data, setData] = useState({})
   
@@ -45,9 +44,7 @@ export default ({ styles }) => {
       .then(res => {
         if (res) {
           const { user, token } = res;
-          if (rememberUser) {
-            saveUserData(data)
-          }
+          saveUserData(data)
           setConnectedUser({ ...user, token })
         }
       })
@@ -69,17 +66,6 @@ export default ({ styles }) => {
           secure
           value={password}
           onChangeText={setPassword} />
-        <TouchableWithoutFeedback
-          onPress={() => setRememberUser(!rememberUser)}>
-          <View  style={styles.checkboxWrapper}>
-            <CheckBox
-              value={rememberUser}
-              onValueChange={newValue => setRememberUser(newValue)}
-              tintColors={{ true: colors.green, false: colors.grey }}
-            />
-            <Text style={styles.checkboxLabel}>Rester connecté</Text>
-          </View>
-        </TouchableWithoutFeedback>
         <View style={styles.buttonWrapper}>
           <CustomButton 
             backgroundColor={colors.secondary}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
@@ -20,17 +20,17 @@ export default () => {
   ]
   
   return (    
-    <SafeAreaView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <CustomTabView
         sections={sections}
         style='rounded' />
-    </SafeAreaView>
+    </ScrollView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flexGrow: 1
   },
   segmentContainer: {
     paddingBottom: 20,
