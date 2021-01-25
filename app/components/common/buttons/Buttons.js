@@ -8,12 +8,12 @@ import { UserContext } from '../../../contexts/UserContext';
 import { updateFavStatus } from '../../../functions/user';
 import { showToast } from '../../../functions/helpers';
 
-export const BackButton = () => {
+export const BackButton = ({ color = colors.white }) => {
   const navigation = useNavigation();
 
   return (
     <CustomButton
-      color={colors.white}
+      color={color}
       icon='chevron-left'
       large
       onPress={() => navigation.goBack()}

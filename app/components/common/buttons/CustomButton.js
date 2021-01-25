@@ -38,7 +38,7 @@ export default (props) => {
   const buttonStyle = {
     backgroundColor: transparent ? colors.transparent : backgroundColor,
     paddingHorizontal: text ? 10 : 10,
-    paddingVertical: text ? 2 : 10,
+    paddingVertical: text ? 5 : 10,
   }
   return (
     <TouchableOpacity

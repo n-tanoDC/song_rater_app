@@ -14,6 +14,7 @@ import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
+import { BackButton } from '../common/buttons/Buttons';
 
 export default ({ route }) => {
   const { user } = route.params;
@@ -62,6 +63,9 @@ export default ({ route }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.backButtonWrapper}>
+          <BackButton color={colors.darkgrey} />          
+        </View>
         <Image source={{ uri: source }} style={styles.image} />
         <CustomInput
           disabled
@@ -107,6 +111,11 @@ const styles = StyleSheet.create({
   scrollContainer: {
     justifyContent: "space-around",
     minHeight: '100%',
+  },
+  backButtonWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0
   },
   image: {
     alignSelf: 'center',

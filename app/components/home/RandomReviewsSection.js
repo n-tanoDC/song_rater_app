@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Carousel from 'react-native-snap-carousel';
 
 import Loader from '../common/Loader';

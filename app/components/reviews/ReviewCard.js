@@ -64,11 +64,11 @@ const ReviewCard = (props) => {
           <View style={styles.bodyHeader}>
             <View>
               <Text numberOfLines={1} style={styles.title}>{title}</Text>
-              <Text numberOfLines={1} style={styles.date}>{getDate(created_at)}</Text>
+              <Text numberOfLines={1} style={[styles.date, { marginBottom: isRandom ? 0 : 10 }]}>{getDate(created_at)}</Text>
             </View>
             <RatingIcon rating={rating} />
           </View>
-          <Text numberOfLines={3} style={styles.content}>{content}</Text>
+          {isRandom ? null : <Text numberOfLines={3} style={styles.content}>{content}</Text>}
         </View>
       </TouchableOpacity>
       {mediaSection}
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
   },
   title: {
     fontFamily: 'baloo2-semibold',

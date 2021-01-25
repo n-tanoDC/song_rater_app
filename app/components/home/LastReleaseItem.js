@@ -7,8 +7,9 @@ import { SpotifyButton } from '../common/buttons/Buttons';
 
 import { getArtistsWithLink, getCover, getLink } from '../../functions/helpers';
 import colors from '../../styles/colors';
+import { memo } from 'react';
 
-export default ({ media }) => {
+const LastReleaseItem = ({ media }) => {
   const navigation = useNavigation()
   return (
     <TouchableWithoutFeedback onPress={() => navigation.push('Media', { media: media })} style={styles.cover}>
@@ -28,6 +29,8 @@ export default ({ media }) => {
     </TouchableWithoutFeedback>
   )
 };
+
+export default memo(LastReleaseItem)
 
 const styles = StyleSheet.create({
   cover: {
