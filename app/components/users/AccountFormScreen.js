@@ -4,9 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 
 import CustomInput from '../common/CustomInput';
 import CustomButton from '../common/buttons/CustomButton';
+import { BackButton } from '../common/buttons/Buttons';
 
 import { API_URL } from '../../config.local';
-import { getUpdatedFields, pickImage, showToast } from '../../functions/helpers';
+import { confirmDelete, getUpdatedFields, pickImage, showToast } from '../../functions/helpers';
 import { deleteAccount, editAccount, logout } from '../../functions/user';
 import { catchErrors } from '../../functions/errors';
 
@@ -14,7 +15,6 @@ import colors from '../../styles/colors';
 
 import { UserContext } from '../../contexts/UserContext';
 import { AppContext } from '../../contexts/AppContext';
-import { BackButton } from '../common/buttons/Buttons';
 
 export default ({ route }) => {
   const { user } = route.params;
@@ -32,28 +32,36 @@ export default ({ route }) => {
   let source = API_URL + 'uploads/' + avatar;
 
   const handleSubmit = () => {
-    const fields = getUpdatedFields({ username, email }, connectedUser)
-    editAccount(fields, user.token, newAvatar)
-      .then(res => {
-        if (res) {
-          setConnectedUser({ ...connectedUser, ...res });
-          showToast('Modifications enregistrées');
-          setUpdates(true);
-          navigation.pop();
-        }
-      })
-      .catch(catchErrors);
+    const newFields = getUpdatedFields({ username, email }, connectedUser)
+
+    if (Object.keys(newFields).length || newAvatar) {
+      editAccount(newFields, user.token, newAvatar)
+        .then(res => {
+          if (res) {
+            setConnectedUser({ ...connectedUser, ...res });
+            showToast('Modifications enregistrées');
+            setUpdates(true);
+            navigation.pop();
+          }
+        })
+        .catch(catchErrors);
+    } else {
+      showToast('Vous n\'avez pas effectué de modifications.')
+    }
   }
 
+  const deleteUserAccount = () => {
+    deleteAccount(connectedUser.token)
+    .then(() => {
+      logout(setConnectedUser);
+      showToast('Votre compte a été bien été supprimé.');
+      navigation.pop();
+    })
+    .catch(catchErrors)
+  }
 
   const handleDelete = () => {
-    deleteAccount(connectedUser.token)
-      .then(res => {
-        logout(setConnectedUser);
-        showToast('Votre compte a été bien été supprimé.');
-        navigation.pop();
-      })
-      .catch(catchErrors)
+    confirmDelete(deleteUserAccount)
   }
   
   if (newAvatar) {
@@ -87,17 +95,17 @@ export default ({ route }) => {
             value={email}
             onChangeText={setEmail} />
         </View>
-        <View style={styles.buttonWrapper}>
-          <CustomButton
-            text='Enregistrer'
-            backgroundColor={colors.secondary}
-            onPress={() => handleSubmit()} />
-        </View>
-        <View style={styles.buttonWrapper}>
+        <View style={styles.buttonsWrapper}>
           <CustomButton
             text='Supprimer mon compte'
+            icon='trash-can'
             backgroundColor={colors.red}
             onPress={() => handleDelete()} />
+          <CustomButton
+            text='Ok'
+            icon='check'
+            backgroundColor={colors.green}
+            onPress={() => handleSubmit()} />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   scrollContainer: {
-    justifyContent: "space-around",
+    justifyContent: 'center',
     minHeight: '100%',
   },
   backButtonWrapper: {
@@ -123,7 +131,10 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: '40%',
   },
-  buttonWrapper: {
-    alignSelf: 'flex-end',
+  buttonsWrapper: {
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }
 })

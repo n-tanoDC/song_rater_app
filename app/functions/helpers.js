@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, ToastAndroid, View } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment/min/moment-with-locales';
 import ArtistName from '../components/media/artists/ArtistName';
 import TextTicker from 'react-native-text-ticker';
+import { call } from 'react-native-reanimated';
 
 // return a formatted string to display a number of followers
 export const getFollowers = (followers) => {
@@ -267,4 +268,17 @@ export const getSeeds = (ids) => {
 export const getRecommendationsSeeds = (user) => {
   const artists = user.favorites.map(fav => getArtists(fav.artists, true))
   return getSeeds(artists)
+}
+
+export const confirmDelete = (callback) => {
+  const title = 'Confirmer la suppression ?';
+  const message = 'Cette action est irréversible.';
+  const buttons = [{
+    text: 'Annuler',
+  }, {
+    text: 'Oui',
+    onPress: callback,
+  }];
+
+  Alert.alert(title, message, buttons);
 }
